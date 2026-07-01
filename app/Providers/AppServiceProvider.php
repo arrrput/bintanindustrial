@@ -24,8 +24,12 @@ class AppServiceProvider extends ServiceProvider
         // if (env('APP_ENV') !== 'local' || request()->header('x-forwarded-proto') === 'https') {
         //      URL::forceScheme('https');
         // }
-        
+
         // // Atau untuk cara yang lebih agresif saat pakai Ngrok, cukup gunakan 1 baris ini saja:
         // URL::forceScheme('https');
+
+        if (config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
     }
 }
