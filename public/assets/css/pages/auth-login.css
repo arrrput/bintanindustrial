@@ -1,0 +1,44 @@
+    /* Wadah utama agar ornamen tidak keluar batas layar */
+    .login-wrapper {
+        position: relative;
+        min-height: 75vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    /* --- Floating Ornaments CSS --- */
+    .floating-ornament {
+        position: absolute;
+        color: var(--accent-color, #198754);
+        opacity: 0.05; /* Transparan halus */
+        z-index: 0;
+        pointer-events: none; /* Agar tidak menutupi klik kursor */
+        animation: float-login 8s ease-in-out infinite;
+    }
+
+    /* Variasi ukuran, posisi, dan delay untuk masing-masing ornamen */
+    .ornament-1 { top: 10%; left: 15%; font-size: 8rem; animation-delay: 0s; }
+    .ornament-2 { bottom: 15%; right: 10%; font-size: 10rem; animation-delay: 2s; }
+    .ornament-3 { top: 20%; right: 20%; font-size: 6rem; animation-delay: 4s; }
+    .ornament-4 { bottom: 20%; left: 20%; font-size: 5rem; animation-delay: 1.5s; }
+
+    /* Animasi Melayang (Float) */
+    @keyframes float-login {
+        0% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-25px) rotate(10deg); }
+        100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    /* Efek kaca (Glassmorphism) tipis untuk Kartu Login */
+    .login-card {
+        z-index: 1;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .login-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(51, 86, 66, 0.15) !important;
+    }

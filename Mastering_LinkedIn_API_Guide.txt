@@ -1,0 +1,180 @@
+Mastering LinkedIn API: Step-by-Step Guide for Seamless Integration
+Author: Mayank Gupta
+
+LinkedIn offers a powerful API that allows developers to automate posting and retrieve user information. In this guide, we will walk you through the process of integrating with LinkedIn’s API, covering GET requests, posting text, uploading images, and posting videos.
+
+Step 1: Setting Up LinkedIn API Access
+To begin, follow these steps to set up your LinkedIn API access:
+
+1. Ensure you have a LinkedIn account – If you don’t have one, sign up at LinkedIn.
+2. Create a Company Page – You need a company page to post on behalf of an organization.
+3. Register an App – Go to LinkedIn Developer Portal and create an app.
+4. Use Your Page Name – When creating an app, use the name of your LinkedIn Page.
+5. Enable Products – Under the Products tab, add:
+   - Share on LinkedIn
+   - Sign In with LinkedIn using OpenID Connect
+6. Verify LinkedIn Page – In the Settings tab, verify your LinkedIn page to allow posting access.
+7. Generate Access Token – Navigate to the Auth tab and use the OAuth 2.0 tools on the right side to generate an access token.
+8. Get User Asset ID using Postman – Once you obtain the access token, use Postman to make API requests and retrieve the asset ID.
+
+--------------------------------------------------------------------------------
+
+Step 2: Making a GET Request to Retrieve User Info
+To fetch user details, use the following Python script:
+
+- Loads environment variables to securely store your LinkedIn Access Token.
+- Makes a GET request to LinkedIn’s API to fetch user details.
+- If successful, prints user information; otherwise, displays an error.
+
+```python
+import requests
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+ACCESS_TOKEN = os.getenv("LINKEDIN_ACCESS_TOKEN")
+
+headers = {
+    "Authorization": f"Bearer {ACCESS_TOKEN}"
+}
+
+response = requests.get("https://api.linkedin.com/v2/userinfo", headers=headers)
+
+if response.status_code == 200:
+    print("✅ User Info:", response.json())
+else:
+    print(f"❌ Error: {response.status_code}, {response.text}")
+```
+
+--------------------------------------------------------------------------------
+
+Step 3: Posting Text to LinkedIn
+Once you have your User URN, you can post a text update:
+
+- Defines the API endpoint for posting text.
+- Constructs the payload including the text message and visibility settings.
+- Sends a POST request with the payload to LinkedIn.
+- Handles success or failure responses.
+
+```python
+post_url = "https://api.linkedin.com/v2/ugcPosts"
+
+data = {
+    "author": "urn:li:person:YOUR_USER_URN",
+    "lifecycleState": "PUBLISHED",
+    "specificContent": {
+        "com.linkedin.ugc.ShareContent": {
+            "shareCommentary": {
+                "text": "🚀 Excited to share my latest blog on LinkedIn API integration! #LinkedInAPI"
+            },
+            "shareMediaCategory": "NONE"
+        }
+    },
+    "visibility": {
+        "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"
+    }
+}
+
+headers = {
+    "Authorization": f"Bearer {ACCESS_TOKEN}",
+    "X-Restli-Protocol-Version": "2.0.0",
+    "Content-Type": "application/json"
+}
+
+response = requests.post(post_url, headers=headers, json=data)
+
+if response.status_code == 201:
+    print("✅ Post Successful!")
+else:
+    print(f"❌ Post Error: {response.status_code}, {response.text}")
+```
+
+--------------------------------------------------------------------------------
+
+Step 4: Uploading an Image
+
+Step 4.1: Register Image Upload
+- Registers an image upload by sending a request to LinkedIn.
+- Retrieves an Asset URN and Upload URL for uploading the image.
+
+```python
+register_url = "https://api.linkedin.com/v2/assets?action=registerUpload"
+
+register_payload = {
+    "registerUploadRequest": {
+        "recipes": ["urn:li:digitalmediaRecipe:feedshare-image"],
+        "owner": "urn:li:person:YOUR_USER_URN",
+        "serviceRelationships": [
+            {"relationshipType": "OWNER", "identifier": "urn:li:userGeneratedContent"}
+        ]
+    }
+}
+
+response = requests.post(register_url, headers=headers, json=register_payload)
+
+if response.status_code == 200:
+    data = response.json()
+    asset_urn = data["value"]["asset"]
+    upload_url = data["value"]["uploadMechanism"]["com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest"]["uploadUrl"]
+    print(f"✅ Image Upload Registered! Asset URN: {asset_urn}")
+```
+
+Step 4.2: Upload the Image
+
+```python
+image_path = "your-image.jpg"
+
+with open(image_path, "rb") as file:
+    image_data = file.read()
+
+upload_response = requests.put(upload_url, headers={"Authorization": f"Bearer {ACCESS_TOKEN}"}, data=image_data)
+
+if upload_response.status_code == 201:
+    print("✅ Image Uploaded Successfully!")
+else:
+    print(f"❌ Upload Error: {upload_response.status_code}, {upload_response.text}")
+```
+
+Step 4.3: Share Image Post
+
+```python
+post_payload = {
+    "author": "urn:li:person:YOUR_USER_URN",
+    "lifecycleState": "PUBLISHED",
+    "specificContent": {
+        "com.linkedin.ugc.ShareContent": {
+            "shareCommentary": {"text": "Check out this amazing image!"},
+            "shareMediaCategory": "IMAGE",
+            "media": [{"status": "READY", "media": asset_urn}]
+        }
+    },
+    "visibility": {"com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"}
+}
+
+response = requests.post(post_url, headers=headers, json=post_payload)
+
+if response.status_code == 201:
+    print("✅ Image Post Successful!")
+else:
+    print(f"❌ Post Error: {response.status_code}, {response.text}")
+```
+
+--------------------------------------------------------------------------------
+
+Step 5: Uploading a Video
+
+Step 5.1: Register Video Upload
+(Similar to Image Upload, but use `urn:li:digitalmediaRecipe:feedshare-video` in the payload.)
+
+Step 5.2: Upload the Video
+(Use the upload URL to send the video data.)
+
+Step 5.3: Share Video Post
+(Use the asset URN to create a video post.)
+
+--------------------------------------------------------------------------------
+
+Conclusion
+This guide walks you through LinkedIn API integration for retrieving user details, posting text, and sharing images and videos. 🚀 Master these steps to automate your LinkedIn workflow seamlessly!

@@ -1,0 +1,82 @@
+        .page-content {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Ornaments Latar Belakang Bertema Karir & Profesional yang Melayang Halus */
+        .careers-bg-ornament {
+            position: absolute;
+            color: var(--accent-color);
+            opacity: 0.04;
+            z-index: 0;
+            pointer-events: none;
+            animation: careersFloat 10s ease-in-out infinite;
+        }
+
+        @keyframes careersFloat {
+            0% { transform: translateY(0px) rotate(0deg) scale(1); }
+            50% { transform: translateY(-25px) rotate(5deg) scale(1.03); }
+            100% { transform: translateY(0px) rotate(0deg) scale(1); }
+        }
+
+        /* Kartu Nilai Budaya Kerja Premium */
+        .value-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 35px 25px;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .value-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--accent-color);
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(51, 86, 66, 0.12);
+            border-color: rgba(51, 86, 66, 0.1);
+        }
+
+        .value-card:hover::before {
+            width: 100%;
+            z-index: -1;
+            opacity: 0.03;
+        }
+
+        .value-icon-wrapper {
+            width: 65px;
+            height: 65px;
+            background: rgba(51, 86, 66, 0.07);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover .value-icon-wrapper {
+            background: var(--accent-color);
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        /* Blok CTA Aplikasi Lowongan Kustom */
+        .cta-box-custom {
+            background: linear-gradient(135deg, #f8f9fa 0%, #edf2ee 100%);
+            border: 1px solid rgba(51, 86, 66, 0.06);
+            border-radius: 24px;
+            padding: 50px;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.02);
+        }

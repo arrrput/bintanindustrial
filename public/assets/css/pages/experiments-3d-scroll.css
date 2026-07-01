@@ -1,0 +1,50 @@
+        /* Force dark background */
+        body, html, main, #main, .main { 
+            background-color: #000 !important; 
+            color: #fff !important; 
+            margin: 0; 
+            padding: 0; 
+            overflow: hidden; 
+        }
+        #canvas-container { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            z-index: 1; 
+            background: #111 !important; 
+        }
+        
+        #debug-panel {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            font-family: monospace;
+            font-size: 12px;
+            color: #00ff00;
+            max-width: 300px;
+        }
+
+        #tweak-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 250px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #444;
+            padding: 15px;
+            border-radius: 10px;
+            z-index: 1000;
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+        .control-group { margin-bottom: 8px; }
+        .control-group label { display: block; margin-bottom: 2px; color: #999; }
+        .control-group input { width: 100%; background: #222; border: 1px solid #444; color: white; padding: 2px; }
+        .rot-inputs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; }

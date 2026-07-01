@@ -1,0 +1,27 @@
+    .cms-card {
+        border-radius: 16px;
+        border: 1px solid rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        overflow: hidden;
+        text-decoration: none !important;
+        display: block;
+    }
+    .cms-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(51, 86, 66, 0.1);
+        border-color: rgba(51, 86, 66, 0.2);
+    }
+    .cms-icon-wrapper {
+        width: 80px;
+        height: 80px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+    }
+    .cms-card:hover .cms-icon-wrapper {
+        transform: scale(1.1);
+    }

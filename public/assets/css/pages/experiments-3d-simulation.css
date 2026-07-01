@@ -1,0 +1,41 @@
+        /* Custom Styles specifically for this page */
+        body { background-color: #f8f9fa; }
+        
+        .simulation-header {
+            padding: 120px 0 20px 0;
+            text-align: center;
+        }
+
+        /* The 400px Canvas Container */
+        .canvas-container {
+            width: 100%;
+            height: 400px; 
+            background: transparent;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        #loading-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #007bff;
+            font-weight: bold;
+            z-index: 10;
+            transition: opacity 0.5s;
+        }
+        
+        .progress-bar-bg { width: 200px; height: 4px; background: #ddd; margin-top: 15px; border-radius: 2px;}
+        #progress-fill { width: 0%; height: 100%; background: #007bff; border-radius: 2px; transition: width 0.3s;}
+
+        /* Active highlight for the selected card without breaking box-shadow */
+        .active-card {
+            outline: 4px solid #007bff;
+            outline-offset: -4px;
+            cursor: default !important;
+        }

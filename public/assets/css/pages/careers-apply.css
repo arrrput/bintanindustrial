@@ -1,0 +1,131 @@
+    .apply-header {
+        background: linear-gradient(135deg, var(--accent-color), #274232);
+        padding: 60px 0;
+        color: white;
+        text-align: center;
+    }
+    .apply-header h2 { color: #ffffff !important; }
+    
+    .accordion-item {
+        border: none;
+        background: none;
+        margin-bottom: 20px;
+    }
+    .section-card {
+        border-radius: 20px !important;
+        border: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        overflow: hidden;
+        background: #fff;
+    }
+    .section-title-box {
+        background: #f8f9fa;
+        padding: 18px 25px;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .section-title-box:hover {
+        background: #f1f1f1;
+    }
+    .section-title-box.active {
+        background: #fff;
+        border-bottom: 1px solid #eee;
+    }
+    .section-title-box h5 {
+        margin: 0;
+        color: var(--accent-color);
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    .step-badge {
+        width: 25px;
+        height: 25px;
+        background: var(--accent-color);
+        color: #fff;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: bold;
+    }
+    .form-label {
+        font-weight: 600;
+        color: #444;
+        font-size: 0.85rem;
+    }
+    .form-control, .form-select {
+        border-radius: 10px;
+        padding: 10px 15px;
+        border: 1px solid #dee2e6;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 0.25rem rgba(51, 86, 66, 0.1);
+    }
+    .btn-next, .btn-apply-submit {
+        background-color: var(--accent-color);
+        color: white;
+        border-radius: 50px;
+        padding: 8px 30px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        border: none;
+        transition: 0.3s;
+    }
+    .btn-next:hover, .btn-apply-submit:hover {
+        background-color: #274232;
+        color: white;
+        transform: translateY(-2px);
+    }
+    .btn-prev {
+        border-radius: 50px;
+        padding: 8px 30px;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+    
+    .locked-section {
+        opacity: 0.5;
+    }
+    .locked-section .section-title-box {
+        cursor: not-allowed;
+    }
+    .locked-section .step-badge {
+        background: #ccc;
+    }
+    
+    .address-line-row {
+        position: relative;
+    }
+    .btn-remove-line {
+        position: absolute;
+        right: -35px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #dc3545;
+        cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+        .btn-container-custom {
+            flex-direction: column-reverse;
+            gap: 15px;
+        }
+        .btn-next, .btn-apply-submit, .btn-prev {
+            width: 100%;
+        }
+        .btn-remove-line {
+            position: static;
+            transform: none;
+            display: block;
+            margin-top: 5px;
+            text-align: right;
+            font-size: 0.75rem;
+        }
+    }

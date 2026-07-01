@@ -1,0 +1,55 @@
+    .life-header {
+      position: relative;
+      height: 45vh;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      text-align: center;
+      background: #333;
+    }
+
+    .life-bg-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .life-bg-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    .life-bg-layer.active {
+      opacity: 1;
+    }
+
+    .life-bg-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5));
+      z-index: 2;
+    }
+
+    .section-title-custom {
+      font-size: 3.5rem;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+      margin-bottom: 0;
+      position: relative;
+      z-index: 3;
+    }

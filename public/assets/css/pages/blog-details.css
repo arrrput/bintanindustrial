@@ -1,0 +1,19 @@
+    /* Memastikan konten dari WYSIWYG editor (seperti gambar/tabel) tidak keluar batas */
+    .article-content {
+        font-size: 1.05rem;
+        line-height: 1.9;
+        color: #444444;
+    }
+    .article-content img {
+        max-width: 100%;
+        height: auto !important;
+        border-radius: 8px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    .article-content h1, .article-content h2, .article-content h3 {
+        color: #222222;
+        font-weight: 700;
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }

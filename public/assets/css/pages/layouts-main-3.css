@@ -1,0 +1,273 @@
+    .dropdown-item-custom,
+    .dropdown-item-logout {
+        display: flex !important;
+        align-items: center !important;
+        transition: 0.3s;
+    }
+    .dropdown-item-custom {
+        color: #444;
+    }
+    .dropdown-item-custom:hover {
+        background-color: #f8f9fa;
+        color: var(--accent-color);
+        padding-left: 20px !important;
+    }
+    .dropdown-item-logout:hover {
+        padding-left: 20px !important;
+    }
+
+    /* Hover Dropdown & Animation */
+    @media (min-width: 1200px) {
+        .user-dropdown:hover .user-dropdown-menu {
+            display: block !important;
+            opacity: 1;
+            visibility: visible;
+            top: 100%;
+            transform: translateX(-50%) translateY(0);
+        }
+        .user-dropdown .user-dropdown-menu {
+            transition: all 0.3s ease;
+            display: block !important;
+            opacity: 0;
+            visibility: hidden;
+            margin-top: 10px;
+        }
+        .user-dropdown:hover .toggle-dropdown-custom {
+            transform: rotate(180deg);
+        }
+    }
+    
+    .toggle-dropdown-custom {
+        transition: transform 0.3s ease;
+        display: inline-block;
+    }
+
+    /* ===== MOBILE NAV REDESIGN ===== */
+    @media (max-width: 1199px) {
+
+        /* Toggle icon */
+        .mobile-nav-toggle {
+            color: var(--nav-color);
+            font-size: 26px;
+            line-height: 0;
+            cursor: pointer;
+            flex-shrink: 0;
+            z-index: 9999;
+            display: inline-block !important; /* Allow CSS transforms (rotate/scale) to apply to this inline element */
+        }
+        .mobile-nav-active .mobile-nav-toggle {
+            color: var(--accent-color) !important;
+            z-index: 99999 !important;
+        }
+
+        .mobile-nav-active #header {
+            z-index: 99999 !important;
+        }
+
+        /* Toggle icon flip — scale + rotate mid-swap */
+        @keyframes iconPop {
+            0%   { opacity: 1; transform: scale(1) rotate(0deg); }
+            45%  { opacity: 0; transform: scale(0.25) rotate(90deg); }
+            55%  { opacity: 0; transform: scale(0.25) rotate(-90deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+        .mobile-nav-toggle.icon-anim { animation: iconPop 0.32s ease both; }
+
+        /* Default mobile state: backdrop overlay (always displayed block to allow animations, hidden via visibility) */
+        .navmenu {
+            display: block !important;
+            position: fixed !important;
+            inset: unset !important;
+            top: var(--header-h, 110px) !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            z-index: 9997 !important;
+            overflow: hidden !important;
+            background: rgba(0, 0, 0, 0) !important;
+            backdrop-filter: blur(0px) !important;
+            -webkit-backdrop-filter: blur(0px) !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+            transition: background 0.35s ease, 
+                        backdrop-filter 0.35s ease, 
+                        visibility 0.35s ease !important;
+        }
+        .mobile-nav-active .navmenu {
+            background: rgba(0, 0, 0, 0.45) !important;
+            backdrop-filter: blur(4px) !important;
+            -webkit-backdrop-filter: blur(4px) !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+        }
+
+
+        /* Panel: selalu di DOM (override main.css display:none), tersembunyi via opacity & max-height */
+        .navmenu > ul {
+            display: block !important;
+            position: absolute !important;
+            inset: 0 0 auto 0 !important;
+            width: 100% !important;
+            padding: 0 !important;
+            max-height: 0 !important;
+            overflow: hidden !important;
+            visibility: hidden !important;
+            border-radius: 0 0 20px 20px !important;
+            background: #fff !important;
+            box-shadow: 0 10px 36px rgba(0,0,0,0.16) !important;
+            /* Hidden state — transition otomatis saat class berubah */
+            opacity: 0 !important;
+            pointer-events: none !important;
+            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.3s ease,
+                        padding 0.35s ease,
+                        visibility 0.35s ease !important;
+        }
+        /* Active: panel slide masuk */
+        .mobile-nav-active .navmenu > ul {
+            max-height: 85vh !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            padding: 0 0 16px !important;
+            pointer-events: auto !important;
+            overflow-y: auto !important;
+        }
+
+        /* Item nav: touch target besar, separator bersih */
+        .navmenu > ul > li {
+            border-bottom: 1px solid #f2f4f6 !important;
+        }
+        .navmenu > ul > li:last-child {
+            border-bottom: none !important;
+        }
+
+        /* Link utama */
+        .navmenu > ul > li > a,
+        .navmenu > ul > li > a:focus {
+            font-size: 15px !important;
+            font-weight: 500 !important;
+            padding: 15px 24px !important;
+            color: #2d2d2d !important;
+            white-space: normal !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            border-left: 3px solid transparent !important;
+            background: transparent !important;
+            transition: background 0.15s, border-color 0.15s, color 0.15s !important;
+        }
+        .navmenu > ul > li > a:hover,
+        .navmenu > ul > li > a.active {
+            color: var(--accent-color) !important;
+            background: rgba(51,86,66,0.05) !important;
+            border-left-color: var(--accent-color) !important;
+        }
+        .navmenu > ul > li > a::before { display: none !important; }
+
+        /* Sembunyikan divider */
+        .navmenu li.cms-divider-custom { display: none !important; }
+
+        /* Separator CMS section */
+        .navmenu li.user-dropdown,
+        .navmenu li.nav-cms-item {
+            border-top: 2px solid #e8f5e9 !important;
+            background: #f7fdf8 !important;
+            border-bottom: none !important;
+        }
+
+        /* User profile row */
+        .navmenu .user-dropdown > a {
+            padding: 16px 20px !important;
+            justify-content: flex-start !important;
+            gap: 12px !important;
+        }
+        .navmenu .user-dropdown > a .toggle-dropdown-custom {
+            margin-left: auto !important;
+            /* Reset template circular icon styles for mobile */
+            width: auto !important;
+            height: auto !important;
+            background: none !important;
+            border-radius: 0 !important;
+            display: inline-block !important;
+            line-height: normal !important;
+        }
+        .navmenu .user-dropdown > a:hover .toggle-dropdown-custom,
+        .navmenu .user-dropdown > a:focus .toggle-dropdown-custom,
+        .navmenu .user-dropdown > a .toggle-dropdown-custom:hover,
+        .navmenu .user-dropdown > a .toggle-dropdown-custom:focus {
+            background: none !important;
+            color: var(--accent-color) !important;
+        }
+        .navmenu .user-dropdown.mobile-open > a .toggle-dropdown-custom {
+            transform: rotate(180deg) !important;
+        }
+
+        /* Sub-menu CMS inline */
+        .navmenu .user-dropdown-menu {
+            position: static !important;
+            display: block !important;
+            max-height: 0 !important;
+            opacity: 0 !important;
+            overflow: hidden !important;
+            visibility: hidden !important;
+            transform: none !important;
+            box-shadow: none !important;
+            min-width: unset !important;
+            margin: 0 16px !important;
+            border-radius: 12px !important;
+            border: 0 solid #dce8de !important;
+            background: #fff !important;
+            padding: 0 8px !important;
+            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.3s ease,
+                        padding 0.35s ease,
+                        margin 0.35s ease !important;
+        }
+        .navmenu .user-dropdown.mobile-open > .user-dropdown-menu {
+            max-height: 400px !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            padding: 8px !important;
+            margin: 0 16px 12px !important;
+            border: 1px solid #dce8de !important;
+        }
+        .navmenu .user-dropdown-menu > li {
+            border-bottom: none !important;
+        }
+        .navmenu .user-dropdown-menu a,
+        .navmenu .user-dropdown-menu a:focus,
+        .navmenu .user-dropdown-menu button {
+            display: flex !important;
+            align-items: center !important;
+            font-size: 14px !important;
+            padding: 9px 12px !important;
+            border-left: none !important;
+            border-radius: 8px !important;
+            justify-content: flex-start !important;
+            gap: 8px !important;
+            font-weight: 500 !important;
+            background: transparent !important;
+        }
+        .navmenu .user-dropdown-menu a,
+        .navmenu .user-dropdown-menu a:focus {
+            color: #444 !important;
+        }
+        .navmenu .user-dropdown-menu a:hover,
+        .navmenu .user-dropdown-menu button:hover {
+            background: rgba(51,86,66,0.06) !important;
+        }
+        .navmenu .user-dropdown-menu a:hover {
+            color: var(--accent-color) !important;
+        }
+        .navmenu .user-dropdown-menu .text-muted {
+            word-break: break-all !important;
+            font-size: 11px !important;
+        }
+
+        /* CMS login link */
+        .navmenu li.nav-cms-item > a {
+            justify-content: flex-start !important;
+            gap: 10px !important;
+            color: var(--accent-color) !important;
+        }
+    }

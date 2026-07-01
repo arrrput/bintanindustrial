@@ -1,0 +1,397 @@
+/* =============================================== */
+/* BINTAN MAIN PAGE HERO */
+/* =============================================== */
+.bintan {
+    width: 100%;
+    height: 50vh;
+    /* Menggunakan 100vh agar memenuhi satu layar penuh */
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Efek Parallax: background-attachment: fixed membuat gambar diam saat scroll */
+    background: linear-gradient(rgba(0, 0, 0, 0.428), rgba(0, 0, 0, 0.428)), url("../img/Bintan/bintan.jpg") no-repeat center center fixed;
+    background-size: cover;
+
+    /* Memastikan teks tetap berada di atas */
+    z-index: 1;
+}
+
+.why-bintan {
+    position: relative;
+    background-color: #ffffff;
+    /* Wajib solid agar menutupi gambar saat scroll */
+    z-index: 1;
+    /* Harus lebih tinggi dari gambar Bintan */
+    box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.1);
+    /* Efek bayangan saat section naik */
+}
+
+.bintan .container {
+    text-align: center;
+}
+
+.bintan h2 {
+    color: #ffffff;
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+@media (max-width: 768px) {
+    .bintan h2 {
+        font-size: 2.2rem;
+    }
+}
+
+/* =============================================== */
+/* MODULAR IMAGE SLIDER CONTAINER */
+/* =============================================== */
+
+/* Pembungkus luar slider - overflow visible agar tombol tidak terpotong */
+.bintan-slider-outer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1100px;
+    /* Diperlebar dari 1000px */
+    margin: 0 auto;
+    padding: 0 90px;
+    /* Ditambah agar tombol semakin jauh dari gambar */
+}
+
+/* Base style untuk slider track - beri space di bawah untuk titik bulat */
+.bintan-img-slider {
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 70px !important;
+    /* WAJIB ADA: Ini adalah area tempat titik berada */
+    overflow: hidden;
+    position: relative;
+}
+
+/* DIMENSI BARU LAPTOP/DESKTOP (Rasio 2048 x 1448 diperbesar agar sangat jelas) */
+.bintan-img-slider .swiper-slide {
+    width: 570px;
+    height: 404px;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+/* KUNCI ANTI-TERPOTONG: Memaksa infografis tampil utuh 100% */
+.bintan-img-slider .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain !important;
+    /* Menjamin info teks peta tidak ter-crop */
+    background-color: #f8f9fa;
+    /* Background netral jika rasio layar sedikit melar */
+    transform: scale(0.9);
+    opacity: 0.35;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.bintan-img-slider .swiper-slide-active img {
+    transform: scale(1.02);
+    opacity: 1;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+}
+
+/* Memastikan wadah link preview merentang penuh */
+.bintan-img-slider .swiper-slide a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: zoom-in;
+    /* Mengubah kursor menjadi logo kaca pembesar */
+}
+
+/* POSISI TOMBOL STRATEGIS DI SAMPING KANAN-KIRI GAMBAR */
+.bintan-prev,
+.bintan-next {
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    /* Ukuran tombol diperkecil (sebelumnya 3.2rem) */
+    color: var(--accent-color);
+    cursor: pointer;
+    z-index: 15;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.bintan-prev {
+    left: 20px;
+}
+
+.bintan-next {
+    right: 20px;
+}
+
+/* MENGHILANGKAN TOMBOL SAAT SLIDE MENTOK (AWAL/AKHIR) */
+.bintan-prev.swiper-button-disabled,
+.bintan-next.swiper-button-disabled {
+    opacity: 0 !important;
+    visibility: hidden;
+    pointer-events: none;
+    /* Mencegah tombol masih bisa diklik saat tersembunyi */
+}
+
+.bintan-prev:hover,
+.bintan-next:hover {
+    color: #48735b;
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* MENCEGAH MUNCULNYA GARIS KETIK / BLOK BIRU SAAT KLIK TOMBOL */
+.bintan-slider-outer,
+.bintan-prev,
+.bintan-next,
+.bintan-pagination {
+    user-select: none;
+    -webkit-user-select: none;
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent;
+    /* Menghilangkan efek kotak biru di HP */
+}
+
+/* STYLE TITIK BULAT PAGINATION (SWIPER DOTS) */
+.bintan-pagination {
+    bottom: 0px !important;
+    /* Tarik paksa ke batas paling bawah kontainer slider */
+    margin-top: 20px;
+}
+
+.bintan-pagination .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background: #cccccc;
+    opacity: 0.7;
+    margin: 0 6px !important;
+    transition: all 0.3s ease;
+}
+
+.bintan-pagination .swiper-pagination-bullet-active {
+    background: var(--accent-color) !important;
+    width: 30px;
+    border-radius: 6px;
+    opacity: 1;
+}
+
+/* =============================================== */
+/* DESKRIPSI DENGAN FADE DOWN LINEAR */
+/* =============================================== */
+
+.bintan-desc-container {
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    min-height: 250px;
+}
+
+/* INI KUNCI UTAMANYA: Menyembunyikan semua teks secara default */
+.bintan-desc-item {
+    display: none;
+    opacity: 0;
+}
+
+/* Hanya teks dengan class 'active' yang akan ditampilkan dengan animasi */
+.bintan-desc-item.active {
+    display: block;
+    animation: fadeDownLinear 0.4s linear forwards;
+}
+
+@keyframes fadeDownLinear {
+    from {
+        opacity: 0;
+        transform: translateY(-25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tipografi Konten Teks */
+.bintan-desc-item h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+}
+
+.bintan-desc-item p {
+    font-size: 1.05rem;
+    color: #555555;
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+.info-list {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.info-list li {
+    font-size: 1.02rem;
+    color: #555555;
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+/* =============================================== */
+/* RESPONSIVITAS KHUSUS TABLET (TAB) DAN HP */
+/* =============================================== */
+
+/* DIMENSI UNTUK TABLET (Garis & Info Tetap Lebar & Terbaca Jelas) */
+@media (max-width: 991px) {
+    .bintan-slider-outer {
+        padding: 0 50px;
+    }
+
+    .bintan-img-slider .swiper-slide {
+        width: 580px;
+        height: 410px;
+    }
+
+    .bintan-prev,
+    .bintan-next {
+        font-size: 2rem;
+    }
+}
+
+/* DIMENSI UNTUK PONSEL/HP */
+@media (max-width: 768px) {
+    .bintan-slider-outer {
+        padding: 0 5px;
+    }
+
+    /* Di HP ukuran mengikuti 88% lebar layar, tinggi otomatis menyesuaikan rasio peta */
+    .bintan-img-slider .swiper-slide {
+        width: 77vw;
+        height: calc(77vw * 1448 / 2048);
+    }
+
+    .bintan-prev,
+    .bintan-next {
+        font-size: 1.5rem;
+        background: trasparent;
+        border-radius: 50%;
+        box-shadow: none;
+    }
+
+    .bintan-prev {
+        left: 0px;
+    }
+
+    .bintan-next {
+        right: 0px;
+    }
+}
+
+/* =============================================== */
+/* PAGE HERO (Efek Paralaks) */
+/* =============================================== */
+.page-hero {
+    width: 100%;
+    height: 50vh;
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 0;
+}
+
+/* Overlay agar teks "Our Estate" terbaca jelas */
+.page-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.page-hero h2 {
+    position: relative;
+    z-index: 2;
+    color: #ffffff;
+    font-size: 4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Bagian konten agar menutupi hero saat di-scroll */
+.page-content {
+    position: relative;
+    background-color: #ffffff;
+    z-index: 2;
+    padding: 80px 0;
+}
+
+/* Meniru style dari .bintan agar tampilannya identik */
+.bie {
+    width: 100%;
+    min-height: 50vh;
+    position: relative;
+    padding: 60px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* PENGGABUNGAN: Background dengan overlay + Paralaks */
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+        url("../img/Bintan/bie.jpg") no-repeat center center fixed;
+    background-size: cover;
+
+    /* Agar tidak bergeser saat di-scroll */
+    background-attachment: fixed;
+}
+
+.bie .container {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* Pastikan class ini sudah ada sesuai diskusi sebelumnya */
+.section-title-custom {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+.card {
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.text-primary {
+    color: var(--accent-color) !important;
+}
+
+.section {
+    padding: 60px 0;
+}

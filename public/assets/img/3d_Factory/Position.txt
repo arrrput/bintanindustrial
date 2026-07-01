@@ -1,0 +1,49 @@
+Type A
+
+Posisi Awal
+Pos: 0,0,0
+Rot: 0.00,0.00,0.00
+Scale: 1
+Cam: -37.00,2.00,0.00
+
+
+Posisi Akhir
+Pos: 0,0,0
+Rot: 0.00,0.00,0.00
+Scale: 1
+Cam: -20.00,10.00,35.00
+
+
+
+Type B
+
+Posisi Awal
+Pos: 0,0,0
+Rot: 0.00,0.00,0.00
+Scale: 1
+Cam: 80.00,12.00,0.00
+
+Posisi Akhir
+Pos: 0,0,0
+Rot: 0.00,0.00,0.00
+Scale: 1
+Cam: 30.00,30.00,70.00
+
+
+
+Type C
+
+Posisi Awal
+Pos: 0,0,0
+Rot: 0.00,0.00,0.00
+Scale: 1
+Cam: 0.00,0.00,70.00
+
+
+Posisi Akhir
+Pos: 0,0,0
+Rot: 0.00,0.00,0.00
+Scale: 1
+Cam: -49.00,21.00,50.00
+
+

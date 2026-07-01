@@ -1,0 +1,43 @@
+Contact Information section
+
+Resume/CV Isertion
+First Name, Last Name, Middlename (Optional)
+Title (Dr., Miss, Mr., Mrs., Ms.)
+Email address
+phone number
+LinkedIn profile
+
+Address section
+
+Country (automated by regional code on phone number)
+Postal Code
+Address Line
+City
+Regency
+Province
+
+Education Section
+
+Degree, use drop down(High School diploma,Diploma 1, Diploma 2 Associate Degree (D3), Bachelor (S1/D4), Master's Degree, Doctoral Degree )
+Major
+School name
+Start Date and End Date(Acquired/expected)
+Country
+
+Experience Section 
+
+Job Title
+Start Date, End Date
+Company Name
+Company City
+Type Of Business
+Job desc
+Reason Of Leaving
+
+License and Certification
+
+Name License Or Certificate
+Issued by
+Issued Date
+Expiration Date
+Comments

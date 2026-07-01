@@ -1,0 +1,85 @@
+    /* Custom Select Styling */
+    .filter-select-wrapper {
+        position: relative;
+    }
+    .filter-select-wrapper::after {
+        content: "\F282"; /* Bootstrap Icon Chevron Down */
+        font-family: "bootstrap-icons";
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        transition: transform 0.3s ease;
+        color: #198754;
+        font-weight: bold;
+    }
+    .filter-select-wrapper:hover::after {
+        transform: translateY(-50%) rotate(180deg);
+    }
+    .form-select-custom {
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: none !important; /* Remove Bootstrap's default arrow */
+        padding-right: 40px !important;
+    }
+    .form-control-custom:focus, .form-select-custom:focus {
+        border-color: #198754;
+        box-shadow: 0 0 10px rgba(25, 135, 84, 0.2);
+    }
+    .form-control-custom:hover, .form-select-custom:hover, .filter-select-wrapper:hover .form-select-custom {
+        border-color: #198754;
+        box-shadow: 0 0 8px rgba(25, 135, 84, 0.15);
+    }
+
+    /* Unified Search Glow */
+    .input-group-custom {
+        transition: all 0.3s ease;
+        border-radius: 50px;
+        overflow: hidden;
+        border: 1px solid #dee2e6;
+    }
+    .input-group-custom:hover, .input-group-custom:focus-within {
+        border-color: #198754;
+        box-shadow: 0 0 10px rgba(25, 135, 84, 0.2);
+    }
+    .input-group-custom .form-control {
+        border: none !important;
+        box-shadow: none !important;
+    }
+    .input-group-custom .input-group-text {
+        border: none !important;
+        background: white !important;
+    }
+
+    /* Modern Pagination Styling */
+    #pagination-links .pagination {
+        gap: 5px;
+    }
+    #pagination-links .page-item .page-link {
+        border-radius: 50% !important;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #555;
+        border: 1px solid #eee;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    #pagination-links .page-item.active .page-link {
+        background-color: #198754;
+        border-color: #198754;
+        color: white;
+        box-shadow: 0 4px 10px rgba(25, 135, 84, 0.3);
+    }
+    #pagination-links .page-item .page-link:hover:not(.active) {
+        background-color: #f8f9fa;
+        border-color: #198754;
+        color: #198754;
+    }
+    #pagination-links .page-item.disabled .page-link {
+        background-color: #fcfcfc;
+        color: #ccc;
+    }

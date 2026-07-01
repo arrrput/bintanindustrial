@@ -1,0 +1,95 @@
+        /* Base / Desktop Improvements */
+        .horizontal-scroll-content {
+            display: flex !important;
+            align-items: stretch !important; /* This ensures all items have the same height */
+            padding-top: 40px !important; /* More space for hover effect */
+            padding-bottom: 60px !important;
+        }
+        .testimonial-horizontal-item {
+            display: flex;
+        }
+        .testimonial-item {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .testimonial-item .row {
+            flex: 1;
+            margin: 0;
+            display: flex;
+        }
+        .testimonial-item .col-4 {
+            padding: 0 !important;
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .testimonial-item .col-4 img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        @media (max-width: 991px) {
+            .horizontal-scroll-content {
+                display: grid !important;
+                grid-template-rows: repeat(2, 1fr);
+                grid-auto-flow: column;
+                grid-auto-columns: min-content;
+                width: max-content !important;
+                padding-top: 20px !important;
+                padding-bottom: 40px !important;
+                padding-left: 20px !important;
+                gap: 15px; /* Space between cards */
+            }
+            .testimonial-horizontal-item {
+                width: 85vw !important;
+                max-width: 320px;
+                margin-right: 0 !important;
+                margin-bottom: 0 !important;
+            }
+            .testimonial-item {
+                display: flex;
+                flex-direction: column;
+                height: 100% !important;
+            }
+            .testimonial-item .row {
+                flex: 1;
+                margin: 0;
+                display: flex;
+            }
+            .testimonial-item .col-4 {
+                width: 30% !important;
+                padding: 0 !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+            }
+            .testimonial-item .col-4 img {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: cover;
+                object-position: center;
+            }
+            .testimonial-item .col-8 {
+                width: 70% !important;
+                padding: 12px !important;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .testimonial-item p {
+                font-size: 12px !important;
+                line-height: 1.3 !important;
+                margin-bottom: 8px !important;
+            }
+            .testimonial-item h3 {
+                font-size: 13px !important;
+            }
+            .testimonial-item h4 {
+                font-size: 10px !important;
+            }
+        }

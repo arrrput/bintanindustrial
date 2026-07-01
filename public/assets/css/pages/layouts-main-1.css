@@ -1,0 +1,32 @@
+    /* Instant Video Preloader Styles */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      overflow: hidden;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #preloader video {
+      width: 848px;
+      max-width: 65%;
+      height: auto;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    @media (min-width: 576px) {
+      #preloader video { max-width: 45%; }
+    }
+    @media (min-width: 992px) {
+      #preloader video { max-width: 28%; }
+    }
+    #preloader.video-ready video {
+      opacity: 1;
+    }
+    .preloader-hidden {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transition: all 0.6s ease-out !important;
+    }

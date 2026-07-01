@@ -1,0 +1,48 @@
+    /* Custom Select Styling for Applicant Filter */
+    .applicant-filter-wrapper {
+        position: relative;
+        min-width: 250px;
+    }
+    .applicant-filter-wrapper::after {
+        content: "\F282"; /* Bootstrap Icon Chevron Down */
+        font-family: "bootstrap-icons";
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        transition: transform 0.3s ease;
+        color: #198754;
+        font-weight: bold;
+    }
+    .applicant-filter-wrapper:hover::after {
+        transform: translateY(-50%) rotate(180deg);
+    }
+    .form-select-applicant {
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: none !important;
+        padding-right: 45px !important;
+        border: 1px solid #eee !important;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05) !important;
+        cursor: pointer;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    .form-select-applicant:focus {
+        border-color: #198754 !important;
+        box-shadow: 0 5px 20px rgba(25, 135, 84, 0.15) !important;
+    }
+    .section-divider {
+        height: 1px;
+        background: linear-gradient(to right, transparent, #eee, transparent);
+        margin: 40px 0;
+    }
+    .history-card {
+        opacity: 0.85;
+        transition: 0.3s;
+    }
+    .history-card:hover {
+        opacity: 1;
+    }

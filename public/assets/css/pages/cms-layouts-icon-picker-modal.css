@@ -1,0 +1,5 @@
+    .icon-option:hover {
+        background: var(--accent-color);
+        color: white;
+        border-color: var(--accent-color);
+    }
