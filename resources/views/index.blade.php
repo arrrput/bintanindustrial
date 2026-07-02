@@ -34,7 +34,7 @@
                             <p>One Location For Global Markets</p>
                             <div class="d-flex mt-4">
                                 <a href="#factype" class="btn-get-started">Explore us</a>
-                                <a href="{{ route('vr360') }}" target="_blank" class="btn-get-started ms-3"
+                                <a href="{{ asset('vr360/index.html') }}" target="_blank" class="btn-get-started ms-3"
                                     style="background: rgba(255,255,255,0.2) !important; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3) !important;">360
                                     View</a>
                             </div>
