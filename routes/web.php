@@ -18,6 +18,14 @@ Route::get('/', [Controller::class, 'index'])->name('home');
 
 Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact.submit');
 
+Route::get('/vr360/', function () {
+    $path = public_path('vr360/index.htm');
+    abort_if(!file_exists($path), 404);
+    return response(file_get_contents($path), 200, [
+        'Content-Type' => 'text/html; charset=UTF-8',
+    ]);
+})->name('vr360');
+
 Route::get('/blog/{slug}', [BlogController::class, 'show']);
 
 // ======================================================= //
@@ -36,7 +44,7 @@ Route::prefix('cms')->name('cms.')->middleware(['auth', 'role:HRGA|BDD|CRS|IT'])
     Route::get('/', function () {
         return view('cms.dashboard');
     })->name('dashboard');
-    
+
     Route::resource('careers', CareerController::class)->middleware('role:HRGA|BDD|CRS|IT');
     Route::get('applicants', [\App\Http\Controllers\Admin\ApplicantCmsController::class, 'index'])->name('applicants.index')->middleware('role:HRGA|BDD|CRS|IT');
     Route::get('applicants/{applicant}', [\App\Http\Controllers\Admin\ApplicantCmsController::class, 'show'])->name('applicants.show')->middleware('role:HRGA|BDD|CRS|IT');
@@ -48,7 +56,7 @@ Route::prefix('cms')->name('cms.')->middleware(['auth', 'role:HRGA|BDD|CRS|IT'])
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->middleware('role:IT');
     Route::get('logs', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])->name('logs.index')->middleware('role:IT');
     Route::post('section-settings', [SectionSettingController::class, 'update'])->name('section-settings.update');
-    
+
     // Unified Home Management
     Route::get('home', [HomeCmsController::class, 'index'])->name('home.index')->middleware('role:BDD|CRS|IT');
     Route::resource('testimonials', TestimonialController::class)->except(['index'])->middleware('role:BDD|CRS|IT');
@@ -56,7 +64,6 @@ Route::prefix('cms')->name('cms.')->middleware(['auth', 'role:HRGA|BDD|CRS|IT'])
 
     // Unified BIE Page Management
     Route::get('bie-page', [\App\Http\Controllers\Admin\BieUnifiedCmsController::class, 'index'])->name('bie-page.index')->middleware('role:BDD|CRS|IT');
-
 });
 
 
