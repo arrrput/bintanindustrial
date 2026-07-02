@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -19,9 +20,9 @@ class UserSeeder extends Seeder
         }
 
         // 2. Berikan Role ke User (pastikan user sudah ada)
-        $user = User::where('email', 'admin@bintanindustrial.com')->first();
-        if($user) {
-            $user->assignRole('IT');
+        $user = User::where('email', 'admin@bintanindustrial.co.id')->first();
+        if ($user) {
+            $user->syncRoles(['IT']);
         }
     }
 }
