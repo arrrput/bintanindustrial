@@ -18,6 +18,14 @@ Route::get('/', [Controller::class, 'index'])->name('home');
 
 Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact.submit');
 
+Route::get('/vr360/', function () {
+    $path = public_path('vr360/index.htm');
+    abort_if(!file_exists($path), 404);
+    return response(file_get_contents($path), 200, [
+        'Content-Type' => 'text/html; charset=UTF-8',
+    ]);
+})->name('vr360');
+
 Route::get('/blog/{slug}', [BlogController::class, 'show']);
 
 // ======================================================= //
