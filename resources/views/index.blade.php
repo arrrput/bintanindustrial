@@ -34,7 +34,7 @@
                             <p>One Location For Global Markets</p>
                             <div class="d-flex mt-4">
                                 <a href="#factype" class="btn-get-started">Explore us</a>
-                                <a href="https://adyajudha.github.io/bie-vr360/" target="_blank"
+                                <a href="https://adyajudha.github.io/vr360-bintanindustrial/" target="_blank"
                                     class="btn-get-started ms-3"
                                     style="background: rgba(255,255,255,0.2) !important; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3) !important;">360
                                     View</a>
