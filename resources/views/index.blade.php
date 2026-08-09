@@ -108,11 +108,13 @@
 
 
     <section id="factype" class="featured-services section">
+        {{-- Ornamen background dinonaktifkan
         <div class="ornament-wrapper">
             <i class="fa-solid fa-city floating-ornament" style="top: 20%; left: 3%; animation-duration: 25s;"></i>
             <i class="fa-solid fa-gears floating-ornament"
                 style="top: 5%; left: 80%; animation-duration: 20s; animation-delay: -2s;"></i>
         </div>
+        --}}
         <div class="container section-title" data-aos="fade-up">
             <h2>Industrial Solutions</h2>
             <p>Explore Our <span>Factory Types</span></p>
