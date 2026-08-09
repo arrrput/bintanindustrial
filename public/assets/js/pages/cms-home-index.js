@@ -5,6 +5,135 @@
             setTimeout(() => { toast.classList.remove('show'); }, 3000);
         }
 
+        const pageCsrf = document.querySelector('input[name="_token"]')?.value;
+
+        // Generic bulk-delete wiring: select-all + per-item checkboxes + a bulk button.
+        function setupBulkDelete(opts) {
+            const container = document.getElementById(opts.containerId);
+            const bulkBtn = document.getElementById(opts.bulkBtnId);
+            const selectAll = opts.selectAllId ? document.getElementById(opts.selectAllId) : null;
+            const countEl = opts.countId ? document.getElementById(opts.countId) : null;
+            if (!container || !bulkBtn) return null;
+
+            const checks = () => Array.from(container.querySelectorAll('.' + opts.checkClass));
+            const selected = () => checks().filter(c => c.checked);
+
+            function refresh() {
+                const all = checks();
+                const n = selected().length;
+                if (countEl) countEl.textContent = n;
+                bulkBtn.classList.toggle('d-none', n === 0);
+                if (selectAll) {
+                    selectAll.checked = all.length > 0 && n === all.length;
+                    selectAll.indeterminate = n > 0 && n < all.length;
+                }
+            }
+
+            container.addEventListener('change', (e) => {
+                if (e.target.classList && e.target.classList.contains(opts.checkClass)) refresh();
+            });
+
+            if (selectAll) {
+                selectAll.addEventListener('change', () => {
+                    checks().forEach(c => { c.checked = selectAll.checked; });
+                    refresh();
+                });
+            }
+
+            bulkBtn.addEventListener('click', async () => {
+                const ids = selected().map(c => c.value);
+                if (ids.length === 0) return;
+
+                const confirmRes = await Swal.fire({
+                    title: opts.confirmTitle,
+                    html: `This will permanently delete <b>${ids.length}</b> item(s).`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete',
+                    confirmButtonColor: '#d33',
+                    cancelButtonText: 'Cancel',
+                });
+                if (!confirmRes.isConfirmed) return;
+
+                try {
+                    const res = await fetch(bulkBtn.dataset.url, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': pageCsrf,
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ ids }),
+                    });
+
+                    const data = await res.json().catch(() => ({}));
+                    if (!res.ok) {
+                        const msg = data.message
+                            || (data.errors ? Object.values(data.errors).flat().join('\n') : 'Delete failed.');
+                        throw new Error(msg);
+                    }
+
+                    (data.ids || ids).forEach(id => {
+                        const el = container.querySelector(`[${opts.itemAttr}="${id}"]`);
+                        if (el) el.remove();
+                    });
+
+                    if (selectAll) { selectAll.checked = false; selectAll.indeterminate = false; }
+                    refresh();
+                    if (typeof opts.onEmpty === 'function') opts.onEmpty();
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted',
+                        text: data.message || 'Selected items deleted.',
+                        timer: 1400,
+                        showConfirmButton: false,
+                    });
+                } catch (err) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed',
+                        text: err.message || 'Something went wrong while deleting.',
+                    });
+                }
+            });
+
+            return { refresh };
+        }
+
+        const testimonialBulk = setupBulkDelete({
+            containerId: 'testimonialTableBody',
+            checkClass: 'testimonial-check',
+            selectAllId: 'testimonialSelectAll',
+            bulkBtnId: 'testimonialBulkDelete',
+            countId: 'testimonialSelCount',
+            itemAttr: 'data-testimonial-id',
+            confirmTitle: 'Delete selected testimonials?',
+            onEmpty: () => {
+                const body = document.getElementById('testimonialTableBody');
+                if (body && !body.querySelector('[data-testimonial-id]')) {
+                    body.innerHTML = '<tr><td colspan="6" class="text-center py-5 text-muted">No testimonials found.</td></tr>';
+                }
+            },
+        });
+
+        const tenantBulk = setupBulkDelete({
+            containerId: 'tenantList',
+            checkClass: 'tenant-check',
+            selectAllId: 'tenantSelectAll',
+            bulkBtnId: 'tenantBulkDelete',
+            countId: 'tenantSelCount',
+            itemAttr: 'data-tenant-id',
+            confirmTitle: 'Delete selected logos?',
+            onEmpty: () => {
+                const list = document.getElementById('tenantList');
+                if (list && !list.querySelector('[data-tenant-id]')) {
+                    list.innerHTML = '<div class="col-12 text-center py-4 text-muted small" id="tenantEmpty">No tenant logos uploaded yet.</div>';
+                    document.getElementById('tenantBulkBar')?.classList.add('d-none');
+                }
+            },
+        });
+
         // Delete a testimonial without reloading (SweetAlert confirm + AJAX),
         // so it stays consistent with the tenant-logo flow.
         const testimonialBody = document.getElementById('testimonialTableBody');
@@ -39,9 +168,10 @@
 
                     const row = delForm.closest('[data-testimonial-id]');
                     if (row) row.remove();
+                    testimonialBulk?.refresh();
 
                     if (!testimonialBody.querySelector('[data-testimonial-id]')) {
-                        testimonialBody.innerHTML = '<tr><td colspan="5" class="text-center py-5 text-muted">No testimonials found.</td></tr>';
+                        testimonialBody.innerHTML = '<tr><td colspan="6" class="text-center py-5 text-muted">No testimonials found.</td></tr>';
                     }
 
                     Swal.fire({
@@ -75,6 +205,8 @@
         const COMPRESS_QUALITY = 0.6;              // 60% quality
         const MAX_DIMENSION = 1000;                // cap the longest side (px) to keep logos light
         const MAX_ORIGINAL_SIZE = 2 * 1024 * 1024; // 2MB — only files above this get compressed
+        const MAX_LOGOS = 2;                       // must match the server-side 'max:2' rule
+        const BATCH_SIZE_LIMIT = 6 * 1024 * 1024;  // keep each request safely under PHP post_max_size (8M)
 
         // Staged files waiting to be uploaded: [{ file, url }]
         let staged = [];
@@ -127,10 +259,32 @@
             }
         }
 
-        // Add newly selected/pasted images to the staging list.
+        // Add newly selected/pasted images to the staging list, capped at MAX_LOGOS.
         function addFiles(files) {
             const imageFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
-            imageFiles.forEach(file => {
+            if (imageFiles.length === 0) return;
+
+            const remaining = MAX_LOGOS - staged.length;
+            if (remaining <= 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Upload limit reached',
+                    text: `You can upload a maximum of ${MAX_LOGOS} logos at a time. Please upload or remove some before adding more.`,
+                });
+                return;
+            }
+
+            let toAdd = imageFiles;
+            if (imageFiles.length > remaining) {
+                toAdd = imageFiles.slice(0, remaining);
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Too many logos',
+                    text: `You can upload a maximum of ${MAX_LOGOS} logos at a time. Only the first ${remaining} were added; ${imageFiles.length - remaining} were skipped.`,
+                });
+            }
+
+            toAdd.forEach(file => {
                 staged.push({ file, url: URL.createObjectURL(file) });
             });
             renderPreview();
@@ -173,41 +327,85 @@
         async function uploadStaged() {
             if (staged.length === 0) return;
 
+            if (staged.length > MAX_LOGOS) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Too many logos',
+                    text: `You can upload a maximum of ${MAX_LOGOS} logos at a time. You currently have ${staged.length} staged — please remove ${staged.length - MAX_LOGOS}.`,
+                });
+                return;
+            }
+
             Swal.fire({
                 title: 'Uploading...',
-                html: `Processing and uploading ${staged.length} logo(s)`,
+                html: 'Preparing logos…',
                 allowOutsideClick: false,
                 didOpen: () => Swal.showLoading(),
             });
 
+            const setProgress = (text) => {
+                const el = Swal.getHtmlContainer();
+                if (el) el.textContent = text;
+            };
+
             try {
-                const formData = new FormData();
+                // 1) Prepare all files (compress only those over 2MB).
+                const prepared = [];
                 for (const item of staged) {
-                    const prepared = await prepareFile(item.file);
-                    formData.append('logos[]', prepared, prepared.name || 'pasted-logo.png');
+                    prepared.push(await prepareFile(item.file));
                 }
 
-                const res = await fetch(uploadUrl, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken,
-                        'Accept': 'application/json',
-                    },
-                    body: formData,
-                });
+                // 2) Group into size-bounded batches so no single request exceeds post_max_size.
+                const batches = [];
+                let current = [];
+                let currentSize = 0;
+                for (const file of prepared) {
+                    if (current.length && currentSize + file.size > BATCH_SIZE_LIMIT) {
+                        batches.push(current);
+                        current = [];
+                        currentSize = 0;
+                    }
+                    current.push(file);
+                    currentSize += file.size;
+                }
+                if (current.length) batches.push(current);
 
-                const data = await res.json().catch(() => ({}));
+                // 3) Upload each batch sequentially.
+                let uploaded = 0;
+                for (const batch of batches) {
+                    setProgress(`Uploading ${uploaded + batch.length} of ${prepared.length} logo(s)…`);
 
-                if (!res.ok) {
-                    const msg = data.message
-                        || (data.errors ? Object.values(data.errors).flat().join('\n') : 'Upload failed.');
-                    throw new Error(msg);
+                    const formData = new FormData();
+                    batch.forEach(file => formData.append('logos[]', file, file.name || 'pasted-logo.png'));
+
+                    const res = await fetch(uploadUrl, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json',
+                        },
+                        body: formData,
+                    });
+
+                    if (res.status === 413) {
+                        throw new Error(uploaded > 0
+                            ? `${uploaded} logo(s) uploaded, but a later batch was too large for the server. Try smaller images.`
+                            : 'A logo is too large for the server. Try a smaller image.');
+                    }
+
+                    const data = await res.json().catch(() => ({}));
+                    if (!res.ok) {
+                        const msg = data.message
+                            || (data.errors ? Object.values(data.errors).flat().join('\n') : 'Upload failed.');
+                        throw new Error(uploaded > 0 ? `${uploaded} logo(s) uploaded, then it failed: ${msg}` : msg);
+                    }
+                    uploaded += batch.length;
                 }
 
                 await Swal.fire({
                     icon: 'success',
                     title: 'Success!',
-                    text: data.message || 'Tenant logos uploaded successfully!',
+                    text: `${uploaded} tenant logo(s) uploaded successfully!`,
                     timer: 1600,
                     showConfirmButton: false,
                 });
@@ -288,9 +486,11 @@
 
                     const col = delForm.closest('[data-tenant-id]');
                     if (col) col.remove();
+                    tenantBulk?.refresh();
 
                     if (!tenantList.querySelector('[data-tenant-id]')) {
                         tenantList.innerHTML = '<div class="col-12 text-center py-4 text-muted small" id="tenantEmpty">No tenant logos uploaded yet.</div>';
+                        document.getElementById('tenantBulkBar')?.classList.add('d-none');
                     }
 
                     Swal.fire({

@@ -93,6 +93,35 @@ class TestimonialController extends Controller
         return redirect()->route('cms.home.index')->with('success', $message);
     }
 
+    public function bulkDestroy(Request $request)
+    {
+        $validated = $request->validate([
+            'ids'   => 'required|array',
+            'ids.*' => 'integer|exists:testimonials,id',
+        ]);
+
+        $items = Testimonial::whereIn('id', $validated['ids'])->get();
+        $ids   = $items->pluck('id')->all();
+
+        foreach ($items as $item) {
+            if ($item->photo) {
+                Storage::disk('public')->delete($item->photo);
+            }
+            $item->delete();
+        }
+
+        $count = count($ids);
+        LogHelper::log('DELETE', 'Testimonials', "Bulk deleted {$count} testimonials.");
+
+        $message = "{$count} testimonial(s) deleted successfully!";
+
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true, 'message' => $message, 'ids' => $ids]);
+        }
+
+        return back()->with('success', $message);
+    }
+
     public function destroy(Testimonial $testimonial)
     {
         $name = $testimonial->name;

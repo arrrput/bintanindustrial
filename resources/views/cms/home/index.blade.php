@@ -36,9 +36,14 @@
             </h2>
             <p class="text-muted small mb-0 mt-1">Manage feedback and ratings displayed on the home page.</p>
         </div>
-        <a href="{{ route('cms.testimonials.create') }}" class="btn btn-primary rounded-pill px-4 shadow-sm fw-bold">
-            <i class="fa-solid fa-plus me-2"></i> Add Testimonial
-        </a>
+        <div class="d-flex gap-2">
+            <button type="button" id="testimonialBulkDelete" data-url="{{ route('cms.testimonials.bulk-destroy') }}" class="btn btn-danger rounded-pill px-4 shadow-sm fw-bold d-none">
+                <i class="fa-solid fa-trash me-2"></i> Delete Selected (<span id="testimonialSelCount">0</span>)
+            </button>
+            <a href="{{ route('cms.testimonials.create') }}" class="btn btn-primary rounded-pill px-4 shadow-sm fw-bold">
+                <i class="fa-solid fa-plus me-2"></i> Add Testimonial
+            </a>
+        </div>
     </div>
 
     <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
@@ -47,7 +52,10 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead class="bg-light text-muted" style="font-size: 0.85rem; letter-spacing: 1px;">
                         <tr>
-                            <th class="ps-4 py-3 text-uppercase" style="width: 100px;">Photo</th>
+                            <th class="ps-4 py-3" style="width: 40px;">
+                                <input type="checkbox" class="form-check-input" id="testimonialSelectAll">
+                            </th>
+                            <th class="py-3 text-uppercase" style="width: 100px;">Photo</th>
                             <th class="py-3 text-uppercase">Name & Position</th>
                             <th class="py-3 text-uppercase text-center">Stars</th>
                             <th class="py-3 text-uppercase d-none d-md-table-cell">Comment</th>
@@ -58,6 +66,9 @@
                         @forelse($testimonials as $t)
                         <tr data-testimonial-id="{{ $t->id }}">
                             <td class="ps-4 py-3">
+                                <input type="checkbox" class="form-check-input testimonial-check" value="{{ $t->id }}">
+                            </td>
+                            <td class="py-3">
                                 @if($t->photo)
                                     <img src="{{ asset('storage/' . $t->photo) }}" class="rounded-circle shadow-sm" style="width: 50px; height: 50px; object-fit: cover;">
                                 @else
@@ -94,7 +105,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5" class="text-center py-5 text-muted">No testimonials found.</td>
+                            <td colspan="6" class="text-center py-5 text-muted">No testimonials found.</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -133,12 +144,27 @@
                 <button type="button" id="tenantClearBtn" class="btn btn-link text-muted text-decoration-none ms-2">Clear</button>
             </div>
 
+            @if($tenants->count() > 0)
+            <div class="d-flex justify-content-between align-items-center mb-3 text-start" id="tenantBulkBar">
+                <div class="form-check mb-0">
+                    <input type="checkbox" class="form-check-input" id="tenantSelectAll">
+                    <label class="form-check-label small text-muted" for="tenantSelectAll">Select all</label>
+                </div>
+                <button type="button" id="tenantBulkDelete" data-url="{{ route('cms.tenants.bulk-destroy') }}" class="btn btn-danger btn-sm rounded-pill px-3 fw-bold d-none">
+                    <i class="fa-solid fa-trash me-2"></i> Delete Selected (<span id="tenantSelCount">0</span>)
+                </button>
+            </div>
+            @endif
+
             <div class="row g-4 text-start" id="tenantList">
                 @forelse($tenants as $t)
                 <div class="col-6 col-md-4 col-lg-2" data-tenant-id="{{ $t->id }}">
                     <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative group" style="background: #f8f9fa;">
                         <div class="p-3 d-flex align-items-center justify-content-center" style="height: 100px;">
                             <img src="{{ asset('storage/' . $t->logo) }}" class="img-fluid" style="max-height: 60px; object-fit: contain;">
+                        </div>
+                        <div class="position-absolute top-0 start-0 p-2">
+                            <input type="checkbox" class="form-check-input tenant-check" value="{{ $t->id }}" style="width:18px;height:18px;cursor:pointer;">
                         </div>
                         <div class="position-absolute top-0 end-0 p-2">
                             <form action="{{ route('cms.tenants.destroy', $t->id) }}" method="POST" class="js-delete-tenant">

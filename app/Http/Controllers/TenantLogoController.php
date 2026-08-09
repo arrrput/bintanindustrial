@@ -17,7 +17,7 @@ class TenantLogoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'logos'   => 'required|array|max:20',
+            'logos'   => 'required|array|max:2',
             'logos.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
@@ -37,6 +37,33 @@ class TenantLogoController extends Controller
 
         if ($request->wantsJson()) {
             return response()->json(['success' => true, 'message' => $message]);
+        }
+
+        return back()->with('success', $message);
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $validated = $request->validate([
+            'ids'   => 'required|array',
+            'ids.*' => 'integer|exists:tenant_logos,id',
+        ]);
+
+        $logos = TenantLogo::whereIn('id', $validated['ids'])->get();
+        $ids   = $logos->pluck('id')->all();
+
+        foreach ($logos as $logo) {
+            Storage::disk('public')->delete($logo->logo);
+            $logo->delete();
+        }
+
+        $count = count($ids);
+        LogHelper::log('DELETE', 'Tenant Logos', "Bulk deleted {$count} tenant logos.");
+
+        $message = "{$count} tenant logo(s) deleted successfully!";
+
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true, 'message' => $message, 'ids' => $ids]);
         }
 
         return back()->with('success', $message);

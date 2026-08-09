@@ -51,6 +51,8 @@ Route::prefix('cms')->name('cms.')->middleware(['auth', 'role:HRGA|BDD|CRS|IT'])
 
     // Unified Home Management
     Route::get('home', [HomeCmsController::class, 'index'])->name('home.index')->middleware('role:BDD|CRS|IT');
+    Route::post('testimonials/bulk-destroy', [TestimonialController::class, 'bulkDestroy'])->name('testimonials.bulk-destroy')->middleware('role:BDD|CRS|IT');
+    Route::post('tenants/bulk-destroy', [TenantLogoController::class, 'bulkDestroy'])->name('tenants.bulk-destroy')->middleware('role:BDD|CRS|IT');
     Route::resource('testimonials', TestimonialController::class)->except(['index'])->middleware('role:BDD|CRS|IT');
     Route::resource('tenants', TenantLogoController::class)->only(['store', 'destroy'])->middleware('role:BDD|CRS|IT');
 
