@@ -524,6 +524,7 @@
                             </div>
                         </div>
 
+                        {{-- Email Us disembunyikan sementara karena email belum tersedia
                         <div class="info-item d-flex mb-4" data-aos="fade-up" data-aos-delay="400">
                             <i class="bi bi-envelope me-3"></i>
                             <div>
@@ -531,6 +532,7 @@
                                 <p class="small text-muted mb-0">Yudha@biie.co.id</p>
                             </div>
                         </div>
+                        --}}
 
                         <div class="rounded-4 overflow-hidden shadow-sm mt-4">
                             <iframe
