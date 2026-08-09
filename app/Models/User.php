@@ -50,7 +50,9 @@ class User extends Authenticatable
      */
     protected static array $allowedPanelDomains = [
         'bintanindustrial.co.id',
+        'bintanindustrial.com',
         'biie.co.id',
+        'biie.com',
     ];
 
     /**
