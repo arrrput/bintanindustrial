@@ -24,7 +24,7 @@
                     <h5 class="mb-0 text-white fw-bold"><i class="fa-solid fa-pen-to-square me-2"></i> Edit Testimonial</h5>
                 </div>
                 <div class="card-body p-4 p-md-5">
-                    <form action="{{ route('cms.testimonials.update', $testimonial->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('cms.testimonials.update', $testimonial->id) }}" method="POST" enctype="multipart/form-data" id="testimonialForm">
                         @csrf
                         @method('PUT')
                         
@@ -62,8 +62,12 @@
                                 <label class="form-label fw-bold text-dark">Change Photo</label>
                                 <div class="p-4 border border-2 border-dashed rounded-3 text-center bg-light mb-2">
                                     <i class="fa-solid fa-cloud-arrow-up fs-1 text-muted mb-2"></i>
-                                    <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror" accept="image/*">
+                                    <input type="file" name="photo" id="testimonialPhotoInput" class="form-control @error('photo') is-invalid @enderror" accept="image/*">
                                 </div>
+                                <p class="text-muted small mb-2">
+                                    <i class="fa-regular fa-clipboard me-1"></i> Tip: you can also press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste an image.
+                                </p>
+                                <div id="testimonialPhotoPreview" class="mb-2"></div>
                                 @if($testimonial->photo)
                                     <div class="d-flex align-items-center gap-3 p-2 border rounded">
                                         <img src="{{ asset('storage/' . $testimonial->photo) }}" class="rounded shadow-sm" style="width: 60px; height: 60px; object-fit: cover;">
@@ -94,3 +98,8 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('assets/js/pages/cms-testimonial-form.js') }}"></script>
+@endpush

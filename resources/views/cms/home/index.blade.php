@@ -54,9 +54,9 @@
                             <th class="pe-4 py-3 text-uppercase text-end">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="testimonialTableBody">
                         @forelse($testimonials as $t)
-                        <tr>
+                        <tr data-testimonial-id="{{ $t->id }}">
                             <td class="ps-4 py-3">
                                 @if($t->photo)
                                     <img src="{{ asset('storage/' . $t->photo) }}" class="rounded-circle shadow-sm" style="width: 50px; height: 50px; object-fit: cover;">
@@ -83,7 +83,7 @@
                                     <a href="{{ route('cms.testimonials.edit', $t->id) }}" class="btn btn-sm btn-light text-primary rounded-circle shadow-sm">
                                         <i class="fa-solid fa-pen"></i>
                                     </a>
-                                    <form action="{{ route('cms.testimonials.destroy', $t->id) }}" method="POST" onsubmit="return confirm('Delete this testimonial?');">
+                                    <form action="{{ route('cms.testimonials.destroy', $t->id) }}" method="POST" class="js-delete-testimonial">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-light text-danger rounded-circle shadow-sm">
                                             <i class="fa-solid fa-trash"></i>
@@ -111,25 +111,37 @@
             </h4>
             <form action="{{ route('cms.tenants.store') }}" method="POST" enctype="multipart/form-data" id="tenantUploadForm">
                 @csrf
-                <div class="p-5 border border-2 border-dashed rounded-4 bg-light mb-4 position-relative d-flex flex-column align-items-center justify-content-center">
+                <div class="p-5 border border-2 border-dashed rounded-4 bg-light mb-2 position-relative d-flex flex-column align-items-center justify-content-center">
                     <i class="fa-solid fa-images fs-1 text-muted mb-3"></i>
                     <p class="mb-3 text-secondary">Click "Browse" or drag and drop tenant logos here</p>
-                    <input type="file" name="logos[]" id="tenantLogosInput" class="form-control position-absolute inset-0 opacity-0 w-100 h-100" style="cursor: pointer; z-index: 2;" multiple onchange="document.getElementById('tenantUploadForm').submit()">
+                    <input type="file" name="logos[]" id="tenantLogosInput" class="form-control position-absolute inset-0 opacity-0 w-100 h-100" style="cursor: pointer; z-index: 2;" accept="image/*" multiple>
                     <button type="button" class="btn btn-outline-success rounded-pill px-4 fw-bold position-relative" style="z-index: 1;">
                         <i class="fa-solid fa-folder-open me-2"></i> Browse Files
                     </button>
                 </div>
+                <p class="text-muted small mb-3">
+                    <i class="fa-regular fa-clipboard me-1"></i> Tip: you can also press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste an image.
+                </p>
             </form>
 
-            <div class="row g-4 text-start">
+            <!-- Staged preview (not yet uploaded) -->
+            <div id="tenantPreview" class="row g-3 text-start mb-3"></div>
+            <div id="tenantSubmitWrap" class="text-center mb-4 d-none">
+                <button type="button" id="tenantUploadBtn" class="btn btn-success rounded-pill px-5 fw-bold shadow-sm">
+                    <i class="fa-solid fa-cloud-arrow-up me-2"></i> Upload <span id="tenantCount"></span>
+                </button>
+                <button type="button" id="tenantClearBtn" class="btn btn-link text-muted text-decoration-none ms-2">Clear</button>
+            </div>
+
+            <div class="row g-4 text-start" id="tenantList">
                 @forelse($tenants as $t)
-                <div class="col-6 col-md-4 col-lg-2">
+                <div class="col-6 col-md-4 col-lg-2" data-tenant-id="{{ $t->id }}">
                     <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative group" style="background: #f8f9fa;">
                         <div class="p-3 d-flex align-items-center justify-content-center" style="height: 100px;">
                             <img src="{{ asset('storage/' . $t->logo) }}" class="img-fluid" style="max-height: 60px; object-fit: contain;">
                         </div>
                         <div class="position-absolute top-0 end-0 p-2">
-                            <form action="{{ route('cms.tenants.destroy', $t->id) }}" method="POST" onsubmit="return confirm('Delete this logo?');">
+                            <form action="{{ route('cms.tenants.destroy', $t->id) }}" method="POST" class="js-delete-tenant">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 25px; height: 25px;">
@@ -140,7 +152,7 @@
                     </div>
                 </div>
                 @empty
-                <div class="col-12 text-center py-4 text-muted small">No tenant logos uploaded yet.</div>
+                <div class="col-12 text-center py-4 text-muted small" id="tenantEmpty">No tenant logos uploaded yet.</div>
                 @endforelse
             </div>
         </div>
@@ -150,5 +162,6 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('assets/js/pages/cms-home-index.js') }}"></script>
 @endpush

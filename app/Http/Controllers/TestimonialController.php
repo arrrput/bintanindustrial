@@ -39,7 +39,17 @@ class TestimonialController extends Controller
 
         LogHelper::log('CREATE', 'Testimonials', "Added new testimonial from: {$testimonial->name}");
 
-        return redirect()->route('cms.home.index')->with('success', 'Testimonial created successfully!');
+        $message = 'Testimonial created successfully!';
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success'  => true,
+                'message'  => $message,
+                'redirect' => route('cms.home.index'),
+            ]);
+        }
+
+        return redirect()->route('cms.home.index')->with('success', $message);
     }
 
     public function edit(Testimonial $testimonial)
@@ -70,7 +80,17 @@ class TestimonialController extends Controller
 
         LogHelper::log('UPDATE', 'Testimonials', "Updated testimonial from: {$testimonial->name}");
 
-        return redirect()->route('cms.home.index')->with('success', 'Testimonial updated successfully!');
+        $message = 'Testimonial updated successfully!';
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success'  => true,
+                'message'  => $message,
+                'redirect' => route('cms.home.index'),
+            ]);
+        }
+
+        return redirect()->route('cms.home.index')->with('success', $message);
     }
 
     public function destroy(Testimonial $testimonial)
@@ -83,6 +103,12 @@ class TestimonialController extends Controller
 
         LogHelper::log('DELETE', 'Testimonials', "Deleted testimonial from: $name");
 
-        return back()->with('success', 'Testimonial deleted successfully!');
+        $message = 'Testimonial deleted successfully!';
+
+        if (request()->wantsJson()) {
+            return response()->json(['success' => true, 'message' => $message]);
+        }
+
+        return back()->with('success', $message);
     }
 }

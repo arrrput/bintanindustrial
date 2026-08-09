@@ -24,7 +24,7 @@
                     <h5 class="mb-0 text-white fw-bold"><i class="fa-solid fa-plus-circle me-2"></i> Add New Testimonial</h5>
                 </div>
                 <div class="card-body p-4 p-md-5">
-                    <form action="{{ route('cms.testimonials.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('cms.testimonials.store') }}" method="POST" enctype="multipart/form-data" id="testimonialForm">
                         @csrf
                         
                         <div class="row g-4">
@@ -61,8 +61,12 @@
                                 <label class="form-label fw-bold text-dark">Client Photo</label>
                                 <div class="p-4 border border-2 border-dashed rounded-3 text-center bg-light">
                                     <i class="fa-solid fa-cloud-arrow-up fs-1 text-muted mb-2"></i>
-                                    <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror" accept="image/*">
+                                    <input type="file" name="photo" id="testimonialPhotoInput" class="form-control @error('photo') is-invalid @enderror" accept="image/*">
                                 </div>
+                                <p class="text-muted small mt-2 mb-0">
+                                    <i class="fa-regular fa-clipboard me-1"></i> Tip: you can also press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste an image.
+                                </p>
+                                <div id="testimonialPhotoPreview" class="mt-3"></div>
                                 @error('photo') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                             </div>
 
@@ -87,3 +91,8 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('assets/js/pages/cms-testimonial-form.js') }}"></script>
+@endpush

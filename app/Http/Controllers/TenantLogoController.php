@@ -17,26 +17,32 @@ class TenantLogoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'logos'   => 'required|array',
+            'logos'   => 'required|array|max:20',
             'logos.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
-        if ($request->hasFile('logos')) {
-            foreach ($request->file('logos') as $file) {
-                $path = $file->store('tenants', 'public');
-                TenantLogo::create([
-                    'logo' => $path,
-                    'name' => $file->getClientOriginalName(),
-                ]);
-            }
+        $count = 0;
+        foreach ($request->file('logos') as $file) {
+            $path = $file->store('tenants', 'public');
+            TenantLogo::create([
+                'logo' => $path,
+                'name' => $file->getClientOriginalName(),
+            ]);
+            $count++;
         }
 
-        LogHelper::log('CREATE', 'Tenant Logos', "Uploaded " . count($request->file('logos')) . " new tenant logos.");
+        LogHelper::log('CREATE', 'Tenant Logos', "Uploaded {$count} new tenant logos.");
 
-        return back()->with('success', 'Tenant logos uploaded successfully!');
+        $message = "{$count} tenant logo(s) uploaded successfully!";
+
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true, 'message' => $message]);
+        }
+
+        return back()->with('success', $message);
     }
 
-    public function destroy(TenantLogo $tenant)
+    public function destroy(Request $request, TenantLogo $tenant)
     {
         $logoName = $tenant->name;
         Storage::disk('public')->delete($tenant->logo);
@@ -44,6 +50,12 @@ class TenantLogoController extends Controller
 
         LogHelper::log('DELETE', 'Tenant Logos', "Deleted tenant logo: $logoName");
 
-        return back()->with('success', 'Tenant logo deleted successfully!');
+        $message = 'Tenant logo deleted successfully!';
+
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true, 'message' => $message]);
+        }
+
+        return back()->with('success', $message);
     }
 }
