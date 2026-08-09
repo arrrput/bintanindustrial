@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 
@@ -12,16 +13,24 @@ class UserSeeder extends Seeder
     {
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // 1. Buat Roles
+        // 1. Pastikan semua Role tersedia
         $roles = ['HRGA', 'BDD', 'CRS', 'IT'];
         foreach ($roles as $role) {
             Role::firstOrCreate(['name' => $role]);
         }
 
-        // 2. Berikan Role ke User (pastikan user sudah ada)
-        $user = User::where('email', 'admin@bintanindustrial.co.id')->first();
-        if ($user) {
-            $user->syncRoles(['IT']);
-        }
+        // 2. Buat (atau perbarui) user admin utama
+        //    Catatan: 'IT' adalah role dengan hak akses tertinggi di aplikasi ini
+        //    (manajemen user & activity logs), sehingga berperan sebagai admin.
+        $admin = User::updateOrCreate(
+            ['email' => 'admin@bintanindustrial.co.id'],
+            [
+                'name' => 'Administrator',
+                'password' => Hash::make('password'),
+            ]
+        );
+
+        // 3. Berikan role IT (admin) ke user tersebut
+        $admin->syncRoles(['IT']);
     }
 }
