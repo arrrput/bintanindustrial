@@ -21,6 +21,17 @@ class AuthController extends Controller
 
         // Jika email dan password cocok dengan database
         if (Auth::attempt($credentials)) {
+            // Batasi akses panel hanya untuk domain email yang diizinkan
+            if (! Auth::user()->canAccessPanel()) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return back()->withErrors([
+                    'email' => 'Only @bintanindustrial.co.id or @biie.co.id email addresses are allowed.',
+                ])->onlyInput('email');
+            }
+
             $request->session()->regenerate();
             LogHelper::log('LOGIN', 'Authentication', "User logged into CMS: " . Auth::user()->email);
             return redirect()->intended('cms'); // Lempar ke Dashboard CMS

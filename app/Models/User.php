@@ -42,4 +42,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Domain email yang diizinkan mengakses panel admin/CMS.
+     *
+     * @var array<int, string>
+     */
+    protected static array $allowedPanelDomains = [
+        'bintanindustrial.co.id',
+        'biie.co.id',
+    ];
+
+    /**
+     * Tentukan apakah user boleh mengakses panel admin/CMS.
+     * Hanya email dengan domain yang diizinkan yang diperbolehkan.
+     */
+    public function canAccessPanel(): bool
+    {
+        $domain = strtolower(substr((string) strrchr($this->email, '@'), 1));
+
+        return in_array($domain, static::$allowedPanelDomains, true);
+    }
 }
