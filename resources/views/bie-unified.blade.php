@@ -272,36 +272,6 @@
     </div>
   </section>
 
-  <!-- ========================================================================= -->
-  <!-- 6. BIE CLOSING (RETURN ON FORESIGHT)                                      -->
-  <!-- ========================================================================= -->
-  <section class="section py-5 light-background">
-      <div class="container text-center">
-        <div class="row mt-3 text-center">
-            <div class="col-12" data-aos="zoom-in" data-aos-duration="900">
-            <div class="cta-box-custom">
-                <h2 class="text-primary fw-bold mb-2">RETURN ON FORESIGHT</h2>
-                <p class="lead text-secondary max-width-700 mx-auto mb-4">Investing in Bintan Industrial Estate is investing in the future today. To find out how the sea-fronting Bintan Industrial Estate can open a world of business opportunities for you, contact us at:</p>
-
-                <div class="row justify-content-center mt-4 g-3">
-                    <div class="col-md-5">
-                        <div class="d-flex align-items-center justify-content-center p-3 bg-white rounded shadow-sm border border-light h-100">
-                        <i class="fa-solid fa-envelope text-primary me-3" style="font-size: 1.4rem;"></i>
-                        <h6 class="mb-0 fw-bold text-dark" style="min-width: 0; word-break: break-all; font-size: clamp(12px, 3.5vw, 16px);">industrialparks@gallantventure.com</h6>
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="d-flex align-items-center justify-content-center p-3 bg-white rounded shadow-sm border border-light h-100">
-                        <i class="fa-solid fa-phone text-primary me-3" style="font-size: 1.4rem;"></i>
-                        <h6 class="mb-0 fw-bold text-dark">+65 6389 3535</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>
-      </div>
-  </section>
 @endsection
 
 @push('scripts')

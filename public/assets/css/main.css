@@ -2465,3 +2465,12 @@ body {
 .blog .blog-info .details-link {
   right: 15px;
 }
+
+/*--------------------------------------------------------------
+# Remove decorative background ornament icons (site-wide)
+--------------------------------------------------------------*/
+[class*="-bg-ornament"],
+.floating-ornament,
+.ornament-wrapper {
+  display: none !important;
+}

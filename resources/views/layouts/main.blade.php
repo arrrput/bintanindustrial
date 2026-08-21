@@ -120,11 +120,13 @@
         </div>
 
         <div class="col-lg-4 col-md-6 footer-about">
+          @if(!Request::is('/'))
           <div class="footer-contact">
             <p><strong>Address:</strong> Tanjung Lobam Road, Tlk. Lobam, Kepulauan Riau PO Box 020 29154</p>
             <p class="mt-3"><strong>Phone:</strong> <span>(0770) 696833</span></p>
             <p><strong>Email:</strong> <span>biie@biie.co.id</span></p>
           </div>
+          @endif
         </div>
 
         <div class="col-lg-4 col-md-12">
