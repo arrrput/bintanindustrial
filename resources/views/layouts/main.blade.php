@@ -37,18 +37,7 @@
 
   <header id="header" class="header sticky-top">
 
-    <div class="topbar d-flex align-items-center">
-      <div class="container d-flex justify-content-center justify-content-md-between">
-        <div class="contact-info d-flex align-items-center">
-          <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:biie@biie.co.id">biie@biie.co.id</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+65 6389 3535</span></i>
-        </div>
-        <div class="social-links d-flex align-items-center">
-          <a href="https://www.instagram.com/biieofficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
-          <a href="https://www.linkedin.com/company/biie/" target="_blank" class="linkedin"><i class="bi bi-linkedin"></i></a>
-        </div>
-      </div>
-    </div><div class="branding d-flex align-items-center">
+    <div class="branding d-flex align-items-center">
 
       <div class="container position-relative d-flex align-items-center justify-content-between">
         <a href="{{ url('/') }}" class="logo d-flex align-items-center">
