@@ -110,7 +110,10 @@
                                         <div class="mt-4">
                                             <label class="form-label fw-bold"><i class="fa-solid fa-photo-film me-2"></i> Post Media (Optional)</label>
                                             <input type="file" class="form-control" name="media" accept="image/*,video/*" onchange="previewMedia(event)">
-                                            
+                                            <p class="text-muted small mt-2 mb-0">
+                                                <i class="fa-regular fa-clipboard me-1"></i> Tip: drag &amp; drop an image here, or press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste one.
+                                            </p>
+
                                             <div id="mediaPreviewContainer" class="mt-3 p-3 bg-white rounded border {{ $career->media ? '' : 'd-none' }} text-center">
                                                 @if($career->media)
                                                     @php

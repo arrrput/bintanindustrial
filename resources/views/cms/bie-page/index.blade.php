@@ -84,6 +84,9 @@
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold">Add Background Images</label>
                                 <input type="file" name="background_images[]" class="form-control rounded-pill" multiple accept="image/*">
+                                <p class="text-muted small mt-2 mb-0">
+                                    <i class="fa-regular fa-clipboard me-1"></i> Tip: drag &amp; drop an image here, or press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste one.
+                                </p>
                             </div>
                             @if($bieSetting && $bieSetting->background_images && count($bieSetting->background_images) > 0)
                             <div class="col-12">
@@ -222,6 +225,9 @@
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold">Add Background Images</label>
                                 <input type="file" name="background_images[]" class="form-control rounded-pill" multiple accept="image/*">
+                                <p class="text-muted small mt-2 mb-0">
+                                    <i class="fa-regular fa-clipboard me-1"></i> Tip: drag &amp; drop an image here, or press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste one.
+                                </p>
                             </div>
                             @if($workSetting && $workSetting->background_images && count($workSetting->background_images) > 0)
                             <div class="col-12">
@@ -351,6 +357,9 @@
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold">Add Background Images</label>
                                 <input type="file" name="background_images[]" class="form-control rounded-pill" multiple accept="image/*">
+                                <p class="text-muted small mt-2 mb-0">
+                                    <i class="fa-regular fa-clipboard me-1"></i> Tip: drag &amp; drop an image here, or press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste one.
+                                </p>
                             </div>
                             @if($bintanSetting && $bintanSetting->background_images && count($bintanSetting->background_images) > 0)
                             <div class="col-12">

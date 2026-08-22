@@ -6,6 +6,7 @@ use App\Models\TenantLogo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Helpers\LogHelper;
+use App\Helpers\ImageCompressor;
 
 class TenantLogoController extends Controller
 {
@@ -23,7 +24,7 @@ class TenantLogoController extends Controller
 
         $count = 0;
         foreach ($request->file('logos') as $file) {
-            $path = $file->store('tenants', 'public');
+            $path = ImageCompressor::store($file, 'tenants');
             TenantLogo::create([
                 'logo' => $path,
                 'name' => $file->getClientOriginalName(),

@@ -6,6 +6,7 @@ use App\Models\SectionSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Helpers\LogHelper;
+use App\Helpers\ImageCompressor;
 
 class SectionSettingController extends Controller
 {
@@ -38,7 +39,7 @@ class SectionSettingController extends Controller
         // Add new images
         if ($request->hasFile('background_images')) {
             foreach ($request->file('background_images') as $file) {
-                $path = $file->store('sections', 'public');
+                $path = ImageCompressor::store($file, 'sections');
                 $currentImages[] = $path;
             }
         }

@@ -130,8 +130,8 @@
                         <i class="fa-solid fa-folder-open me-2"></i> Browse Files
                     </button>
                 </div>
-                <p class="text-muted small mb-3">
-                    <i class="fa-regular fa-clipboard me-1"></i> Tip: you can also press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste an image.
+                <p class="text-muted small mt-2 mb-0">
+                    <i class="fa-regular fa-clipboard me-1"></i> Tip: drag &amp; drop an image here, or press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste one.
                 </p>
             </form>
 

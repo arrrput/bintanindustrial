@@ -6,6 +6,7 @@ use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Helpers\LogHelper;
+use App\Helpers\ImageCompressor;
 
 class TestimonialController extends Controller
 {
@@ -32,7 +33,7 @@ class TestimonialController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('testimonials', 'public');
+            $data['photo'] = ImageCompressor::store($request->file('photo'), 'testimonials');
         }
 
         $testimonial = Testimonial::create($data);
@@ -73,7 +74,7 @@ class TestimonialController extends Controller
             if ($testimonial->photo) {
                 Storage::disk('public')->delete($testimonial->photo);
             }
-            $data['photo'] = $request->file('photo')->store('testimonials', 'public');
+            $data['photo'] = ImageCompressor::store($request->file('photo'), 'testimonials');
         }
 
         $testimonial->update($data);

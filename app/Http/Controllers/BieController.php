@@ -6,6 +6,7 @@ use App\Models\Bie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Helpers\LogHelper;
+use App\Helpers\ImageCompressor;
 
 class BieController extends Controller
 {
@@ -48,7 +49,7 @@ class BieController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store($pageGroup, 'public');
+            $imagePath = ImageCompressor::store($request->file('image'), $pageGroup);
         }
 
         $order = $request->order;
@@ -96,7 +97,7 @@ class BieController extends Controller
             if ($bie->image && Storage::disk('public')->exists($bie->image)) {
                 Storage::disk('public')->delete($bie->image);
             }
-            $imagePath = $request->file('image')->store($pageGroup, 'public');
+            $imagePath = ImageCompressor::store($request->file('image'), $pageGroup);
         }
 
         $bie->update([

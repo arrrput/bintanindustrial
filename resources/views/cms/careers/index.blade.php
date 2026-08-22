@@ -54,6 +54,9 @@
                                 <div class="col-md-12">
                                     <label class="form-label small fw-bold">Background Images</label>
                                     <input type="file" name="background_images[]" class="form-control rounded-pill px-3" multiple>
+                                    <p class="text-muted small mt-2 mb-0">
+                                        <i class="fa-regular fa-clipboard me-1"></i> Tip: drag &amp; drop an image here, or press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste one.
+                                    </p>
                                 </div>
                                 
                                 @if($setting && $setting->background_images && count($setting->background_images) > 0)

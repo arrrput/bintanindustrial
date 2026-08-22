@@ -7,6 +7,7 @@ use App\Models\SectionSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Helpers\LogHelper;
+use App\Helpers\ImageCompressor;
 
 class ProgramController extends Controller
 {
@@ -44,7 +45,7 @@ class ProgramController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('program', 'public');
+            $imagePath = ImageCompressor::store($request->file('image'), 'program');
         }
 
         // Auto-increment order logic
@@ -99,7 +100,7 @@ class ProgramController extends Controller
             if ($program->image && Storage::disk('public')->exists($program->image)) {
                 Storage::disk('public')->delete($program->image);
             }
-            $imagePath = $request->file('image')->store('program', 'public');
+            $imagePath = ImageCompressor::store($request->file('image'), 'program');
         }
 
         $program->update([

@@ -9,6 +9,7 @@ use App\Models\SectionSetting;
 use Illuminate\Http\Request;
 use App\Services\LinkedInService;
 use App\Helpers\LogHelper;
+use App\Helpers\ImageCompressor;
 use Illuminate\Support\Str;
 
 class CareerController extends Controller
@@ -67,7 +68,7 @@ class CareerController extends Controller
         $data['post_to_linkedin'] = $request->has('post_to_linkedin');
 
         if ($request->hasFile('media')) {
-            $data['media'] = $request->file('media')->store('careers', 'public');
+            $data['media'] = ImageCompressor::store($request->file('media'), 'careers');
         }
 
         $career = Career::create($data);
@@ -120,7 +121,7 @@ class CareerController extends Controller
             if ($career->media && \Storage::disk('public')->exists($career->media)) {
                 \Storage::disk('public')->delete($career->media);
             }
-            $data['media'] = $request->file('media')->store('careers', 'public');
+            $data['media'] = ImageCompressor::store($request->file('media'), 'careers');
         }
 
         // LinkedIn Automation (Hanya jika dicentang saat update)

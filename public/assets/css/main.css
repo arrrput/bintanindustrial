@@ -2474,3 +2474,42 @@ body {
 .ornament-wrapper {
   display: none !important;
 }
+
+/*--------------------------------------------------------------
+# CMS image upload drag & drop feedback
+--------------------------------------------------------------*/
+.js-image-dropzone {
+  transition: background-color 0.2s, outline-color 0.2s;
+}
+
+.js-image-dropzone.is-dragover {
+  outline: 2px dashed #198754;
+  outline-offset: 2px;
+  background-color: rgba(25, 135, 84, 0.08);
+}
+
+/*--------------------------------------------------------------
+# CMS click-to-view-full-size image lightbox
+--------------------------------------------------------------*/
+#cms-image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.85);
+  cursor: zoom-out;
+}
+
+#cms-image-lightbox.is-open {
+  display: flex;
+}
+
+#cms-image-lightbox img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}

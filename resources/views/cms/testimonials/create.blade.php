@@ -64,7 +64,7 @@
                                     <input type="file" name="photo" id="testimonialPhotoInput" class="form-control @error('photo') is-invalid @enderror" accept="image/*">
                                 </div>
                                 <p class="text-muted small mt-2 mb-0">
-                                    <i class="fa-regular fa-clipboard me-1"></i> Tip: you can also press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste an image.
+                                    <i class="fa-regular fa-clipboard me-1"></i> Tip: drag &amp; drop an image here, or press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste one.
                                 </p>
                                 <div id="testimonialPhotoPreview" class="mt-3"></div>
                                 @error('photo') <div class="text-danger small mt-1">{{ $message }}</div> @enderror

@@ -72,6 +72,9 @@
                                     <i class="fa-solid fa-cloud-arrow-up fs-1 text-muted mb-2"></i>
                                     <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
                                 </div>
+                                <p class="text-muted small mt-2 mb-0">
+                                    <i class="fa-regular fa-clipboard me-1"></i> Tip: drag &amp; drop an image here, or press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste one.
+                                </p>
                                 @error('image') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                             </div>
 

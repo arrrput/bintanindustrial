@@ -7,6 +7,7 @@ use App\Models\SectionSetting;
 use Illuminate\Http\Request;
 use App\Services\InstagramService;
 use App\Helpers\LogHelper;
+use App\Helpers\ImageCompressor;
 
 class BlogController extends Controller
 {
@@ -54,7 +55,7 @@ class BlogController extends Controller
         // Looping Upload Semua Gambar
         if ($request->hasFile('image')) {
             foreach ($request->file('image') as $file) {
-                $imagePaths[] = $file->store('blogs', 'public');
+                $imagePaths[] = ImageCompressor::store($file, 'blogs');
             }
         }
 
@@ -149,7 +150,7 @@ class BlogController extends Controller
         // 3. Jika ada upload gambar BARU (Tambahkan, jangan timpa!)
         if ($request->hasFile('image')) {
             foreach ($request->file('image') as $file) {
-                $imagePaths[] = $file->store('blogs', 'public'); // Tambahkan ke array yang sudah ada
+                $imagePaths[] = ImageCompressor::store($file, 'blogs'); // Tambahkan ke array yang sudah ada
             }
         }
 

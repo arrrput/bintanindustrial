@@ -55,6 +55,9 @@
                                 <div class="card border-0 bg-light p-4 rounded-4 mb-4">
                                     <label class="form-label fw-bold text-dark">Featured Image(s)</label>
                                     <input type="file" class="form-control @error('image') is-invalid @enderror" name="image[]" accept="image/*" multiple onchange="previewImages(event)" required>
+                                    <p class="text-muted small mt-2 mb-0">
+                                        <i class="fa-regular fa-clipboard me-1"></i> Tip: drag &amp; drop an image here, or press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste one.
+                                    </p>
                                     <div id="previewContainer" class="mt-3 d-flex flex-wrap gap-2"></div>
                                     @error('image') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
                                 </div>

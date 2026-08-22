@@ -171,6 +171,7 @@
   <!-- Lenis Smooth Scroll -->
   <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
   <script src="{{ asset('assets/js/pages/layouts-main-js-1.js') }}"></script>
+  <script src="{{ asset('assets/js/cms-image-paste.js') }}"></script>
 @stack('scripts')
 <link rel="stylesheet" href="{{ asset('assets/css/pages/layouts-main-3.css') }}">
 <script src="{{ asset('assets/js/pages/layouts-main-js-2.js') }}"></script>

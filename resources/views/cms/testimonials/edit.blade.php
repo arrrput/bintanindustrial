@@ -64,8 +64,8 @@
                                     <i class="fa-solid fa-cloud-arrow-up fs-1 text-muted mb-2"></i>
                                     <input type="file" name="photo" id="testimonialPhotoInput" class="form-control @error('photo') is-invalid @enderror" accept="image/*">
                                 </div>
-                                <p class="text-muted small mb-2">
-                                    <i class="fa-regular fa-clipboard me-1"></i> Tip: you can also press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste an image.
+                                <p class="text-muted small mt-2 mb-0">
+                                    <i class="fa-regular fa-clipboard me-1"></i> Tip: drag &amp; drop an image here, or press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste one.
                                 </p>
                                 <div id="testimonialPhotoPreview" class="mb-2"></div>
                                 @if($testimonial->photo)
