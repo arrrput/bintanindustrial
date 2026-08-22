@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Edit Life Content - BIIE CMS')
+@section('title', 'Edit Program Content - BIIE CMS')
 
 @section('content')
 <div class="page-title" data-aos="fade">
@@ -9,7 +9,7 @@
       <ol>
         <li><a href="{{ url('/') }}">Home</a></li>
         <li><a href="{{ route('cms.dashboard') }}">CMS</a></li>
-        <li><a href="{{ route('cms.lives.index') }}">Life</a></li>
+        <li><a href="{{ route('cms.programs.index') }}">Program</a></li>
         <li class="current">Edit Content</li>
       </ol>
     </nav>
@@ -21,18 +21,18 @@
         <div class="col-lg-10">
             <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
                 <div class="card-header bg-primary py-3 border-0">
-                    <h5 class="mb-0 text-white fw-bold"><i class="fa-solid fa-pen-to-square me-2"></i> Edit Life Content</h5>
+                    <h5 class="mb-0 text-white fw-bold"><i class="fa-solid fa-pen-to-square me-2"></i> Edit Program Content</h5>
                 </div>
                 <div class="card-body p-4 p-md-5">
-                    <form action="{{ route('cms.lives.update', $life->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('cms.programs.update', $program->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        
+
                         <div class="row g-4">
                             <!-- Title -->
                             <div class="col-md-8">
                                 <label class="form-label fw-bold text-dark">Title <span class="text-danger">*</span></label>
-                                <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title', $life->title) }}" placeholder="e.g., LIFE AT WORK" required>
+                                <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title', $program->title) }}" placeholder="e.g., ANNUAL TENANT GATHERING" required>
                                 @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
@@ -40,8 +40,9 @@
                             <div class="col-md-4">
                                 <label class="form-label fw-bold text-dark">Category <span class="text-danger">*</span></label>
                                 <select name="category" class="form-select @error('category') is-invalid @enderror" required>
-                                    <option value="work" {{ $life->category == 'work' ? 'selected' : '' }}>Life at Work</option>
-                                    <option value="relaxation" {{ $life->category == 'relaxation' ? 'selected' : '' }}>Resort-Style Relaxation</option>
+                                    <option value="event" {{ $program->category == 'event' ? 'selected' : '' }}>Event</option>
+                                    <option value="entertainment" {{ $program->category == 'entertainment' ? 'selected' : '' }}>Entertainment</option>
+                                    <option value="csr" {{ $program->category == 'csr' ? 'selected' : '' }}>CSR</option>
                                 </select>
                                 @error('category') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
@@ -49,7 +50,7 @@
                             <!-- Subtitle / Quote -->
                             <div class="col-md-12">
                                 <label class="form-label fw-bold text-dark">Subtitle / Lead Text (Optional)</label>
-                                <input type="text" name="subtitle" class="form-control @error('subtitle') is-invalid @enderror" value="{{ old('subtitle', $life->subtitle) }}" placeholder="e.g., A lush, tranquil environment...">
+                                <input type="text" name="subtitle" class="form-control @error('subtitle') is-invalid @enderror" value="{{ old('subtitle', $program->subtitle) }}" placeholder="e.g., A lush, tranquil environment...">
                                 @error('subtitle') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
@@ -58,8 +59,8 @@
                                 <label class="form-label fw-bold text-dark">Cover Image</label>
                                 <div class="row align-items-center g-3">
                                     <div class="col-md-3">
-                                        @if($life->image)
-                                            <img src="{{ asset('storage/' . $life->image) }}" class="img-fluid rounded-3 shadow-sm border">
+                                        @if($program->image)
+                                            <img src="{{ asset('storage/' . $program->image) }}" class="img-fluid rounded-3 shadow-sm border">
                                         @else
                                             <div class="bg-light rounded-3 d-flex align-items-center justify-content-center border" style="height: 100px;">
                                                 <i class="fa-solid fa-image fs-1 text-muted"></i>
@@ -78,13 +79,13 @@
                             <!-- Description -->
                             <div class="col-12">
                                 <label class="form-label fw-bold text-dark">Description <span class="text-danger">*</span></label>
-                                <textarea name="description" rows="6" class="form-control @error('description') is-invalid @enderror" required>{{ old('description', $life->description) }}</textarea>
+                                <textarea name="description" rows="6" class="form-control @error('description') is-invalid @enderror" required>{{ old('description', $program->description) }}</textarea>
                                 @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
                         </div>
 
                         <div class="d-flex justify-content-end gap-2 mt-5">
-                            <a href="{{ route('cms.lives.index') }}" class="btn btn-light rounded-pill px-4 fw-bold">Cancel</a>
+                            <a href="{{ route('cms.programs.index') }}" class="btn btn-light rounded-pill px-4 fw-bold">Cancel</a>
                             <button type="submit" class="btn btn-primary rounded-pill px-5 shadow fw-bold">
                                 <i class="fa-solid fa-save me-2"></i> Update Content
                             </button>

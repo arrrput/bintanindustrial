@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CareerController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
-use App\Http\Controllers\LifeController;
+use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\BieController;
 use App\Http\Controllers\SectionSettingController;
 use App\Http\Controllers\TestimonialController;
@@ -43,7 +43,7 @@ Route::prefix('cms')->name('cms.')->middleware(['auth', 'role:HRGA|BDD|CRS|IT'])
     Route::put('applicants/{applicant}/status', [\App\Http\Controllers\Admin\ApplicantCmsController::class, 'updateStatus'])->name('applicants.update-status')->middleware('role:HRGA|BDD|CRS|IT');
     Route::delete('applicants/{applicant}', [\App\Http\Controllers\Admin\ApplicantCmsController::class, 'destroy'])->name('applicants.destroy')->middleware('role:HRGA|BDD|CRS|IT');
     Route::resource('blogs', BlogController::class)->middleware('role:BDD|CRS|IT');
-    Route::resource('lives', LifeController::class)->middleware('role:BDD|CRS|IT');
+    Route::resource('programs', ProgramController::class)->middleware('role:BDD|CRS|IT');
     Route::resource('bies', BieController::class)->middleware('role:BDD|CRS|IT');
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->middleware('role:IT');
     Route::get('logs', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])->name('logs.index')->middleware('role:IT');
@@ -66,8 +66,9 @@ Route::prefix('cms')->name('cms.')->middleware(['auth', 'role:HRGA|BDD|CRS|IT'])
 // ======================================================= //
 Route::redirect('/bintan', '/bie', 301);
 Route::redirect('/work', '/bie', 301);
+Route::redirect('/life', '/program', 301);
 Route::get('/bie', [\App\Http\Controllers\Public\BiePageController::class, 'index'])->name('bie.unified');
-Route::get('/life', [LifeController::class, 'publicIndex']);
+Route::get('/program', [ProgramController::class, 'publicIndex']);
 
 // ======================================================= //
 //    RUTE CAREERS PUBLIK (DINAMIS DARI DATABASE)          //

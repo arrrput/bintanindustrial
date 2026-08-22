@@ -1,9 +1,9 @@
 @extends('layouts.main') 
 
-@section('title', 'Manage Life Content - BIIE CMS')
+@section('title', 'Manage Program Content - BIIE CMS')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('assets/css/pages/cms-lives-index.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/pages/cms-programs-index.css') }}">
 @endpush
 
 @section('content')
@@ -20,14 +20,14 @@
       <ol>
         <li><a href="{{ url('/') }}">Home</a></li>
         <li><a href="{{ route('cms.dashboard') }}">CMS</a></li>
-        <li class="current">Life</li>
+        <li class="current">Program</li>
       </ol>
     </nav>
   </div>
 </div>
 
 <div class="container py-4 py-md-5 mt-2">
-    
+
     <!-- Section Settings Form -->
     <div class="card border-0 shadow-sm rounded-4 mb-5">
         <div class="card-body p-4">
@@ -36,11 +36,11 @@
             </h4>
             <form action="{{ route('cms.section-settings.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="section_key" value="life">
+                <input type="hidden" name="section_key" value="program">
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label class="form-label small fw-bold">Custom Section Title</label>
-                        <input type="text" name="title" class="form-control rounded-pill" value="{{ $setting->title ?? 'Work & Relaxation' }}" placeholder="Enter custom title">
+                        <input type="text" name="title" class="form-control rounded-pill" value="{{ $setting->title ?? 'Event, Entertainment & CSR' }}" placeholder="Enter custom title">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label small fw-bold">Add Background Images (Can select multiple)</label>
@@ -79,12 +79,12 @@
     <div class="d-flex justify-content-between align-items-center mb-4 gap-2">
         <div>
             <h2 class="fw-bold text-dark mb-0 fs-3">
-                <i class="fa-solid fa-heart text-danger me-2"></i> Life Content
+                <i class="fa-solid fa-calendar-days text-danger me-2"></i> Program Content
             </h2>
-            <p class="text-muted small mb-0 mt-1">Manage content for "Work" and "Relaxation" sections on the Life page.</p>
+            <p class="text-muted small mb-0 mt-1">Manage content for "Event", "Entertainment" and "CSR" sections on the Program page.</p>
         </div>
         <div>
-            <a href="{{ route('cms.lives.create') }}" class="btn btn-danger rounded-pill px-4 shadow-sm fw-bold">
+            <a href="{{ route('cms.programs.create') }}" class="btn btn-danger rounded-pill px-4 shadow-sm fw-bold">
                 <i class="fa-solid fa-plus me-2"></i> Add Content
             </a>
         </div>
@@ -103,11 +103,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($lives as $life)
+                        @forelse($programs as $program)
                         <tr>
                             <td class="ps-4 py-3">
-                                @if($life->image)
-                                    <img src="{{ asset('storage/' . $life->image) }}" class="rounded-3 shadow-sm" style="width: 60px; height: 60px; object-fit: cover;">
+                                @if($program->image)
+                                    <img src="{{ asset('storage/' . $program->image) }}" class="rounded-3 shadow-sm" style="width: 60px; height: 60px; object-fit: cover;">
                                 @else
                                     <div class="bg-light rounded-3 d-flex align-items-center justify-content-center text-muted" style="width: 60px; height: 60px;">
                                         <i class="fa-solid fa-image"></i>
@@ -115,20 +115,20 @@
                                 @endif
                             </td>
                             <td class="py-3">
-                                <h6 class="mb-1 fw-bold text-dark">{{ $life->title }}</h6>
-                                <span class="badge {{ $life->category == 'work' ? 'bg-primary' : 'bg-success' }} px-2 py-1 rounded-pill text-uppercase" style="font-size: 0.65rem;">
-                                    {{ $life->category }}
+                                <h6 class="mb-1 fw-bold text-dark">{{ $program->title }}</h6>
+                                <span class="badge {{ $program->category == 'event' ? 'bg-primary' : ($program->category == 'entertainment' ? 'bg-success' : 'bg-warning text-dark') }} px-2 py-1 rounded-pill text-uppercase" style="font-size: 0.65rem;">
+                                    {{ $program->category }}
                                 </span>
                             </td>
                             <td class="py-3 d-none d-md-table-cell text-muted small">
-                                {{ Str::limit(strip_tags($life->description), 80) }}
+                                {{ Str::limit(strip_tags($program->description), 80) }}
                             </td>
                             <td class="pe-4 py-3 text-end">
                                 <div class="d-flex justify-content-end gap-2">
-                                    <a href="{{ route('cms.lives.edit', $life->id) }}" class="btn btn-sm btn-light text-primary rounded-circle shadow-sm">
+                                    <a href="{{ route('cms.programs.edit', $program->id) }}" class="btn btn-sm btn-light text-primary rounded-circle shadow-sm">
                                         <i class="fa-solid fa-pen"></i>
                                     </a>
-                                    <form action="{{ route('cms.lives.destroy', $life->id) }}" method="POST" onsubmit="return confirm('Delete this content?');">
+                                    <form action="{{ route('cms.programs.destroy', $program->id) }}" method="POST" onsubmit="return confirm('Delete this content?');">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-light text-danger rounded-circle shadow-sm">
                                             <i class="fa-solid fa-trash"></i>
@@ -151,5 +151,5 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('assets/js/pages/cms-lives-index.js') }}"></script>
+<script src="{{ asset('assets/js/pages/cms-programs-index.js') }}"></script>
 @endpush

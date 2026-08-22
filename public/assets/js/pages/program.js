@@ -1,5 +1,5 @@
     document.addEventListener("DOMContentLoaded", function() {
-      const layers = document.querySelectorAll('#lifeBgSlideshow .life-bg-layer');
+      const layers = document.querySelectorAll('#programBgSlideshow .program-bg-layer');
       let current = 0;
       setInterval(() => {
         layers[current].classList.remove('active');

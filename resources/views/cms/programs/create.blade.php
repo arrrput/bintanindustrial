@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Add Life Content - BIIE CMS')
+@section('title', 'Add Program Content - BIIE CMS')
 
 @section('content')
 <div class="page-title" data-aos="fade">
@@ -9,7 +9,7 @@
       <ol>
         <li><a href="{{ url('/') }}">Home</a></li>
         <li><a href="{{ route('cms.dashboard') }}">CMS</a></li>
-        <li><a href="{{ route('cms.lives.index') }}">Life</a></li>
+        <li><a href="{{ route('cms.programs.index') }}">Program</a></li>
         <li class="current">Add Content</li>
       </ol>
     </nav>
@@ -21,17 +21,17 @@
         <div class="col-lg-10">
             <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
                 <div class="card-header bg-success py-3 border-0">
-                    <h5 class="mb-0 text-white fw-bold"><i class="fa-solid fa-plus-circle me-2"></i> Add New Life Content</h5>
+                    <h5 class="mb-0 text-white fw-bold"><i class="fa-solid fa-plus-circle me-2"></i> Add New Program Content</h5>
                 </div>
                 <div class="card-body p-4 p-md-5">
-                    <form action="{{ route('cms.lives.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('cms.programs.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        
+
                         <div class="row g-4">
                             <!-- Title -->
                             <div class="col-md-8">
                                 <label class="form-label fw-bold text-dark">Title <span class="text-danger">*</span></label>
-                                <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}" placeholder="e.g., LIFE AT WORK" required>
+                                <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}" placeholder="e.g., ANNUAL TENANT GATHERING" required>
                                 @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
@@ -39,8 +39,9 @@
                             <div class="col-md-4">
                                 <label class="form-label fw-bold text-dark">Category <span class="text-danger">*</span></label>
                                 <select name="category" class="form-select @error('category') is-invalid @enderror" required>
-                                    <option value="work" {{ old('category') == 'work' ? 'selected' : '' }}>Life at Work</option>
-                                    <option value="relaxation" {{ old('category') == 'relaxation' ? 'selected' : '' }}>Resort-Style Relaxation</option>
+                                    <option value="event" {{ old('category') == 'event' ? 'selected' : '' }}>Event</option>
+                                    <option value="entertainment" {{ old('category') == 'entertainment' ? 'selected' : '' }}>Entertainment</option>
+                                    <option value="csr" {{ old('category') == 'csr' ? 'selected' : '' }}>CSR</option>
                                 </select>
                                 @error('category') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
@@ -71,7 +72,7 @@
                         </div>
 
                         <div class="d-flex justify-content-end gap-2 mt-5">
-                            <a href="{{ route('cms.lives.index') }}" class="btn btn-light rounded-pill px-4 fw-bold">Cancel</a>
+                            <a href="{{ route('cms.programs.index') }}" class="btn btn-light rounded-pill px-4 fw-bold">Cancel</a>
                             <button type="submit" class="btn btn-success rounded-pill px-5 shadow fw-bold">
                                 <i class="fa-solid fa-save me-2"></i> Save Content
                             </button>

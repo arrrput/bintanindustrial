@@ -48,7 +48,7 @@
             <ul>
                 <li><a href="{{ url('/') }}" class="{{ Request::is('/') ? 'active' : '' }}">Home</a></li>
                 <li><a href="{{ url('/bie') }}" class="{{ Request::is('bie*') ? 'active' : '' }}">BIE</a></li> 
-                <li><a href="{{ url('/life') }}" class="{{ Request::is('life*') ? 'active' : '' }}">Life</a></li>
+                <li><a href="{{ url('/program') }}" class="{{ Request::is('program*') ? 'active' : '' }}">Program</a></li>
                 <li><a href="{{ url('/careers') }}" class="{{ Request::is('careers*') ? 'active' : '' }}">Careers</a></li>
                 <li><a href="{{ url('/blogs') }}" class="{{ (Request::is('blogs*') || Request::is('blog*')) ? 'active' : '' }}">Blogs</a></li>
                 @auth

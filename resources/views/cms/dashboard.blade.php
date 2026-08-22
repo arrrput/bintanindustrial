@@ -63,15 +63,15 @@
         </div>
         @endrole
 
-        <!-- 3. Manage Life -->
+        <!-- 3. Manage Program -->
         @role('BDD|CRS|IT')
         <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
-            <a href="{{ route('cms.lives.index') }}" class="card bg-white p-4 cms-card h-100">
+            <a href="{{ route('cms.programs.index') }}" class="card bg-white p-4 cms-card h-100">
                 <div class="cms-icon-wrapper bg-danger-subtle text-danger">
-                    <i class="fa-solid fa-heart"></i>
+                    <i class="fa-solid fa-calendar-days"></i>
                 </div>
-                <h4 class="fw-bold text-dark mb-2">Manage Life</h4>
-                <p class="text-muted small mb-0">Manage "Life at BIE" content, including work-life balance and resort facilities.</p>
+                <h4 class="fw-bold text-dark mb-2">Manage Program</h4>
+                <p class="text-muted small mb-0">Manage "Program at BIE" content, including events, entertainment and CSR initiatives.</p>
 
                 <div class="mt-4 d-flex align-items-center text-danger fw-bold text-uppercase small" style="letter-spacing: 1px;">
                     Open Module <i class="fa-solid fa-arrow-right ms-2"></i>

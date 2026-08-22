@@ -1,4 +1,4 @@
-.life-parallax-divider {
+.program-parallax-divider {
     position: relative;
     background-attachment: fixed;
     background-position: center;
@@ -14,12 +14,12 @@
     margin: 40px 0;
 }
 
-.life-parallax-content {
+.program-parallax-content {
     position: relative;
     z-index: 2;
 }
 
-.life-parallax-content h3 {
+.program-parallax-content h3 {
     font-family: var(--heading-font);
     font-size: 3.5rem;
     font-weight: 800;
@@ -30,7 +30,7 @@
     color: #ffffff !important;
 }
 
-.life-parallax-content p {
+.program-parallax-content p {
     font-size: 1.3rem;
     font-style: italic;
     max-width: 750px;

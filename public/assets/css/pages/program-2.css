@@ -1,4 +1,4 @@
-    .life-header {
+    .program-header {
       position: relative;
       height: 45vh;
       min-height: 400px;
@@ -10,7 +10,7 @@
       background: #333;
     }
 
-    .life-bg-container {
+    .program-bg-container {
       position: absolute;
       top: 0;
       left: 0;
@@ -19,7 +19,7 @@
       z-index: 1;
     }
 
-    .life-bg-layer {
+    .program-bg-layer {
       position: absolute;
       top: 0;
       left: 0;
@@ -32,11 +32,11 @@
       transition: opacity 1.5s ease-in-out;
     }
 
-    .life-bg-layer.active {
+    .program-bg-layer.active {
       opacity: 1;
     }
 
-    .life-bg-overlay {
+    .program-bg-overlay {
       position: absolute;
       top: 0;
       left: 0;
