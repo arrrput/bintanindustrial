@@ -50,7 +50,7 @@
                 <li><a href="{{ url('/bie') }}" class="{{ Request::is('bie*') ? 'active' : '' }}">BIE</a></li> 
                 <li><a href="{{ url('/program') }}" class="{{ Request::is('program*') ? 'active' : '' }}">Program</a></li>
                 <li><a href="{{ url('/careers') }}" class="{{ Request::is('careers*') ? 'active' : '' }}">Careers</a></li>
-                <li><a href="{{ url('/blogs') }}" class="{{ (Request::is('blogs*') || Request::is('blog*')) ? 'active' : '' }}">Blogs</a></li>
+                <li><a href="{{ url('/blogs') }}" class="{{ (Request::is('blogs*') || Request::is('blog*')) ? 'active' : '' }}">News</a></li>
                 @auth
                     <li class="cms-divider-custom" style="width: 1px; height: 20px; background: #ddd; margin: 0 8px; display: inline-block; vertical-align: middle;"></li>
                     <li class="dropdown user-dropdown">

@@ -97,14 +97,14 @@
         </div>
         @endrole
 
-        <!-- 5. Manage Blogs -->
+        <!-- 5. Manage News -->
         @role('BDD|CRS|IT')
         <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
             <a href="{{ route('cms.blogs.index') }}" class="card bg-white p-4 cms-card h-100">
                 <div class="cms-icon-wrapper bg-primary-subtle text-primary">
                     <i class="fa-solid fa-newspaper"></i>
                 </div>
-                <h4 class="fw-bold text-dark mb-2">Manage Blogs</h4>
+                <h4 class="fw-bold text-dark mb-2">Manage News</h4>
                 <p class="text-muted small mb-0">Write company news, press releases, and articles about Bintan Industrial Estate.</p>
                 
                 <div class="mt-4 d-flex align-items-center text-primary fw-bold text-uppercase small" style="letter-spacing: 1px;">

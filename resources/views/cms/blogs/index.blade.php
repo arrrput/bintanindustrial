@@ -1,6 +1,6 @@
 @extends('layouts.main') 
 
-@section('title', 'Manage Blog Articles - BIIE CMS')
+@section('title', 'Manage News Articles - BIIE CMS')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/pages/cms-blogs-index.css') }}">
@@ -20,7 +20,7 @@
       <ol>
         <li><a href="{{ url('/') }}">Home</a></li>
         <li><a href="{{ route('cms.dashboard') }}">CMS</a></li>
-        <li class="current">Blogs</li>
+        <li class="current">News</li>
       </ol>
     </nav>
   </div>
@@ -82,7 +82,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4 gap-2">
         <div>
             <h2 class="fw-bold text-dark mb-0 fs-3">
-                <i class="fa-solid fa-newspaper text-primary me-2"></i> Blog Articles
+                <i class="fa-solid fa-newspaper text-primary me-2"></i> News Articles
             </h2>
             <p class="text-muted small mb-0 mt-1">Create, edit, and manage news and articles.</p>
         </div>

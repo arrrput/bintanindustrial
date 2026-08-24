@@ -8,7 +8,7 @@
       <ol>
         <li><a href="{{ url('/') }}">Home</a></li>
         <li><a href="{{ route('cms.dashboard') }}">CMS</a></li>
-        <li><a href="{{ route('cms.blogs.index') }}">Blogs</a></li>
+        <li><a href="{{ route('cms.blogs.index') }}">News</a></li>
         <li class="current">Create Article</li>
       </ol>
     </nav>

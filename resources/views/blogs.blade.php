@@ -10,7 +10,7 @@
             <nav class="breadcrumbs">
                 <ol>
                     <li><a href="{{ url('/') }}">Home</a></li>
-                    <li class="current">Blogs</li>
+                    <li class="current">News</li>
                 </ol>
             </nav>
         </div>
