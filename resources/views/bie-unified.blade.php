@@ -40,26 +40,12 @@
   </section>
 
   <section class="page-content section position-relative overflow-hidden">
-    <!-- Ornaments -->
-    <i class="fa-solid fa-industry bie-bg-ornament" style="font-size: 6rem; top: 5%; right: 2%;"></i>
-    <i class="fa-solid fa-boxes-stacked bie-bg-ornament" style="font-size:10rem; top: 70%; left: -2%; animation-delay: 2.5s;"></i>
-    <i class="fa-solid fa-anchor bie-bg-ornament" style="font-size: 12rem; bottom: 10%; right: -2%; animation-delay: 4.5s;"></i>
-
     <div class="container position-relative" style="z-index: 1;">
       @foreach($bies as $index => $section)
         <div class="row align-items-center mb-5 pb-5" data-aos="{{ $index % 2 == 0 ? 'fade-right' : 'fade-left' }}" data-aos-duration="1000">
           <div class="col-lg-6 {{ $index % 2 != 0 ? 'order-lg-2' : '' }}">
             <div class="position-relative">
               <img src="{{ $section->image ? asset('storage/' . $section->image) : asset('assets/img/Bintan/image5.jpeg') }}" class="img-fluid rounded shadow-lg" alt="{{ $section->title }}" loading="lazy">
-              @if($index % 2 == 0)
-                <div class="position-absolute bottom-0 start-0 translate-middle-y z-n1 d-none d-lg-block" style="margin-left: -100px;">
-                   <i class="fa-solid fa-gears bie-bg-ornament" style="font-size: 15rem; opacity: 0.1;"></i>    
-                </div>
-              @else
-                <div class="position-absolute top-0 end-0 translate-middle-y z-n1 d-none d-lg-block" style="margin-right: -30px;">
-                   <i class="fa-solid fa-compass bie-bg-ornament" style="font-size: 9rem; opacity: 0.1;"></i>   
-                </div>
-              @endif
             </div>
           </div>
           <div class="col-lg-6 {{ $index % 2 != 0 ? 'order-lg-1 pe-lg-5' : 'ps-lg-5' }} mt-4 mt-lg-0">
@@ -99,10 +85,6 @@
   </section>
 
   <section class="why-bintan section light-background position-relative">
-    <i class="fa-solid fa-map bintan-bg-ornament" style="font-size: 11rem; top: 10%; left: -2%;"></i>
-    <i class="fa-solid fa-compass bintan-bg-ornament" style="font-size: 12rem; bottom: 15%; right: -2%; animation-delay: 2s;"></i>
-    <i class="fa-solid fa-ship bintan-bg-ornament" style="font-size: 8rem; top: 40%; right: 5%; animation-delay: 4s;"></i>
-
     <div class="container position-relative" style="z-index: 1;">
       
       <!-- Added Advantages Badge -->
@@ -245,18 +227,11 @@
       <div class="row align-items-center mb-4 pb-2" data-aos="{{ $index % 2 == 0 ? 'fade-right' : 'fade-left' }}" data-aos-duration="1000">
         <div class="col-lg-6 {{ $index % 2 != 0 ? 'order-lg-2' : '' }}">
           <div class="position-relative p-2 p-md-4">
-            <div class="position-absolute {{ $index % 2 == 0 ? 'top-0 start-0' : 'bottom-0 end-0' }} translate-middle z-n1 d-none d-lg-block">
-               <i class="bi bi-grid-3x3-gap-fill text-primary" style="font-size: 5rem; opacity: 0.15;"></i>     
-            </div>
-            <div class="work-ornament {{ $index % 2 == 0 ? 'bottom-0 end-0' : 'top-0 start-0' }}" style="margin: -20px;">
-                <i class="fa-solid fa-cog floating-gear text-primary gear-icon"></i>
-            </div>
             <img src="{{ $item->image ? asset('storage/' . $item->image) : asset('assets/img/Bintan/image6.jpeg') }}" class="img-fluid rounded-4 shadow-lg position-relative" alt="{{ $item->title }}" loading="lazy">
           </div>
         </div>
         <div class="col-lg-6 {{ $index % 2 != 0 ? 'order-lg-1 pe-lg-5' : 'ps-lg-5' }} mt-4 mt-lg-0">
           <div class="position-relative">
-            <div class="bg-shape-light d-none d-lg-block"></div>
             <h3 class="fw-bold mb-3 text-uppercase" style="letter-spacing: 1px;">{{ $item->title }}</h3>
             @if($item->subtitle)
                 <p class="lead text-primary fw-semibold mb-4" style="font-size: 1.1rem; border-left: 4px solid var(--accent-color); padding-left: 15px;">{{ $item->subtitle }}</p>

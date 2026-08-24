@@ -60,19 +60,6 @@
         }
 
         /* ---------------- BIE Section Styles ---------------- */
-        .bie-bg-ornament {
-            position: absolute;
-            color: var(--accent-color);
-            opacity: 0.09;
-            z-index: 0;
-            pointer-events: none;
-            animation: bieFloat 9s ease-in-out infinite;
-        }
-        @keyframes bieFloat {
-            0% { transform: translateY(0px) rotate(0deg) scale(1,1); }
-            50% { transform: translateY(-30px) rotate(6deg) scale(1.05); }
-            100% { transform: translateY(0px) rotate(0deg) scale(1); }
-        }
         .pillar-card {
             background: #ffffff;
             border-radius: 16px;
@@ -120,36 +107,6 @@
         }
 
         /* ---------------- Work Section Styles ---------------- */
-        .work-ornament {
-            position: absolute;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.08;
-        }
-        .floating-gear {
-            animation: rotateGear 25s linear infinite;
-        }
-        @keyframes rotateGear {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        .gear-icon {
-            font-size: 9rem !important;
-            opacity: 0.5 !important;
-        }
-        .bg-shape-light {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 110%;
-            height: 110%;
-            background: var(--accent-color);
-            opacity: 0.12;
-            border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%;
-            z-index: -1;
-            filter: blur(50px);
-        }
         .service-suite-flex {
             display: flex;
             flex-wrap: wrap;
@@ -173,19 +130,6 @@
         }
 
         /* ---------------- Bintan Section Styles ---------------- */
-        .bintan-bg-ornament {
-            position: absolute;
-            color: var(--accent-color);
-            opacity: 0.1;
-            z-index: 0;
-            pointer-events: none;
-            animation: bintanFloat 8s ease-in-out infinite;
-        }
-        @keyframes bintanFloat {
-            0% { transform: translateY(0px) rotate(0deg) scale(1); }
-            50% { transform: translateY(-20px) rotate(8deg) scale(1.05); }
-            100% { transform: translateY(0px) rotate(0deg) scale(1); }
-        }
         .info-list li {
             transition: all 0.3s ease;
             padding: 4px 8px;
