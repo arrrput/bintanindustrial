@@ -93,9 +93,6 @@
   </section>
 
   <section class="program-parallax-divider">
-    <i class="fa-solid fa-music floating-ornament text-white" style="font-size: 10rem; top: -5%; left: 5%;"></i>
-    <i class="fa-solid fa-hands-holding-circle floating-ornament text-white" style="font-size: 8rem; bottom: -5%; right: 8%; animation-delay: 2s;"></i>
-
     <div class="container program-parallax-content" data-aos="zoom-in" data-aos-duration="1200">
       <h3>Beyond The Workplace</h3>
       <p>"Where meaningful celebrations, leisure and community care come together. A complete, self-sustained ecosystem designed to enrich the lives of everyone within Bintan Industrial Estate."</p>
