@@ -78,13 +78,14 @@
                                 <textarea class="form-control summernote-editor" name="requirements" required></textarea>
                             </div>
 
+                            {{--
                             <!-- LinkedIn Automation -->
                             <div class="col-12 mt-4">
                                 <div class="card border-0 shadow-sm rounded-4 p-4 bg-primary-subtle border border-primary-subtle">
                                     <h5 class="fw-bold text-primary mb-3"><i class="fa-brands fa-linkedin me-2"></i> LinkedIn Automation</h5>
                                     <div class="form-check form-switch mb-3">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="post_to_linkedin" name="post_to_linkedin" value="1" 
-                                            style="transform: scale(1.3); margin-left: -2.5em; margin-top: 0.1em;" 
+                                        <input class="form-check-input" type="checkbox" role="switch" id="post_to_linkedin" name="post_to_linkedin" value="1"
+                                            style="transform: scale(1.3); margin-left: -2.5em; margin-top: 0.1em;"
                                             onchange="toggleLinkedinCaption(this)" {{ old('post_to_linkedin') ? 'checked' : '' }}>
                                         <label class="form-check-label ms-3 fw-bold" for="post_to_linkedin">Auto-post to LinkedIn</label>
                                     </div>
@@ -97,7 +98,7 @@
                                             </button>
                                         </div>
                                         <textarea class="form-control" id="linkedin_caption" name="linkedin_caption" rows="8" placeholder="Write a professional post...">{{ old('linkedin_caption') }}</textarea>
-                                        
+
                                         <div class="mt-4">
                                             <label class="form-label fw-bold"><i class="fa-solid fa-photo-film me-2"></i> Post Media (Optional)</label>
                                             <input type="file" class="form-control" name="media" accept="image/*,video/*" onchange="previewMedia(event)">
@@ -109,6 +110,7 @@
                                     </div>
                                 </div>
                             </div>
+                            --}}
                         </div>
 
                         <div class="d-flex justify-content-end gap-2 mt-5">

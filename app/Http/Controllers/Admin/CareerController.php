@@ -7,7 +7,7 @@ use App\Models\Career;
 use App\Models\Applicant;
 use App\Models\SectionSetting;
 use Illuminate\Http\Request;
-use App\Services\LinkedInService;
+// use App\Services\LinkedInService;
 use App\Helpers\LogHelper;
 use App\Helpers\ImageCompressor;
 use Illuminate\Support\Str;
@@ -75,15 +75,16 @@ class CareerController extends Controller
 
         LogHelper::log('CREATE', 'Careers', "Published new job vacancy: {$career->title}");
 
+        /*
         // LinkedIn Automation
         if ($career->post_to_linkedin) {
             $caption = $request->linkedin_caption ?? $this->generateDefaultLinkedinCaption($career);
-            
+
             // Simpan caption yang digunakan
             $career->update(['linkedin_caption' => $caption]);
 
             $mediaPath = $career->media ? storage_path('app/public/' . $career->media) : null;
-            
+
             $linkedinService = new LinkedInService();
             $linkedinPostId = $linkedinService->publishPost($caption, $mediaPath);
 
@@ -91,6 +92,7 @@ class CareerController extends Controller
                 $career->update(['linkedin_post_id' => $linkedinPostId]);
             }
         }
+        */
 
         return redirect()->route('cms.careers.index')->with('success', 'Job vacancy successfully published!');
     }
@@ -124,19 +126,20 @@ class CareerController extends Controller
             $data['media'] = ImageCompressor::store($request->file('media'), 'careers');
         }
 
+        /*
         // LinkedIn Automation (Hanya jika dicentang saat update)
         if ($request->has('post_to_linkedin')) {
-            // Jika user mengisi caption baru di form, gunakan itu. 
-            // Jika kosong tapi ingin auto-post, generate baru atau gunakan yang lama? 
+            // Jika user mengisi caption baru di form, gunakan itu.
+            // Jika kosong tapi ingin auto-post, generate baru atau gunakan yang lama?
             // Sesuai permintaan: gunakan yang ada di form (yang mungkin sudah terisi caption lama).
             $caption = $request->linkedin_caption ?? $this->generateDefaultLinkedinCaption($career);
-            
+
             $data['linkedin_caption'] = $caption;
 
             // Gunakan media baru jika diupload, jika tidak gunakan yang lama
             $currentMedia = isset($data['media']) ? $data['media'] : $career->media;
             $mediaPath = $currentMedia ? storage_path('app/public/' . $currentMedia) : null;
-            
+
             $linkedinService = new LinkedInService();
             $linkedinPostId = $linkedinService->publishPost($caption, $mediaPath);
 
@@ -144,6 +147,7 @@ class CareerController extends Controller
                 $data['linkedin_post_id'] = $linkedinPostId;
             }
         }
+        */
 
         // Saat update, kita tidak mengubah posted_date (biarkan tanggal aslinya)
         $career->update($data);

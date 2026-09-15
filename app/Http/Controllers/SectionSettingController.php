@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SectionSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use App\Helpers\LogHelper;
 use App\Helpers\ImageCompressor;
@@ -46,6 +47,14 @@ class SectionSettingController extends Controller
 
         $setting->background_images = array_values($currentImages);
         $setting->save();
+
+        // Public pages cache these settings — bust the relevant cache so the change shows immediately.
+        if (in_array($request->section_key, ['bie', 'work', 'bintan'])) {
+            Cache::forget('bie_page_settings');
+        }
+        if ($request->section_key === 'career') {
+            Cache::forget('section_setting_career');
+        }
 
         LogHelper::log('UPDATE', 'Section Settings', "Updated settings for section: {$request->section_key}");
 

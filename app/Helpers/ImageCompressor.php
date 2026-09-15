@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
  */
 class ImageCompressor
 {
-    public static function store(UploadedFile $file, string $folder, string $disk = 'public', int $quality = 60): string
+    public static function store(UploadedFile $file, string $folder, string $disk = 'public', int $quality = 80): string
     {
         $mime = $file->getMimeType();
         $extension = strtolower($file->getClientOriginalExtension()) ?: 'jpg';

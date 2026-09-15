@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label class="form-label small fw-bold">Background Images</label>
-                                    <input type="file" name="background_images[]" class="form-control rounded-pill px-3" multiple>
+                                    <input type="file" name="background_images[]" class="form-control rounded-pill px-3" multiple accept="image/*">
                                     <p class="text-muted small mt-2 mb-0">
                                         <i class="fa-regular fa-clipboard me-1"></i> Tip: drag &amp; drop an image here, or press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste one.
                                     </p>

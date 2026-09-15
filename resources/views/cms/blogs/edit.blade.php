@@ -81,6 +81,7 @@
                                     @error('image') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
                                 </div>
 
+                                {{--
                                 <div class="card border-0 p-4 rounded-4 bg-primary-subtle border border-primary-subtle">
                                     <h6 class="fw-bold text-primary mb-3"><i class="fa-brands fa-instagram me-2"></i> Instagram Automation</h6>
                                     <div class="form-check form-switch mb-3">
@@ -90,6 +91,7 @@
                                     <label class="form-label fw-bold text-dark small">IG Caption / Excerpt</label>
                                     <textarea class="form-control" name="excerpt" rows="4">{{ old('excerpt', $blog->excerpt) }}</textarea>
                                 </div>
+                                --}}
 
                                 <div class="d-flex justify-content-end gap-2 mt-4">
                                     <a href="{{ route('cms.blogs.index') }}" class="btn btn-light rounded-pill px-4 fw-bold">Cancel</a>

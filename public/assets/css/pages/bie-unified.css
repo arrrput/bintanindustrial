@@ -109,6 +109,11 @@
         /* ---------------- Work Section Styles ---------------- */
         .service-suite-flex {
             display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .service-suite-row {
+            display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 1.5rem;
@@ -118,7 +123,11 @@
             display: flex;
         }
         @media (min-width: 768px) { .service-item { width: calc(50% - 0.75rem); } }
-        @media (min-width: 992px) { .service-item { width: calc(33.333% - 1rem); } }
+        @media (min-width: 992px) {
+            .service-item {
+                width: calc((100% - (var(--row-cols, 3) - 1) * 1.5rem) / var(--row-cols, 3));
+            }
+        }
         .service-card {
             width: 100%;
             border-radius: 20px;

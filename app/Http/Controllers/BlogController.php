@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\SectionSetting;
 use Illuminate\Http\Request;
-use App\Services\InstagramService;
+// use App\Services\InstagramService;
 use App\Helpers\LogHelper;
 use App\Helpers\ImageCompressor;
 
@@ -71,15 +71,16 @@ class BlogController extends Controller
 
         LogHelper::log('CREATE', 'Blogs', "Published new blog post: {$blog->title}");
 
+        /*
         // PROSES OTOMATIS POST KE INSTAGRAM
         if ($blog->post_to_ig) {
             $images = is_array($blog->image) ? $blog->image : json_decode($blog->image, true);
             $firstImage = $images[0] ?? null;
 
             if ($firstImage) {
-                
-                $imageUrl = asset('storage/' . $firstImage); 
-                
+
+                $imageUrl = asset('storage/' . $firstImage);
+
                 $caption = $request->excerpt ?? $blog->title;
 
                 $igService = new InstagramService();
@@ -91,6 +92,7 @@ class BlogController extends Controller
                 }
             }
         }
+        */
 
         return redirect()->route('cms.blogs.index')
                          ->with('success', 'Article successfully published!');
