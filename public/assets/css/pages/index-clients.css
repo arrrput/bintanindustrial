@@ -1,3 +1,67 @@
+        /* Section container (background image is set inline in the blade) */
+        #clients {
+            position: relative;
+            padding: 100px 0;
+            margin-top: 40px;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        #clients .section-title h2,
+        #clients .section-title p {
+            color: #ffffff !important;
+        }
+        #clients .section-title p {
+            margin-bottom: 0;
+        }
+        #clients .section-title p span {
+            color: var(--accent-color);
+        }
+
+        /* Testimonial cards */
+        #clients .horizontal-scroll-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+        #clients .horizontal-scroll-content {
+            width: max-content;
+            padding-left: 20px;
+        }
+        #clients .testimonial-horizontal-item {
+            width: 420px;
+            margin-right: 30px;
+            flex-shrink: 0;
+        }
+        #clients .testimonial-item {
+            height: 210px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        #clients .testimonial-item .col-4 {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Tenant logos */
+        #clients .tenants-badge {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+        }
+        #clients .tenants-swiper {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        #clients .tenants-swiper .swiper-slide img {
+            max-height: 60px;
+            transition: 0.3s;
+            filter: none !important;
+        }
+
         /* Base / Desktop Improvements */
         .horizontal-scroll-content {
             display: flex !important;
