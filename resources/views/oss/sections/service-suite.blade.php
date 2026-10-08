@@ -1,4 +1,8 @@
 {{-- Section: One Stop Service Suite --}}
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('assets/css/pages/service-suite.css') }}">
+@endpush
+
 @if ($serviceSuite && $serviceSuite->count() > 0)
     @php
         // Balance service cards across rows (max 3 per row) instead of a

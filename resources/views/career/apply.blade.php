@@ -15,7 +15,7 @@
 </div>
 
 <div class="container mt-4 mt-md-5 mb-5 pb-5">
-    <form action="{{ route('careers.apply.post', $career->slug) }}" method="POST" enctype="multipart/form-data" id="multiStepForm">
+    <form action="{{ route('career.apply.post', $career->slug) }}" method="POST" enctype="multipart/form-data" id="multiStepForm">
         @csrf
         
         <div class="row justify-content-center">

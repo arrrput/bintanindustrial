@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    {{-- Testimonials (horizontal scroll, driven by index-3d-simulation.js) --}}
+    {{-- Testimonials (horizontal scroll, driven by index.js) --}}
     <div class="horizontal-scroll-wrapper">
         <div class="horizontal-scroll-content d-flex">
             @foreach ($testimonials as $t)

@@ -1,0 +1,89 @@
+/* Industrial Solutions: 3D factory viewer + factory type cards (Profile page) */
+
+    #factype {
+        --accent-color: #265741;
+    }
+
+    /* Section title pill */
+    #factype .section-title h2 {
+        background: rgba(25, 135, 84, 0.1) !important;
+        color: var(--accent-color) !important;
+        font-size: 0.9rem !important;
+        padding: 10px 25px !important;
+    }
+
+    #factype .section-title p {
+        font-size: 2rem !important;
+        margin-top: 15px !important;
+    }
+
+    /* Factory type cards */
+    #factype .image-bg-card {
+        height: 100px;
+    }
+    @media (max-width: 575.98px) {
+        #factype .image-bg-card {
+            height: 140px;
+            padding: 16px !important;
+        }
+        #factype .image-bg-card h4 {
+            font-size: 15px !important;
+            letter-spacing: 0.5px;
+        }
+        #factype .image-bg-card p.small {
+            font-size: 12px !important;
+            line-height: 1.3;
+        }
+        #factype .image-bg-card .read-more {
+            font-size: 11px !important;
+            margin-top: 5px !important;
+        }
+        #factype .image-bg-card .content {
+            line-height: 1.3 !important;
+        }
+
+    }
+
+    /* ============================CANVAS 3D MODEL=============================== */
+
+    /* --- 3D Canvas Styles --- */
+    .canvas-container {
+        width: 100%;
+        height: 400px;
+        background: transparent;
+        position: relative;
+        overflow: hidden;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+        border-radius: 20px;
+    }
+
+    @media (max-width: 575.98px) {
+        .canvas-container {
+            height: 320px;
+            border-radius: 14px;
+            margin-bottom: 18px;
+        }
+    }
+    @media (min-width: 576px) and (max-width: 991.98px) {
+        .canvas-container {
+            height: 360px;
+        }
+    }
+
+    #loading-overlay {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: var(--accent-color); /* Menggunakan variabel warna tema Anda */
+        font-weight: bold;
+        z-index: 10;
+        transition: opacity 0.5s;
+    }
+
+    .progress-bar-bg { width: 200px; height: 4px; background: #ddd; margin-top: 15px; border-radius: 2px;}
+    #progress-fill { width: 0%; height: 100%; background: var(--accent-color); border-radius: 2px; transition: width 0.3s;}

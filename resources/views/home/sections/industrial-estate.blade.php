@@ -1,12 +1,12 @@
-{{-- Section: BIE Intro (Our Industrial Estate) --}}
-@include('bie.partials.header-overlay', [
+{{-- Section: Our Industrial Estate (content managed in CMS > BIE Page) --}}
+@include('partials.section-header-overlay', [
     'slideshowId' => 'bieBgSlideshow',
     'setting' => $bieSetting,
     'fallbackImage' => 'assets/img/Bintan/bie.jpg',
     'fallbackTitle' => 'Our Industrial Estate',
 ])
 
-<section class="page-content section position-relative overflow-hidden">
+<section class="industrial-estate page-content section position-relative overflow-hidden">
     <div class="container position-relative" style="z-index: 1;">
         @foreach ($bies as $index => $section)
             @php $isReversed = $index % 2 != 0; @endphp

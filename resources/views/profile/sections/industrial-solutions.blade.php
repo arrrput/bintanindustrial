@@ -1,4 +1,9 @@
 {{-- Section: Industrial Solutions (factory types + 3D viewer) --}}
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('assets/css/components/image-bg-card.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/pages/factory-types.css') }}">
+@endpush
+
 @php
     $factoryTypes = [
         [
@@ -82,10 +87,8 @@
     <script src="https://unpkg.com/three@0.128.0/examples/js/loaders/RGBELoader.js"></script>
     <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
     <script>
         window.__factoryAssetBase = "{{ asset('assets/img/3d_Factory') }}";
     </script>
-    <script src="{{ asset('assets/js/pages/index-3d-simulation.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/factory-3d.js') }}"></script>
 @endpush

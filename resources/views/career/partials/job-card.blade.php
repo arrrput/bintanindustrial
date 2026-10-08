@@ -52,7 +52,7 @@
             </ul>
         </div>
 
-        <a href="{{ route('careers.detail', $job->slug) }}"
+        <a href="{{ route('career.show', $job->slug) }}"
             class="btn btn-sm w-100 fw-bold rounded-pill py-2 {{ $isClosed ? 'btn-outline-danger' : 'btn-outline-success btn-job-apply' }}"
             style="transition: 0.3s;">
             View Details {{ $isClosed ? '(Closed)' : '& Apply' }}

@@ -4,7 +4,7 @@
 <section class="page-content section pt-0">
     <div class="container">
         @forelse ($csrProgram as $index => $item)
-            @include('program.partials.program-row', [
+            @include('oss.partials.program-row', [
                 'reversed' => $index % 2 != 0,
                 'rowClass' => 'mt-5 pt-4',
                 'image' => $item->image ? asset('storage/' . $item->image) : asset('assets/img/Bintan/image10.jpeg'),
@@ -18,7 +18,7 @@
             ])
         @empty
             {{-- Fallback content when no CSR program exists yet --}}
-            @include('program.partials.program-row', [
+            @include('oss.partials.program-row', [
                 'reversed' => false,
                 'rowClass' => 'mt-5 pt-4',
                 'image' => asset('assets/img/Bintan/image10.jpeg'),

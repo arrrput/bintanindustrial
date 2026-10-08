@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Careers - Bintan Industrial Estate')
+@section('title', 'Career - Bintan Industrial Estate')
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('assets/css/puu.css') }}">
@@ -9,7 +9,7 @@
 @endpush
 
 @section('content')
-    @include('partials.page-title', ['current' => 'Careers'])
+    @include('partials.page-title', ['current' => 'Career'])
 
     @include('partials.page-header', [
         'prefix' => 'career',
@@ -38,7 +38,7 @@
 
             <div class="row g-4 mt-2">
                 @forelse ($careers as $job)
-                    @include('careers.partials.job-card', ['job' => $job])
+                    @include('career.partials.job-card', ['job' => $job])
                 @empty
                     <div class="col-12 text-center py-5">
                         <i class="fa-solid fa-folder-open fs-1 text-muted mb-3"></i>

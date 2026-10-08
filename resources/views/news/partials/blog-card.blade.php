@@ -7,7 +7,7 @@
 @php
     $images = is_array($blog->image) ? $blog->image : json_decode($blog->image, true);
     $images = $images ?: [$blog->image];
-    $blogUrl = url('/blog/' . $blog->slug);
+    $blogUrl = route('news.show', $blog->slug);
 @endphp
 
 <div class="col-lg-4 col-md-6 blog-item">

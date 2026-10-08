@@ -46,11 +46,11 @@
 
         <nav id="navmenu" class="navmenu">
             <ul>
-                <li><a href="{{ url('/') }}" class="{{ Request::is('/') ? 'active' : '' }}">Home</a></li>
-                <li><a href="{{ url('/bie') }}" class="{{ Request::is('bie*') ? 'active' : '' }}">BIE</a></li> 
-                <li><a href="{{ url('/program') }}" class="{{ Request::is('program*') ? 'active' : '' }}">Program</a></li>
-                <li><a href="{{ url('/careers') }}" class="{{ Request::is('careers*') ? 'active' : '' }}">Careers</a></li>
-                <li><a href="{{ url('/blogs') }}" class="{{ (Request::is('blogs*') || Request::is('blog*')) ? 'active' : '' }}">News</a></li>
+                <li><a href="{{ route('home') }}" class="{{ Request::routeIs('home') ? 'active' : '' }}">Home</a></li>
+                <li><a href="{{ route('profile') }}" class="{{ Request::routeIs('profile') ? 'active' : '' }}">Profile</a></li>
+                <li><a href="{{ route('oss') }}" class="{{ Request::routeIs('oss') ? 'active' : '' }}">OSS</a></li>
+                <li><a href="{{ route('news.index') }}" class="{{ Request::routeIs('news.*') ? 'active' : '' }}">News</a></li>
+                <li><a href="{{ route('career.index') }}" class="{{ Request::routeIs('career.*') ? 'active' : '' }}">Career</a></li>
                 @auth
                     <li class="cms-divider-custom" style="width: 1px; height: 20px; background: #ddd; margin: 0 8px; display: inline-block; vertical-align: middle;"></li>
                     <li class="dropdown user-dropdown">
@@ -120,13 +120,13 @@
         </div>
 
         <div class="col-lg-4 col-md-6 footer-about">
-          @if(!Request::is('/'))
+          {{-- @if(!Request::is('/')) --}}
           <div class="footer-contact">
             <p><strong>Address:</strong> Tanjung Lobam Road, Tlk. Lobam, Kepulauan Riau PO Box 020 29154</p>
             <p class="mt-3"><strong>Phone:</strong> <span>(0770) 696833</span></p>
-            <p><strong>Email:</strong> <span>biie@biie.co.id</span></p>
+            {{-- <p><strong>Email:</strong> <span>biie@biie.co.id</span></p> --}}
           </div>
-          @endif
+          {{-- @endif --}}
         </div>
 
         <div class="col-lg-4 col-md-12">

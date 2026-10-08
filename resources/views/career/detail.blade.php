@@ -34,7 +34,7 @@
       <nav class="breadcrumbs">
         <ol>
           <li><a href="{{ url('/') }}">Home</a></li>
-          <li><a href="{{ url('/careers') }}">Careers</a></li>
+          <li><a href="{{ route('career.index') }}">Career</a></li>
           <li class="current">Job Details</li>
         </ol>
       </nav>
@@ -145,7 +145,7 @@
                                  <i class="fa-solid fa-lock me-2"></i> Apply Closed
                               </button>
                           @else
-                              <a href="{{ route('careers.apply.email', $career->slug) }}" class="btn btn-apply-animated btn-lg fw-bold rounded-pill text-center">
+                              <a href="{{ route('career.apply.email', $career->slug) }}" class="btn btn-apply-animated btn-lg fw-bold rounded-pill text-center">
                                  <i class="fa-solid fa-paper-plane me-2"></i> Apply for this position
                               </a>
                           @endif

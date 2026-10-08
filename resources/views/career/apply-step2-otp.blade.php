@@ -44,7 +44,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('careers.apply.verify', $career->slug) }}" method="POST">
+                    <form action="{{ route('career.apply.verify', $career->slug) }}" method="POST">
                         @csrf
                         <div class="mb-4">
                             <input type="text" name="otp" class="form-control form-control-lg rounded-pill px-4 otp-input @error('otp') is-invalid @enderror" maxlength="6" placeholder="XXXXXX" required autocomplete="off">
@@ -57,13 +57,13 @@
 
                     <div class="mt-4 border-top pt-3">
                         <p class="small text-muted mb-2">Didn't receive the code?</p>
-                        <form action="{{ route('careers.apply.send-otp', $career->slug) }}" method="POST">
+                        <form action="{{ route('career.apply.send-otp', $career->slug) }}" method="POST">
                             @csrf
                             <input type="hidden" name="email" value="{{ session('apply_email') }}">
                             <button type="submit" class="btn btn-link text-success p-0 fw-bold text-decoration-none">Resend Code</button>
                         </form>
                         <div class="mt-3">
-                            <a href="{{ route('careers.apply.email', $career->slug) }}" class="text-muted text-decoration-none small">Change Email Address</a>
+                            <a href="{{ route('career.apply.email', $career->slug) }}" class="text-muted text-decoration-none small">Change Email Address</a>
                         </div>
                     </div>
 

@@ -1,5 +1,6 @@
 {{--
-    Full-width section header with a background slideshow (handled by bie-unified.js).
+    Full-width section header with a background slideshow (Home, Profile).
+    Its CSS and slideshow script are pushed once per page.
 
     Params:
     - $slideshowId   : id of the slideshow container
@@ -14,6 +15,15 @@
         ->map(fn ($img) => asset('storage/' . $img))
         ->whenEmpty(fn () => collect([asset($fallbackImage)]));
 @endphp
+
+@once
+    @push('styles')
+        <link rel="stylesheet" href="{{ asset('assets/css/components/section-header-overlay.css') }}">
+    @endpush
+    @push('scripts')
+        <script src="{{ asset('assets/js/components/bg-slideshow.js') }}"></script>
+    @endpush
+@endonce
 
 <section class="section-header-overlay">
     <div class="bg-container" id="{{ $slideshowId }}">

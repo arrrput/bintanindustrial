@@ -44,7 +44,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('careers.apply.send-otp', $career->slug) }}" method="POST">
+                    <form action="{{ route('career.apply.send-otp', $career->slug) }}" method="POST">
                         @csrf
                         <div class="mb-4 text-start">
                             <label class="form-label fw-bold text-dark">Email Address <span class="text-danger">*</span></label>
@@ -53,7 +53,7 @@
 
                         <div class="d-grid gap-3">
                             <button type="submit" class="btn btn-apply-submit border-0">Send Verification Code</button>
-                            <a href="{{ route('careers.detail', $career->slug) }}" class="text-muted text-decoration-none small fw-bold">Cancel and go back</a>
+                            <a href="{{ route('career.show', $career->slug) }}" class="text-muted text-decoration-none small fw-bold">Cancel and go back</a>
                         </div>
                     </form>
                 </div>

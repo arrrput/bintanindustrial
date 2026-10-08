@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'BIE - Bintan Industrial Estate')
+@section('title', 'Profile - Bintan Industrial Estate')
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('assets/css/puu.css') }}">
@@ -8,12 +8,10 @@
 @endpush
 
 @section('content')
-    @include('partials.page-title', ['current' => 'BIE'])
+    @include('partials.page-title', ['current' => 'Profile'])
 
-    @include('bie.sections.intro')
-    @include('bie.sections.bintan')
-    @include('bie.sections.service-suite')
-    @include('bie.sections.facilities')
+    @include('profile.sections.bintan')
+    @include('profile.sections.industrial-solutions')
 @endsection
 
 @push('scripts')

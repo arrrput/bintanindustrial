@@ -1,0 +1,80 @@
+/* Image background card (Home > Infrastructure, Profile > Industrial Solutions) */
+
+    .image-bg-card {
+        border-radius: 20px !important;
+        overflow: hidden;
+        transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        border: none !important;
+        height: 450px;
+        display: flex;
+        align-items: center; /* Center content vertically */
+        justify-content: center; /* Center content horizontally */
+        text-align: center;
+        padding: 30px !important;
+        position: relative;
+        cursor: pointer; /* Indicate clickability */
+    }
+
+    /* Base Card Style */
+    .image-bg-card {
+        transition: all 0.5s ease !important;
+        border-radius: 20px !important;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .image-bg-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%);
+        z-index: 1;
+        transition: 0.5s ease;
+        border-radius: 20px !important;
+        opacity: 1;
+    }
+
+    /* Active Card State - ONLY OUTLINE */
+    .active-card {
+        outline-offset: -4px;
+        cursor: default !important;
+        background: #265741 !important;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3) !important;
+    }
+
+    .image-bg-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%);
+        z-index: 1;
+        transition: 0.5s ease;
+        border-radius: 20px !important;
+    }
+
+    /* Green overlay ONLY on hover */
+    .image-bg-card:hover::before {
+        background: #265741 !important;
+    }
+
+    /* Content adjustments on hover and for active card */
+    .image-bg-card:hover .content,
+    .active-card .content {
+        transform: translateY(-5px) !important;
+    }
+
+    .image-bg-card .content {
+        position: relative;
+        z-index: 2;
+        transition: 0.5s ease;
+    }
+
+    .image-bg-card h4, .image-bg-card h3, .image-bg-card p, .image-bg-card .icon {
+        color: white !important;
+        margin-bottom: 0;
+    }
+
+    .image-bg-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }

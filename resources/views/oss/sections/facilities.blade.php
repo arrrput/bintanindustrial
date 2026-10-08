@@ -1,5 +1,5 @@
 {{-- Section: Facilities --}}
-@include('bie.partials.header-overlay', [
+@include('partials.section-header-overlay', [
     'slideshowId' => 'workBgSlideshow',
     'setting' => $workSetting,
     'fallbackImage' => 'assets/img/Bintan/work.jpg',

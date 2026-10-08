@@ -1,4 +1,9 @@
 {{-- Section: World-Class Infrastructure --}}
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('assets/css/components/image-bg-card.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/pages/infrastructure.css') }}">
+@endpush
+
 @php
     $services = [
         ['title' => 'Water Treatment Plant', 'icon' => 'bi-droplet-half', 'image' => 'WTP'],

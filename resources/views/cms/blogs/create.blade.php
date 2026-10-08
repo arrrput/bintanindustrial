@@ -37,7 +37,7 @@
                                     <div class="col-12">
                                         <label class="form-label fw-bold text-dark">SEO Slug <span class="text-danger">*</span></label>
                                         <div class="input-group">
-                                            <span class="input-group-text bg-light text-muted small">{{ url('/blog') }}/</span>
+                                            <span class="input-group-text bg-light text-muted small">{{ url('/news') }}/</span>
                                             <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" value="{{ old('slug') }}" required>
                                         </div>
                                         @error('slug') <div class="text-danger small mt-1">{{ $message }}</div> @enderror

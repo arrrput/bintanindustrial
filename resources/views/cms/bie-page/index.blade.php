@@ -36,7 +36,7 @@
             </h2>
             <p class="text-muted mb-0">Manage all content sections of the public <strong>/bie</strong> page from one place.</p>
         </div>
-        <a href="{{ url('/bie') }}" target="_blank" class="btn btn-outline-success rounded-pill px-4 fw-bold">
+        <a href="{{ route('profile') }}" target="_blank" class="btn btn-outline-success rounded-pill px-4 fw-bold">
             <i class="fa-solid fa-arrow-up-right-from-square me-2"></i> View Live Page
         </a>
     </div>

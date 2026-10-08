@@ -1,0 +1,70 @@
+/* World-Class Infrastructure / Integrated Services cards (OSS page) */
+
+    #services {
+        --accent-color: #265741;
+    }
+
+    /* Section title pill */
+    #services .section-title h2 {
+        background: rgba(25, 135, 84, 0.1) !important;
+        color: var(--accent-color) !important;
+        font-size: 0.9rem !important;
+        padding: 10px 25px !important;
+    }
+
+    #services .section-title p {
+        font-size: 2rem !important;
+        margin-top: 15px !important;
+    }
+
+    @media (max-width: 575.98px) {
+        /* Integrated Services cards */
+        #services .image-bg-card {
+            padding: 18px !important;
+        }
+        #services .image-bg-card .icon {
+            width: 48px !important;
+            height: 48px !important;
+            margin-bottom: 8px !important;
+        }
+        #services .image-bg-card .icon i {
+            font-size: 22px !important;
+        }
+        #services .image-bg-card h3 {
+            font-size: 13px !important;
+            margin: 6px 0 0 0 !important;
+            line-height: 1.3;
+        }
+    }
+
+    .service-item .icon {
+        background: rgba(255,255,255,0.2) !important;
+        backdrop-filter: blur(5px);
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 12px auto;
+        font-size: 16px;
+        transition: 0.3s ease;
+        position: relative;
+        z-index: 3;
+    }
+
+    .service-item .icon:hover {
+        background: white !important;
+        color: var(--accent-color) !important;
+        transform: scale(1.1);
+    }
+
+    .service-item .icon:hover i {
+        color: var(--accent-color) !important;
+    }
+
+    /* Remove the old card-triggered icon hover if it exists */
+    .image-bg-card:hover .icon {
+        /* Keep it subtle or remove the forced white background */
+        background: rgba(255,255,255,0.3) !important;
+    }

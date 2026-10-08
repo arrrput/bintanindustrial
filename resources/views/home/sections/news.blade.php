@@ -12,7 +12,7 @@
                     @php
                         $images = is_array($blog->image) ? $blog->image : json_decode($blog->image, true);
                         $images = $images ?: [$blog->image];
-                        $blogUrl = url('/blog/' . $blog->slug);
+                        $blogUrl = route('news.show', $blog->slug);
                     @endphp
 
                     <div class="col-lg-4 col-md-6 blog-item isotope-item">
@@ -83,7 +83,7 @@
             </div>
 
             <div class="text-center mt-5" data-aos="fade-up">
-                <a href="{{ url('/blogs') }}" class="btn btn-outline-success rounded-pill px-5 py-2 fw-bold">
+                <a href="{{ route('news.index') }}" class="btn btn-outline-success rounded-pill px-5 py-2 fw-bold">
                     View All Articles
                 </a>
             </div>

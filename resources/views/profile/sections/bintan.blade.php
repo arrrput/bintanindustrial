@@ -1,5 +1,5 @@
 {{-- Section: Bintan Island (advantages slider + descriptions) --}}
-@include('bie.partials.header-overlay', [
+@include('partials.section-header-overlay', [
     'slideshowId' => 'bintanBgSlideshow',
     'setting' => $bintanSetting,
     'fallbackImage' => 'assets/img/Bintan/bintan.jpg',

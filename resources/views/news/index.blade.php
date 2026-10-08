@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Semua Artikel - Bintan Industrial Estate')
+@section('title', 'News - Bintan Industrial Estate')
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('assets/css/pages/blogs.css') }}">

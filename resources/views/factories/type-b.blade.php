@@ -10,7 +10,7 @@
       <nav class="breadcrumbs">
         <ol>
           <li><a href="{{ url('/') }}">Home</a></li>
-          <li><a href="{{ url('/#factype') }}">Factory Types</a></li>
+          <li><a href="{{ route('profile') }}#factype">Factory Types</a></li>
           <li class="current">Type B</li>
         </ol>
       </nav>

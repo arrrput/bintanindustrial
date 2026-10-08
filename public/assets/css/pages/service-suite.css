@@ -1,0 +1,33 @@
+/* One Stop Service Suite cards (OSS page) */
+
+        .service-suite-flex {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .service-suite-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        .service-suite-row .service-item {
+            width: 100%;
+            display: flex;
+        }
+        @media (min-width: 768px) { .service-suite-row .service-item { width: calc(50% - 0.75rem); } }
+        @media (min-width: 992px) {
+            .service-suite-row .service-item {
+                width: calc((100% - (var(--row-cols, 3) - 1) * 1.5rem) / var(--row-cols, 3));
+            }
+        }
+        .service-card {
+            width: 100%;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+        }
+
