@@ -28,7 +28,7 @@ class BiePageController extends Controller
 
         $bintans = Bie::where('page_group', 'bintan')->orderBy('order')->get();
 
-        return view('bie-unified', compact(
+        return view('bie.index', compact(
             'bieSetting', 'workSetting', 'bintanSetting',
             'bies', 'works', 'bintans', 'serviceSuite'
         ));

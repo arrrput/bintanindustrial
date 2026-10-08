@@ -53,3 +53,24 @@
       position: relative;
       z-index: 3;
     }
+
+    /* Job card: closed state */
+    .value-card.is-closed {
+      opacity: 0.85;
+    }
+    .value-card.is-closed .value-icon-wrapper,
+    .value-card.is-closed:hover .value-icon-wrapper {
+      background: rgba(220, 53, 69, 0.1);
+      color: #dc3545;
+    }
+
+    /* Job card: apply button */
+    .value-card .btn-job-apply {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+    .value-card .btn-job-apply:hover {
+      border-color: var(--accent-color);
+      background-color: var(--accent-color);
+      color: #fff;
+    }

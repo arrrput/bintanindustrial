@@ -22,7 +22,7 @@ class CareerController extends Controller
             SectionSetting::where('section_key', 'career')->first()
         );
 
-        return view('careers', compact('careers', 'setting'));
+        return view('careers.index', compact('careers', 'setting'));
     }
 
     public function show($slug)

@@ -147,6 +147,6 @@ class ProgramController extends Controller
         $csrProgram = Program::where('category', 'csr')->orderBy('order')->get();
         $setting = SectionSetting::where('section_key', 'program')->first();
 
-        return view('program', compact('eventProgram', 'entertainmentProgram', 'csrProgram', 'setting'));
+        return view('program.index', compact('eventProgram', 'entertainmentProgram', 'csrProgram', 'setting'));
     }
 }

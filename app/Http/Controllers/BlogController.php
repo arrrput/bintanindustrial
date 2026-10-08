@@ -209,12 +209,12 @@ class BlogController extends Controller
     {
         $blogs = Blog::latest()->paginate(9);
         $setting = SectionSetting::where('section_key', 'blog')->first();
-        return view('blogs', compact('blogs', 'setting'));
+        return view('news.index', compact('blogs', 'setting'));
     }
 
     public function show($slug)
     {
         $blog = Blog::where('slug', $slug)->firstOrFail();
-        return view('blog-details', compact('blog'));
+        return view('news.show', compact('blog'));
     }
 }

@@ -20,6 +20,6 @@ class Controller extends BaseController
         $testimonials = Testimonial::latest()->get();
         $tenants = TenantLogo::latest()->get();
 
-        return view('index', compact('blogs', 'testimonials', 'tenants'));
+        return view('home.index', compact('blogs', 'testimonials', 'tenants'));
     }
 }
