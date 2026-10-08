@@ -1,3 +1,5 @@
+/* Beyond The Workplace: parallax banner + Events, Entertainment, CSR (News page) */
+
 .program-parallax-divider {
     position: relative;
     background-attachment: fixed;
@@ -38,4 +40,15 @@
     color: #f1f1f1;
     text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
     line-height: 1.8;
+}
+
+/* Program rows (Events, Entertainment, CSR) */
+.beyond-the-workplace .page-content {
+    position: relative;
+    background-color: #ffffff;
+    z-index: 2;
+}
+
+.beyond-the-workplace .text-primary {
+    color: var(--accent-color) !important;
 }

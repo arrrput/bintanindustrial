@@ -19,10 +19,10 @@ class ApplicantController extends Controller
         $career = Career::where('slug', $slug)->firstOrFail();
         
         if ($career->is_closed) {
-            return redirect()->route('careers.detail', $slug)->with('error', 'This vacancy is closed.');
+            return redirect()->route('career.show', $slug)->with('error', 'This vacancy is closed.');
         }
 
-        return view('careers.apply-step1-email', compact('career'));
+        return view('career.apply-step1-email', compact('career'));
     }
 
     // Step 1 Action: Generate and Send OTP
@@ -31,7 +31,7 @@ class ApplicantController extends Controller
         $career = Career::where('slug', $slug)->firstOrFail();
 
         if ($career->is_closed) {
-            return redirect()->route('careers.detail', $slug)->with('error', 'This vacancy is closed.');
+            return redirect()->route('career.show', $slug)->with('error', 'This vacancy is closed.');
         }
 
         $request->validate([
@@ -52,7 +52,7 @@ class ApplicantController extends Controller
             ->to($request->email)
             ->send(new ApplicantOtpMail($otp, $career->title));
 
-        return redirect()->route('careers.apply.otp', $slug)->with('success', 'Verification code sent to your email.');
+        return redirect()->route('career.apply.otp', $slug)->with('success', 'Verification code sent to your email.');
     }
 
     // Step 2: Show OTP Verification Form
@@ -62,10 +62,10 @@ class ApplicantController extends Controller
         
         // Ensure they came from step 1 for this specific job
         if (session('apply_slug') !== $slug || !session('apply_email')) {
-            return redirect()->route('careers.apply.email', $slug)->with('error', 'Please enter your email first.');
+            return redirect()->route('career.apply.email', $slug)->with('error', 'Please enter your email first.');
         }
 
-        return view('careers.apply-step2-otp', compact('career'));
+        return view('career.apply-step2-otp', compact('career'));
     }
 
     // Step 2 Action: Verify OTP
@@ -82,7 +82,7 @@ class ApplicantController extends Controller
             // Clear the actual OTP so it can't be reused, but keep the email for the final form
             $request->session()->forget('apply_otp');
 
-            return redirect()->route('careers.apply', $slug)->with('success', 'Email verified successfully.');
+            return redirect()->route('career.apply', $slug)->with('success', 'Email verified successfully.');
         }
 
         return redirect()->back()->withErrors(['otp' => 'Invalid verification code. Please try again.']);
@@ -94,15 +94,15 @@ class ApplicantController extends Controller
         $career = Career::where('slug', $slug)->firstOrFail();
         
         if ($career->is_closed) {
-            return redirect()->route('careers.detail', $slug)->with('error', 'This vacancy is closed.');
+            return redirect()->route('career.show', $slug)->with('error', 'This vacancy is closed.');
         }
 
         // Ensure email is verified
         if (!session('apply_verified') || session('apply_slug') !== $slug) {
-            return redirect()->route('careers.apply.email', $slug)->with('error', 'Please verify your email address first.');
+            return redirect()->route('career.apply.email', $slug)->with('error', 'Please verify your email address first.');
         }
 
-        return view('careers.apply', compact('career'));
+        return view('career.apply', compact('career'));
     }
 
     // Step 3 Action: Store Application
@@ -111,12 +111,12 @@ class ApplicantController extends Controller
         $career = Career::where('slug', $slug)->firstOrFail();
 
         if ($career->is_closed) {
-            return redirect()->route('careers.detail', $slug)->with('error', 'This vacancy is closed.');
+            return redirect()->route('career.show', $slug)->with('error', 'This vacancy is closed.');
         }
 
         // Double check verified status
         if (!session('apply_verified') || session('apply_slug') !== $slug) {
-            return redirect()->route('careers.apply.email', $slug)->with('error', 'Session expired. Please verify your email again.');
+            return redirect()->route('career.apply.email', $slug)->with('error', 'Session expired. Please verify your email again.');
         }
 
         $request->validate([
@@ -262,6 +262,6 @@ class ApplicantController extends Controller
         // Clean up session after successful application
         $request->session()->forget(['apply_email', 'apply_otp', 'apply_slug', 'apply_verified']);
 
-        return redirect()->route('careers.detail', $slug)->with('success', 'Applied Successfully!');
+        return redirect()->route('career.show', $slug)->with('success', 'Applied Successfully!');
     }
 }

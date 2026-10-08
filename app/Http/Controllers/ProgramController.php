@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bie;
 use App\Models\Program;
 use App\Models\SectionSetting;
 use Illuminate\Http\Request;
@@ -142,11 +143,15 @@ class ProgramController extends Controller
      */
     public function publicIndex()
     {
-        $eventProgram = Program::where('category', 'event')->orderBy('order')->get();
-        $entertainmentProgram = Program::where('category', 'entertainment')->orderBy('order')->get();
-        $csrProgram = Program::where('category', 'csr')->orderBy('order')->get();
+        // OSS page. Events, Entertainment & CSR programs are shown on the News page (BlogController@publicIndex).
         $setting = SectionSetting::where('section_key', 'program')->first();
 
-        return view('program.index', compact('eventProgram', 'entertainmentProgram', 'csrProgram', 'setting'));
+        // One Stop Service Suite & Facilities (managed in CMS > BIE Page, "work" group)
+        $workSetting = SectionSetting::cachedForBiePage()->get('work');
+        $allWorks = Bie::where('page_group', 'work')->orderBy('order')->get();
+        $works = $allWorks->where('category', 'main_section')->values();
+        $serviceSuite = $allWorks->where('category', 'service_suite')->values();
+
+        return view('oss.index', compact('setting', 'workSetting', 'works', 'serviceSuite'));
     }
 }

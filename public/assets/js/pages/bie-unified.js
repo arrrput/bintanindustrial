@@ -1,23 +1,5 @@
   document.addEventListener('DOMContentLoaded', function() {
     
-    // Parallax Slideshows Logic
-    const slideshows = ['bieBgSlideshow', 'bintanBgSlideshow', 'workBgSlideshow'];
-    
-    slideshows.forEach(id => {
-        const container = document.getElementById(id);
-        if(container) {
-            const layers = container.querySelectorAll('.bg-parallax-layer');
-            if(layers.length > 1) {
-                let current = 0;
-                setInterval(() => {
-                    layers[current].classList.remove('active');
-                    current = (current + 1) % layers.length;
-                    layers[current].classList.add('active');
-                }, 4000);
-            }
-        }
-    });
-
     // Bintan Swiper Logic
     const descItems = document.querySelectorAll('.bintan-desc-item');
     function syncDescription(index) {

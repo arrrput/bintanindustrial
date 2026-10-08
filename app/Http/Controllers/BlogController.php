@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Program;
 use App\Models\SectionSetting;
 use Illuminate\Http\Request;
 // use App\Services\InstagramService;
@@ -209,7 +210,13 @@ class BlogController extends Controller
     {
         $blogs = Blog::latest()->paginate(9);
         $setting = SectionSetting::where('section_key', 'blog')->first();
-        return view('news.index', compact('blogs', 'setting'));
+
+        // "Beyond The Workplace" section (managed in CMS > Programs)
+        $eventProgram = Program::where('category', 'event')->orderBy('order')->get();
+        $entertainmentProgram = Program::where('category', 'entertainment')->orderBy('order')->get();
+        $csrProgram = Program::where('category', 'csr')->orderBy('order')->get();
+
+        return view('news.index', compact('blogs', 'setting', 'eventProgram', 'entertainmentProgram', 'csrProgram'));
     }
 
     public function show($slug)

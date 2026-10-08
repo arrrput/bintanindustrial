@@ -180,7 +180,7 @@ class CareerController extends Controller
     private function generateDefaultLinkedinCaption($career)
     {
         $closingDate = \Carbon\Carbon::parse($career->closing_date)->format('d F Y');
-        $jobUrl = route('careers.detail', $career->slug); 
+        $jobUrl = route('career.show', $career->slug); 
 
         return "📢 WE ARE HIRING!\n\n" .
                "Bintan Industrial Estate is looking for a talented " . strtoupper($career->title) . " to join our growing team.\n\n" .

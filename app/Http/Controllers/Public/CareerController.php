@@ -22,12 +22,12 @@ class CareerController extends Controller
             SectionSetting::where('section_key', 'career')->first()
         );
 
-        return view('careers.index', compact('careers', 'setting'));
+        return view('career.index', compact('careers', 'setting'));
     }
 
     public function show($slug)
     {
         $career = Career::where('slug', $slug)->firstOrFail();
-        return view('careers.detail', compact('career'));
+        return view('career.detail', compact('career'));
     }
 }

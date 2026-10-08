@@ -43,4 +43,6 @@
             </div>
         </div>
     </section>
+
+    @include('news.sections.beyond-the-workplace')
 @endsection

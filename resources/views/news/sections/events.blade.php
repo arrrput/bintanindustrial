@@ -4,7 +4,7 @@
 <section class="page-content section pb-0">
     <div class="container">
         @forelse ($eventProgram as $index => $item)
-            @include('oss.partials.program-row', [
+            @include('news.partials.program-row', [
                 'reversed' => $index % 2 != 0,
                 'rowClass' => 'mb-5',
                 'image' => $item->image ? asset('storage/' . $item->image) : asset('assets/img/Bintan/image8.jpeg'),
@@ -18,7 +18,7 @@
             ])
         @empty
             {{-- Fallback content when no event program exists yet --}}
-            @include('oss.partials.program-row', [
+            @include('news.partials.program-row', [
                 'reversed' => false,
                 'rowClass' => 'mb-5',
                 'image' => asset('assets/img/Bintan/image8.jpeg'),
