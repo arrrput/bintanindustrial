@@ -18,7 +18,7 @@ class Controller extends BaseController
 
     public function index()
     {
-        // "Our Industrial Estate" section (managed in CMS > BIE Page).
+        // "Our Industrial Estate" section (managed in CMS > Manage Home).
         // Shares the cache key with the Profile page so CMS updates bust both.
         $bieSetting = SectionSetting::cachedForBiePage()->get('bie');
         $bies = Bie::where('page_group', 'bie')->orderBy('order')->get();

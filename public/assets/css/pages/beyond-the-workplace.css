@@ -16,9 +16,52 @@
     margin: 40px 0;
 }
 
+/* Background image layers (cross-faded by components/bg-slideshow.js when there are several) */
+.program-parallax-divider .bg-container {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.program-parallax-layer {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.program-parallax-layer.active {
+    opacity: 1;
+}
+
+.program-parallax-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5));
+}
+
 .program-parallax-content {
     position: relative;
     z-index: 2;
+}
+
+/* Solid color background (SectionSetting background_type = "color") */
+.program-parallax-divider.is-solid .program-parallax-content h3,
+.program-parallax-divider.is-solid .program-parallax-content p {
+    text-shadow: none;
+}
+
+.program-parallax-divider.is-light .program-parallax-content h3 {
+    color: #222222 !important;
+}
+
+.program-parallax-divider.is-light .program-parallax-content p {
+    color: #444444;
 }
 
 .program-parallax-content h3 {

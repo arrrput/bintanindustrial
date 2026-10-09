@@ -9,7 +9,7 @@
       <ol>
         <li><a href="{{ url('/') }}">Home</a></li>
         <li><a href="{{ route('cms.dashboard') }}">CMS</a></li>
-        <li><a href="{{ route('cms.bie-page.index') }}">BIE Page</a></li>
+        <li><a href="{{ route('cms.bie-page.index') }}">Profile &amp; OSS</a></li>
         <li class="current">Edit Work Item</li>
       </ol>
     </nav>

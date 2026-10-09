@@ -43,7 +43,7 @@
                 </div>
                 <div class="collapse" id="collapseSectionSettings">
                     <div class="card-body p-4 pt-0">
-                        <form action="{{ route('cms.section-settings.update') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('cms.section-settings.update') }}" method="POST" enctype="multipart/form-data" class="js-banner-bg-form">
                             @csrf
                             <input type="hidden" name="section_key" value="career">
                             <div class="row g-3">
@@ -51,32 +51,7 @@
                                     <label class="form-label small fw-bold">Custom Section Title</label>
                                     <input type="text" name="title" class="form-control rounded-pill px-3" value="{{ $setting->title ?? 'Join Our Team' }}" placeholder="Enter custom title">
                                 </div>
-                                <div class="col-md-12">
-                                    <label class="form-label small fw-bold">Background Images</label>
-                                    <input type="file" name="background_images[]" class="form-control rounded-pill px-3" multiple accept="image/*">
-                                    <p class="text-muted small mt-2 mb-0">
-                                        <i class="fa-regular fa-clipboard me-1"></i> Tip: drag &amp; drop an image here, or press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste one.
-                                    </p>
-                                </div>
-                                
-                                @if($setting && $setting->background_images && count($setting->background_images) > 0)
-                                <div class="col-12 mt-2">
-                                    <label class="form-label small fw-bold">Current Images</label>
-                                    <div class="d-flex flex-wrap gap-2">
-                                        @foreach($setting->background_images as $img)
-                                        <div class="position-relative border rounded p-1" style="width: 80px;">
-                                            <img src="{{ asset('storage/' . $img) }}" class="rounded w-100" style="height: 50px; object-fit: cover;">
-                                            <div class="position-absolute top-0 end-0 p-0">
-                                                <input type="checkbox" name="remove_images[]" value="{{ $img }}" id="del_bg_{{ $loop->index }}" class="d-none">
-                                                <label for="del_bg_{{ $loop->index }}" class="btn btn-danger btn-sm rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 20px; height: 20px; cursor: pointer; padding: 0;" onclick="this.parentElement.parentElement.style.opacity='0.3';">
-                                                    <i class="fa-solid fa-xmark" style="font-size: 0.6rem;"></i>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                                @endif
+                                @include('cms.partials.banner-background', ['key' => 'career', 'setting' => $setting, 'compact' => true])
 
                                 <div class="col-12 mt-3 text-end">
                                     <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold btn-sm shadow-sm">

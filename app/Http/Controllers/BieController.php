@@ -23,8 +23,8 @@ class BieController extends Controller
     ];
 
     private array $moduleMap = [
-        'bie'    => 'BIE',
-        'work'   => 'Facilities & Work',
+        'bie'    => 'Our Industrial Estate',
+        'work'   => 'Service Suite & Facilities',
         'bintan' => 'Bintan Island',
     ];
 
@@ -72,9 +72,9 @@ class BieController extends Controller
             'order'         => $order,
         ]);
 
-        LogHelper::log('CREATE', 'BIE Page - ' . ($this->moduleMap[$pageGroup] ?? $pageGroup), "Added: {$bie->title}");
+        LogHelper::log('CREATE', $this->logModule($pageGroup), "Added: {$bie->title}");
 
-        return redirect()->route('cms.bie-page.index')
+        return redirect()->route($this->indexRoute($pageGroup))
                          ->with('success', 'Content successfully added!');
     }
 
@@ -112,9 +112,9 @@ class BieController extends Controller
             'category'      => $request->category ?? $bie->category,
         ]);
 
-        LogHelper::log('UPDATE', 'BIE Page - ' . ($this->moduleMap[$pageGroup] ?? $pageGroup), "Updated: {$bie->title}");
+        LogHelper::log('UPDATE', $this->logModule($pageGroup), "Updated: {$bie->title}");
 
-        return redirect()->route('cms.bie-page.index')
+        return redirect()->route($this->indexRoute($pageGroup))
                          ->with('success', 'Content successfully updated!');
     }
 
@@ -130,10 +130,22 @@ class BieController extends Controller
 
         $bie->delete();
 
-        LogHelper::log('DELETE', 'BIE Page - ' . ($this->moduleMap[$pageGroup] ?? $pageGroup), "Deleted: {$title}");
+        LogHelper::log('DELETE', $this->logModule($pageGroup), "Deleted: {$title}");
 
-        return redirect()->route('cms.bie-page.index')
+        return redirect()->route($this->indexRoute($pageGroup))
                          ->with('success', 'Content successfully deleted!');
+    }
+
+    // "bie" (Our Industrial Estate) lives in Manage Home; "bintan" & "work" in Manage Profile & OSS.
+    private function indexRoute(string $pageGroup): string
+    {
+        return $pageGroup === 'bie' ? 'cms.home.index' : 'cms.bie-page.index';
+    }
+
+    private function logModule(string $pageGroup): string
+    {
+        $page = $pageGroup === 'bie' ? 'Home' : 'Profile & OSS';
+        return $page . ' - ' . ($this->moduleMap[$pageGroup] ?? $pageGroup);
     }
 
     private function validationRules(string $pageGroup, bool $isUpdate = false): array

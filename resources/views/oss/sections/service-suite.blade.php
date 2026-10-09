@@ -21,12 +21,16 @@
         $serviceGlobalIndex = 0;
     @endphp
 
+    @include('partials.section-header-overlay', [
+        'slideshowId' => 'serviceSuiteBgSlideshow',
+        'setting' => $serviceSuiteSetting,
+        'fallbackImage' => 'assets/img/Bintan/bie.jpg',
+        'fallbackTitle' => 'One Stop Service Suite',
+        'fallbackSubtitle' => 'Comprehensive support services designed for operational efficiency.',
+    ])
+
     <section class="section pt-5 pb-5 bg-white">
-        <div class="container">
-            <div class="text-center mb-5" data-aos="fade-up">
-                <h3 class="text-primary fw-bold text-uppercase">ONE STOP SERVICE SUITE</h3>
-                <p class="lead">Comprehensive support services designed for operational efficiency.</p>
-            </div>
+        <div class="container mt-4">
 
             <div class="service-suite-flex">
                 @foreach ($serviceChunks as $serviceChunk)

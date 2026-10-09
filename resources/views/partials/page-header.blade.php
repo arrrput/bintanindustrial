@@ -1,12 +1,13 @@
 {{--
-    Page header with a background slideshow (Program, Careers, News).
+    Page header with a background slideshow (Program, Careers, News),
+    or a solid background color when the setting's background_type is "color".
     CSS classes are derived from $prefix: {prefix}-header, {prefix}-bg-container,
     {prefix}-bg-layer and {prefix}-bg-overlay.
 
     Params:
     - $prefix         : class prefix, e.g. 'program', 'career', 'blog'
     - $slideshowId    : id of the slideshow container
-    - $setting        : SectionSetting model (title, background_images) or null
+    - $setting        : SectionSetting model (title, background_type, background_color, background_images) or null
     - $fallbackImage  : image used when the setting has no background images
     - $fallbackTitle  : title used when the setting has no title
     - $script         : slideshow script, only loaded when there is more than one image
@@ -14,22 +15,30 @@
     - $aos            : (optional) data-aos attributes for the title container
 --}}
 @php
-    $backgroundImages = collect($setting?->background_images ?? [])
-        ->map(fn ($img) => asset('storage/' . $img))
-        ->whenEmpty(fn () => collect([asset($fallbackImage)]));
+    $solidColor = $setting?->solidColor();
+    $isLightColor = $setting?->isLightColor() ?? false;
+
+    $backgroundImages = $solidColor
+        ? collect()
+        : collect($setting?->background_images ?? [])
+            ->map(fn ($img) => asset('storage/' . $img))
+            ->whenEmpty(fn () => collect([asset($fallbackImage)]));
 @endphp
 
-<section class="{{ $prefix }}-header">
-    <div class="{{ $prefix }}-bg-container" id="{{ $slideshowId }}">
-        @foreach ($backgroundImages as $index => $image)
-            <div class="{{ $prefix }}-bg-layer {{ $index === 0 ? 'active' : '' }}"
-                style="background-image: url('{{ $image }}');"></div>
-        @endforeach
-    </div>
-    <div class="{{ $prefix }}-bg-overlay"></div>
+<section class="{{ $prefix }}-header" @if ($solidColor) style="background-color: {{ $solidColor }};" @endif>
+    @unless ($solidColor)
+        <div class="{{ $prefix }}-bg-container" id="{{ $slideshowId }}">
+            @foreach ($backgroundImages as $index => $image)
+                <div class="{{ $prefix }}-bg-layer {{ $index === 0 ? 'active' : '' }}"
+                    style="background-image: url('{{ $image }}');"></div>
+            @endforeach
+        </div>
+        <div class="{{ $prefix }}-bg-overlay"></div>
+    @endunless
     <div class="container position-relative {{ $containerClass ?? '' }}" style="z-index: 3;"
         {!! $aos ?? 'data-aos="zoom-in" data-aos-duration="1000"' !!}>
-        <h2 class="section-title-custom text-white fw-bold mx-auto">{{ $setting->title ?? $fallbackTitle }}</h2>
+        <h2 class="section-title-custom {{ $isLightColor ? 'text-dark' : 'text-white' }} fw-bold mx-auto"
+            @if ($solidColor) style="text-shadow: none;" @endif>{{ $setting->title ?? $fallbackTitle }}</h2>
     </div>
 </section>
 

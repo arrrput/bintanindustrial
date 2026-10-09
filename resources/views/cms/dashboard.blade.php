@@ -37,7 +37,7 @@
                     <i class="fa-solid fa-house-chimney-window"></i>
                 </div>
                 <h4 class="fw-bold text-dark mb-2">Manage Home</h4>
-                <p class="text-muted small mb-0">Manage home page components including testimonials, client feedback, and tenant logos.</p>
+                <p class="text-muted small mb-0">Manage Home page content — Our Industrial Estate sections, client testimonials, and tenant logos.</p>
                 
                 <div class="mt-4 d-flex align-items-center text-primary fw-bold text-uppercase small" style="letter-spacing: 1px;">
                     Open Module <i class="fa-solid fa-arrow-right ms-2"></i>
@@ -46,15 +46,15 @@
         </div>
         @endrole
 
-        <!-- 2. Manage BIE Page (unified) -->
+        <!-- 2. Manage Profile & OSS -->
         @role('BDD|CRS|IT')
         <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
             <a href="{{ route('cms.bie-page.index') }}" class="card bg-white p-4 cms-card h-100">
                 <div class="cms-icon-wrapper bg-success-subtle text-success">
                     <i class="fa-solid fa-building-columns"></i>
                 </div>
-                <h4 class="fw-bold text-dark mb-2">Manage BIE Page</h4>
-                <p class="text-muted small mb-0">Manage all content of the BIE page — industrial estate sections, facilities & infrastructure, and Bintan Island slides.</p>
+                <h4 class="fw-bold text-dark mb-2">Manage Profile &amp; OSS</h4>
+                <p class="text-muted small mb-0">Manage Bintan Island slides on the Profile page, plus the One Stop Service Suite and Facilities on the OSS page.</p>
 
                 <div class="mt-4 d-flex align-items-center text-success fw-bold text-uppercase small" style="letter-spacing: 1px;">
                     Open Module <i class="fa-solid fa-arrow-right ms-2"></i>
@@ -63,15 +63,15 @@
         </div>
         @endrole
 
-        <!-- 3. Manage Program -->
+        <!-- 3. Manage Programs -->
         @role('BDD|CRS|IT')
         <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
             <a href="{{ route('cms.programs.index') }}" class="card bg-white p-4 cms-card h-100">
                 <div class="cms-icon-wrapper bg-danger-subtle text-danger">
                     <i class="fa-solid fa-calendar-days"></i>
                 </div>
-                <h4 class="fw-bold text-dark mb-2">Manage Program</h4>
-                <p class="text-muted small mb-0">Manage "Program at BIE" content, including events, entertainment and CSR initiatives.</p>
+                <h4 class="fw-bold text-dark mb-2">Manage Programs</h4>
+                <p class="text-muted small mb-0">Manage Event, Entertainment &amp; CSR programs shown in "Beyond The Workplace" on the News page.</p>
 
                 <div class="mt-4 d-flex align-items-center text-danger fw-bold text-uppercase small" style="letter-spacing: 1px;">
                     Open Module <i class="fa-solid fa-arrow-right ms-2"></i>

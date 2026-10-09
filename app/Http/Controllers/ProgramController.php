@@ -146,12 +146,14 @@ class ProgramController extends Controller
         // OSS page. Events, Entertainment & CSR programs are shown on the News page (BlogController@publicIndex).
         $setting = SectionSetting::where('section_key', 'program')->first();
 
-        // One Stop Service Suite & Facilities (managed in CMS > BIE Page, "work" group)
-        $workSetting = SectionSetting::cachedForBiePage()->get('work');
+        // One Stop Service Suite & Facilities (managed in CMS > Profile & OSS, "work" group)
+        $biePageSettings = SectionSetting::cachedForBiePage();
+        $serviceSuiteSetting = $biePageSettings->get('service_suite');
+        $workSetting = $biePageSettings->get('work');
         $allWorks = Bie::where('page_group', 'work')->orderBy('order')->get();
         $works = $allWorks->where('category', 'main_section')->values();
         $serviceSuite = $allWorks->where('category', 'service_suite')->values();
 
-        return view('oss.index', compact('setting', 'workSetting', 'works', 'serviceSuite'));
+        return view('oss.index', compact('setting', 'serviceSuiteSetting', 'workSetting', 'works', 'serviceSuite'));
     }
 }

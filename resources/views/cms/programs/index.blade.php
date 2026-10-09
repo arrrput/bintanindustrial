@@ -1,6 +1,6 @@
 @extends('layouts.main') 
 
-@section('title', 'Manage Program Content - BIIE CMS')
+@section('title', 'Manage Programs - BIIE CMS')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/pages/cms-programs-index.css') }}">
@@ -20,7 +20,7 @@
       <ol>
         <li><a href="{{ url('/') }}">Home</a></li>
         <li><a href="{{ route('cms.dashboard') }}">CMS</a></li>
-        <li class="current">Program</li>
+        <li class="current">Manage Programs</li>
       </ol>
     </nav>
   </div>
@@ -32,42 +32,22 @@
     <div class="card border-0 shadow-sm rounded-4 mb-5">
         <div class="card-body p-4">
             <h4 class="fw-bold text-dark mb-4">
-                <i class="fa-solid fa-gear text-success me-2"></i> Section Settings
+                <i class="fa-solid fa-image text-danger me-2"></i> Beyond The Workplace &mdash; Banner
             </h4>
-            <form action="{{ route('cms.section-settings.update') }}" method="POST" enctype="multipart/form-data">
+            <p class="text-muted small mb-4 mt-n3">Banner shown above the Event, Entertainment &amp; CSR sections on the News page.</p>
+            <form action="{{ route('cms.section-settings.update') }}" method="POST" enctype="multipart/form-data" class="js-banner-bg-form">
                 @csrf
                 <input type="hidden" name="section_key" value="program">
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label class="form-label small fw-bold">Custom Section Title</label>
-                        <input type="text" name="title" class="form-control rounded-pill" value="{{ $setting->title ?? 'Event, Entertainment & CSR' }}" placeholder="Enter custom title">
+                        <label class="form-label small fw-bold">Banner Title</label>
+                        <input type="text" name="title" class="form-control rounded-pill" value="{{ $setting->title ?? 'Beyond The Workplace' }}" placeholder="Enter banner title">
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label small fw-bold">Add Background Images (Can select multiple)</label>
-                        <input type="file" name="background_images[]" class="form-control rounded-pill" multiple accept="image/*">
-                        <p class="text-muted small mt-2 mb-0">
-                            <i class="fa-regular fa-clipboard me-1"></i> Tip: drag &amp; drop an image here, or press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste one.
-                        </p>
+                    @include('cms.partials.banner-background', ['key' => 'program', 'setting' => $setting])
+                    <div class="col-12">
+                        <label class="form-label small fw-bold">Banner Subtitle <span class="text-muted fw-normal">(optional)</span></label>
+                        <textarea name="subtitle" class="form-control rounded-4" rows="3" maxlength="1000" placeholder="Short text shown under the banner title">{{ old('subtitle', $setting->subtitle ?? '') }}</textarea>
                     </div>
-                    
-                    @if($setting && $setting->background_images && count($setting->background_images) > 0)
-                    <div class="col-12 mt-3">
-                        <label class="form-label small fw-bold">Current Background Images (Click icon to remove)</label>
-                        <div class="d-flex flex-wrap gap-3">
-                            @foreach($setting->background_images as $img)
-                            <div class="position-relative border rounded p-1 shadow-sm" style="width: 120px;">
-                                <img src="{{ asset('storage/' . $img) }}" class="rounded w-100" style="height: 80px; object-fit: cover;">
-                                <div class="position-absolute top-0 end-0 p-1">
-                                    <input type="checkbox" name="remove_images[]" value="{{ $img }}" id="del_bg_{{ $loop->index }}" class="d-none">
-                                    <label for="del_bg_{{ $loop->index }}" class="btn btn-danger btn-sm rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 25px; height: 25px; cursor: pointer;" onclick="this.parentElement.parentElement.style.opacity='0.3'; this.innerHTML='<i class=\'fa-solid fa-undo\'></i>';">
-                                        <i class="fa-solid fa-xmark" style="font-size: 0.7rem;"></i>
-                                    </label>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-                    @endif
 
                     <div class="col-12 mt-4 text-end">
                         <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm">
@@ -84,7 +64,7 @@
             <h2 class="fw-bold text-dark mb-0 fs-3">
                 <i class="fa-solid fa-calendar-days text-danger me-2"></i> Program Content
             </h2>
-            <p class="text-muted small mb-0 mt-1">Manage content for "Event", "Entertainment" and "CSR" sections on the Program page.</p>
+            <p class="text-muted small mb-0 mt-1">Manage content for "Event", "Entertainment" and "CSR" sections in the "Beyond The Workplace" section of the News page.</p>
         </div>
         <div>
             <a href="{{ route('cms.programs.create') }}" class="btn btn-danger rounded-pill px-4 shadow-sm fw-bold">

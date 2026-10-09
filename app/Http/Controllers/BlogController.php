@@ -211,12 +211,13 @@ class BlogController extends Controller
         $blogs = Blog::latest()->paginate(9);
         $setting = SectionSetting::where('section_key', 'blog')->first();
 
-        // "Beyond The Workplace" section (managed in CMS > Programs)
+        // "Beyond The Workplace" section: banner + Events, Entertainment & CSR (managed in CMS > Programs)
+        $programSetting = SectionSetting::where('section_key', 'program')->first();
         $eventProgram = Program::where('category', 'event')->orderBy('order')->get();
         $entertainmentProgram = Program::where('category', 'entertainment')->orderBy('order')->get();
         $csrProgram = Program::where('category', 'csr')->orderBy('order')->get();
 
-        return view('news.index', compact('blogs', 'setting', 'eventProgram', 'entertainmentProgram', 'csrProgram'));
+        return view('news.index', compact('blogs', 'setting', 'programSetting', 'eventProgram', 'entertainmentProgram', 'csrProgram'));
     }
 
     public function show($slug)

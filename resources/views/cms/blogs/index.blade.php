@@ -34,7 +34,7 @@
             <h4 class="fw-bold text-dark mb-4">
                 <i class="fa-solid fa-gear text-success me-2"></i> Section Settings
             </h4>
-            <form action="{{ route('cms.section-settings.update') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('cms.section-settings.update') }}" method="POST" enctype="multipart/form-data" class="js-banner-bg-form">
                 @csrf
                 <input type="hidden" name="section_key" value="blog">
                 <div class="row g-3">
@@ -42,32 +42,7 @@
                         <label class="form-label small fw-bold">Custom Section Title</label>
                         <input type="text" name="title" class="form-control rounded-pill" value="{{ $setting->title ?? 'News & Media' }}" placeholder="Enter custom title">
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label small fw-bold">Add Background Images (Can select multiple)</label>
-                        <input type="file" name="background_images[]" class="form-control rounded-pill" multiple accept="image/*">
-                        <p class="text-muted small mt-2 mb-0">
-                            <i class="fa-regular fa-clipboard me-1"></i> Tip: drag &amp; drop an image here, or press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste one.
-                        </p>
-                    </div>
-                    
-                    @if($setting && $setting->background_images && count($setting->background_images) > 0)
-                    <div class="col-12 mt-3">
-                        <label class="form-label small fw-bold">Current Background Images (Click icon to remove)</label>
-                        <div class="d-flex flex-wrap gap-3">
-                            @foreach($setting->background_images as $img)
-                            <div class="position-relative border rounded p-1 shadow-sm" style="width: 120px;">
-                                <img src="{{ asset('storage/' . $img) }}" class="rounded w-100" style="height: 80px; object-fit: cover;">
-                                <div class="position-absolute top-0 end-0 p-1">
-                                    <input type="checkbox" name="remove_images[]" value="{{ $img }}" id="del_bg_{{ $loop->index }}" class="d-none">
-                                    <label for="del_bg_{{ $loop->index }}" class="btn btn-danger btn-sm rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 25px; height: 25px; cursor: pointer;" onclick="this.parentElement.parentElement.style.opacity='0.3'; this.innerHTML='<i class=\'fa-solid fa-undo\'></i>';">
-                                        <i class="fa-solid fa-xmark" style="font-size: 0.7rem;"></i>
-                                    </label>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-                    @endif
+                    @include('cms.partials.banner-background', ['key' => 'blog', 'setting' => $setting])
 
                     <div class="col-12 mt-4 text-end">
                         <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm">

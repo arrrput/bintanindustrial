@@ -16,14 +16,30 @@ class SectionSettingController extends Controller
         $request->validate([
             'section_key'        => 'required|string',
             'title'              => 'nullable|string|max:255',
+            'subtitle'           => 'nullable|string|max:1000',
             'background_images'  => 'nullable|array',
             'background_images.*'=> 'image|mimes:jpeg,png,jpg,webp|max:2048',
             'remove_images'      => 'nullable|array',
+            'background_type'    => 'nullable|in:image,color',
+            'background_color'   => ['nullable', 'required_if:background_type,color', 'regex:/^#[0-9a-fA-F]{6}$/'],
         ]);
 
         $setting = SectionSetting::firstOrNew(['section_key' => $request->section_key]);
 
         $setting->title = $request->title;
+
+        // Only forms with a subtitle field send it.
+        if ($request->has('subtitle')) {
+            $setting->subtitle = $request->subtitle;
+        }
+
+        // Only forms that offer the image/solid-color choice send these fields.
+        if ($request->filled('background_type')) {
+            $setting->background_type = $request->background_type;
+            if ($request->filled('background_color')) {
+                $setting->background_color = strtolower($request->background_color);
+            }
+        }
         
         $currentImages = $setting->background_images ?? [];
 
@@ -49,7 +65,7 @@ class SectionSettingController extends Controller
         $setting->save();
 
         // Public pages cache these settings — bust the relevant cache so the change shows immediately.
-        if (in_array($request->section_key, ['bie', 'work', 'bintan'])) {
+        if (in_array($request->section_key, ['bie', 'work', 'bintan', 'service_suite'])) {
             Cache::forget('bie_page_settings');
         }
         if ($request->section_key === 'career') {

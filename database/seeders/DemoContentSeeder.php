@@ -62,8 +62,9 @@ class DemoContentSeeder extends Seeder
 
         SectionSetting::create([
             'section_key' => 'program',
-            'title' => 'Programs at BIE',
-            'background_images' => [$this->img('Bintan/villa.webp', 'section_settings')],
+            'title' => 'Beyond The Workplace',
+            'subtitle' => '"Where meaningful celebrations, leisure and community care come together. A complete, self-sustained ecosystem designed to enrich the lives of everyone within Bintan Industrial Estate."',
+            'background_images' => [$this->img('Bintan/condo.jpg', 'section_settings')],
         ]);
 
         SectionSetting::create([

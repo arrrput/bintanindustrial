@@ -27,8 +27,130 @@
 </div>
 
 <div class="container py-4 py-md-5 mt-2">
-    
-    <!-- SECTION 1: TESTIMONIALS -->
+
+    {{-- Page Header --}}
+    <div class="d-flex justify-content-between align-items-start mb-5 flex-wrap gap-3">
+        <div>
+            <h2 class="fw-bold text-dark mb-1">
+                <i class="fa-solid fa-house-chimney-window text-primary me-2"></i> Manage Home
+            </h2>
+            <p class="text-muted mb-0">Manage all content sections of the public <strong>Home</strong> page from one place.</p>
+        </div>
+        <a href="{{ route('home') }}" target="_blank" class="btn btn-outline-primary rounded-pill px-4 fw-bold">
+            <i class="fa-solid fa-arrow-up-right-from-square me-2"></i> View Live Page
+        </a>
+    </div>
+
+    <!-- SECTION 1: OUR INDUSTRIAL ESTATE -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body p-4">
+            <h4 class="fw-bold text-dark mb-4">
+                <i class="fa-solid fa-industry text-success me-2"></i> Our Industrial Estate &mdash; Banner
+            </h4>
+            <form action="{{ route('cms.section-settings.update') }}" method="POST" enctype="multipart/form-data" class="js-banner-bg-form">
+                @csrf
+                <input type="hidden" name="section_key" value="bie">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">Banner Title</label>
+                        <input type="text" name="title" class="form-control rounded-pill" value="{{ $bieSetting->title ?? 'Our Industrial Estate' }}" placeholder="Enter banner title">
+                    </div>
+                    @include('cms.partials.banner-background', ['key' => 'bie', 'setting' => $bieSetting])
+
+                    <div class="col-12 text-end">
+                        <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm">
+                            <i class="fa-solid fa-save me-2"></i> Save Banner
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2 class="fw-bold text-dark mb-0 fs-3">
+                <i class="fa-solid fa-industry text-success me-2"></i> Our Industrial Estate
+            </h2>
+            <p class="text-muted small mb-0 mt-1">Alternating image+text rows shown below the banner on the home page.</p>
+        </div>
+        <a href="{{ route('cms.bies.create') }}" class="btn btn-success rounded-pill px-4 shadow-sm fw-bold">
+            <i class="fa-solid fa-plus me-2"></i> Add Section
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light text-muted" style="font-size: 0.85rem; letter-spacing: 1px;">
+                        <tr>
+                            <th class="ps-4 py-3 text-uppercase" style="width: 80px;">Media</th>
+                            <th class="py-3 text-uppercase">Title & Type</th>
+                            <th class="py-3 text-uppercase d-none d-md-table-cell">Description</th>
+                            <th class="py-3 text-uppercase text-center">Order</th>
+                            <th class="pe-4 py-3 text-uppercase text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($bies as $item)
+                        <tr>
+                            <td class="ps-4 py-3">
+                                @if($item->image)
+                                    <img src="{{ asset('storage/' . $item->image) }}" class="rounded-3 shadow-sm" style="width: 56px; height: 56px; object-fit: cover;">
+                                @elseif($item->icon)
+                                    <div class="bg-success-subtle text-success rounded-3 d-flex align-items-center justify-content-center" style="width: 56px; height: 56px;">
+                                        <i class="{{ $item->icon }} fs-4"></i>
+                                    </div>
+                                @else
+                                    <div class="bg-light rounded-3 d-flex align-items-center justify-content-center text-muted" style="width: 56px; height: 56px;">
+                                        <i class="fa-solid fa-image"></i>
+                                    </div>
+                                @endif
+                            </td>
+                            <td class="py-3">
+                                <h6 class="mb-1 fw-bold text-dark">{{ $item->title }}</h6>
+                                @if($item->badge)
+                                    <span class="badge bg-light text-secondary border me-1 px-2 py-1 rounded-pill" style="font-size: 0.62rem;">{{ $item->badge }}</span>
+                                @endif
+                                <span class="badge {{ $item->category == 'main_section' ? 'bg-primary' : 'bg-success' }} px-2 py-1 rounded-pill text-uppercase" style="font-size: 0.62rem;">
+                                    {{ str_replace('_', ' ', $item->category) }}
+                                </span>
+                            </td>
+                            <td class="py-3 d-none d-md-table-cell text-muted small">
+                                {{ Str::limit(strip_tags($item->description), 80) }}
+                            </td>
+                            <td class="py-3 text-center">
+                                <span class="badge bg-light text-dark border">{{ $item->order }}</span>
+                            </td>
+                            <td class="pe-4 py-3 text-end">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a href="{{ route('cms.bies.edit', $item->id) }}" class="btn btn-sm btn-light text-primary rounded-circle shadow-sm" title="Edit">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                    <form action="{{ route('cms.bies.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Delete this section?');">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-light text-danger rounded-circle shadow-sm" title="Delete">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="5" class="text-center py-5 text-muted">
+                                No industrial estate sections yet. <a href="{{ route('cms.bies.create') }}">Add one</a>.
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: TESTIMONIALS -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h2 class="fw-bold text-dark mb-0 fs-3">
@@ -114,7 +236,7 @@
         </div>
     </div>
 
-    <!-- SECTION 2: TENANT LOGOS -->
+    <!-- SECTION 3: TENANT LOGOS -->
     <div class="card border-0 shadow-sm rounded-4 mb-5">
         <div class="card-body p-4 text-center">
             <h4 class="fw-bold text-dark mb-4 text-start">

@@ -58,3 +58,35 @@
             color: #fff;
             font-weight: bold;
         }
+
+        /* Solid color background (SectionSetting background_type = "color") */
+        .section-header-overlay.is-solid .section-title-custom {
+            text-shadow: none;
+        }
+
+        .section-header-overlay.is-light .section-title-custom {
+            color: #222222;
+        }
+
+        .section-subtitle-custom {
+            position: relative;
+            z-index: 3;
+            max-width: 750px;
+            margin-top: 15px;
+            margin-bottom: 0;
+            font-size: 1.2rem;
+            color: #f1f1f1;
+            text-shadow: 1px 1px 8px rgba(0,0,0,0.6);
+        }
+
+        .section-header-overlay.is-solid .section-subtitle-custom {
+            text-shadow: none;
+        }
+
+        .section-header-overlay.is-light .section-subtitle-custom {
+            color: #444444;
+        }
+
+        @media (max-width: 768px) {
+            .section-subtitle-custom { font-size: 1rem; }
+        }

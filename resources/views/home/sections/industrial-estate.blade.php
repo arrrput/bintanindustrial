@@ -1,4 +1,4 @@
-{{-- Section: Our Industrial Estate (content managed in CMS > BIE Page) --}}
+{{-- Section: Our Industrial Estate (content managed in CMS > Manage Home) --}}
 @include('partials.section-header-overlay', [
     'slideshowId' => 'bieBgSlideshow',
     'setting' => $bieSetting,
