@@ -1,7 +1,5 @@
 {{-- Section: Global Partnership (testimonials + tenant logos) --}}
-@push('styles')
-    <link rel="stylesheet" href="{{ asset('assets/css/pages/index-clients.css') }}">
-@endpush
+{{-- Styles live in assets/css/pages/index.css (loaded by home/index.blade.php) --}}
 
 <section id="clients" class="clients section overflow-hidden"
     style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('{{ asset('assets/img/bgtenant.jpg') }}');">

@@ -3,7 +3,7 @@
 @section('title', 'Home - Bintan Industrial Estate')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('assets/css/pages/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/pages/index.css') }}?v={{ filemtime(public_path('assets/css/pages/index.css')) }}">
 @endpush
 
 @section('content')
@@ -20,5 +20,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
-    <script src="{{ asset('assets/js/pages/index.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/index.js') }}?v={{ filemtime(public_path('assets/js/pages/index.js')) }}"></script>
 @endpush
