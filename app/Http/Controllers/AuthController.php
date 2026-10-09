@@ -28,7 +28,7 @@ class AuthController extends Controller
                 $request->session()->regenerateToken();
 
                 return back()->withErrors([
-                    'email' => 'Only @bintanindustrial.co.id, @bintanindustrial.com, @biie.co.id, or @biie.com email addresses are allowed.',
+                    'email' => 'Only @bintanindustrial.co.id, @bintanindustrial.com, @biie.co.id, @biie.com, or @gallantventure.com email addresses are allowed.',
                 ])->onlyInput('email');
             }
 

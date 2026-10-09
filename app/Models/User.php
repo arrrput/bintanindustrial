@@ -53,6 +53,7 @@ class User extends Authenticatable
         'bintanindustrial.com',
         'biie.co.id',
         'biie.com',
+        'gallantventure.com',
     ];
 
     /**
