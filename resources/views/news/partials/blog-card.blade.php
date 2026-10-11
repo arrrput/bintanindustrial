@@ -35,7 +35,7 @@
     <div class="blog-info d-flex justify-content-between align-items-center shadow-sm" style="border-radius: 0 0 8px 8px;">
         <div class="blog-text flex-grow-1 pe-2" style="min-width: 0;">
             <h4 class="fw-bold mb-1 text-truncate" title="{{ $blog->title }}">{{ $blog->title }}</h4>
-            <p class="mb-0 blog-desc">{{ $blog->excerpt ?? strip_tags($blog->content) }}</p>
+            <p class="mb-0 blog-desc">{{ $blog->excerpt ?: strip_tags($blog->content) }}</p>
         </div>
 
         <div class="blog-icons d-flex gap-2 flex-shrink-0">

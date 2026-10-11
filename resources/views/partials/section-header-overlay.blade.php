@@ -12,6 +12,8 @@
     - $titleClass    : (optional) extra classes for the title
     - $fallbackSubtitle : (optional) text under the title when the setting has none (only used without a setting)
 --}}
+{{-- Hidden when the banner is switched off in the CMS (the section then relies on its sub-heading) --}}
+@if (\App\Models\SectionSetting::bannerVisible($setting))
 @php
     $solidColor = $setting?->solidColor();
     $isLightColor = $setting?->isLightColor() ?? false;
@@ -50,3 +52,5 @@
         @endif
     </div>
 </section>
+
+@endif

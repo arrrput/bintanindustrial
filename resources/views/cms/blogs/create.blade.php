@@ -8,7 +8,7 @@
       <ol>
         <li><a href="{{ url('/') }}">Home</a></li>
         <li><a href="{{ route('cms.dashboard') }}">CMS</a></li>
-        <li><a href="{{ route('cms.blogs.index') }}">News</a></li>
+        <li><a href="{{ route('cms.blogs.index') }}">Manage Blog</a></li>
         <li class="current">Create Article</li>
       </ol>
     </nav>
@@ -18,6 +18,11 @@
 <div class="container py-5 mt-2">
     <div class="row justify-content-center">
         <div class="col-lg-12">
+            <div class="mb-4">
+                <a href="{{ route('cms.blogs.index') }}" class="btn btn-secondary rounded-pill px-4 fw-bold">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Back
+                </a>
+            </div>
             <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
                 <div class="card-header bg-success py-3 border-0">
                     <h5 class="mb-0 text-white fw-bold"><i class="fa-solid fa-pen-nib me-2"></i> Write New Article</h5>
@@ -48,6 +53,13 @@
                                         <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="12" placeholder="Write your article here..." required>{{ old('content') }}</textarea>
                                         @error('content') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
+
+                                    <div class="col-12">
+                                        <label class="form-label fw-bold text-dark">Excerpt <span class="text-muted fw-normal small">(optional)</span></label>
+                                        <textarea class="form-control @error('excerpt') is-invalid @enderror" name="excerpt" rows="3" maxlength="1000" placeholder="Short summary shown on news cards and the CMS list">{{ old('excerpt') }}</textarea>
+                                        <div class="form-text">Leave empty to generate it automatically from the content.</div>
+                                        @error('excerpt') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
                                 </div>
                             </div>
 
@@ -69,8 +81,7 @@
                                         <input class="form-check-input" type="checkbox" role="switch" id="post_to_ig" name="post_to_ig" value="1" {{ old('post_to_ig') ? 'checked' : '' }}>
                                         <label class="form-check-label fw-bold" for="post_to_ig">Auto-post to IG</label>
                                     </div>
-                                    <label class="form-label fw-bold text-dark small">IG Caption / Excerpt</label>
-                                    <textarea class="form-control" name="excerpt" rows="4" placeholder="Social media caption...">{{ old('excerpt') }}</textarea>
+                                    <p class="text-muted small mb-0">The Excerpt field is used as the IG caption.</p>
                                 </div>
                                 --}}
 

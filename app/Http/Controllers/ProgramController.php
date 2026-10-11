@@ -139,21 +139,21 @@ class ProgramController extends Controller
     }
 
     /**
-     * Menampilkan halaman Program untuk publik
+     * Public OSS page
      */
     public function publicIndex()
     {
-        // OSS page. Events, Entertainment & CSR programs are shown on the News page (BlogController@publicIndex).
+        // OSS page. Events, Entertainment & CSR programs are shown on the Blog page (BlogController@publicIndex).
         $setting = SectionSetting::where('section_key', 'program')->first();
 
-        // One Stop Service Suite & Facilities (managed in CMS > Profile & OSS, "work" group)
-        $biePageSettings = SectionSetting::cachedForBiePage();
-        $serviceSuiteSetting = $biePageSettings->get('service_suite');
-        $workSetting = $biePageSettings->get('work');
-        $allWorks = Bie::where('page_group', 'work')->orderBy('order')->get();
-        $works = $allWorks->where('category', 'main_section')->values();
+        // One Stop Service Suite & Facilities (managed in CMS > Manage OSS, "work" group)
+        $settings = SectionSetting::cachedForBiePage();
+        $serviceSuiteSetting = $settings->get('service_suite');
+        $facilitiesSetting = $settings->get('facilities');
+        $allWorks = Bie::where('page_group', 'work')->whereIn('category', ['service_suite', 'facility'])->orderBy('order')->get();
         $serviceSuite = $allWorks->where('category', 'service_suite')->values();
+        $facilities = $allWorks->where('category', 'facility')->values();
 
-        return view('oss.index', compact('setting', 'serviceSuiteSetting', 'workSetting', 'works', 'serviceSuite'));
+        return view('oss.index', compact('setting', 'serviceSuiteSetting', 'serviceSuite', 'facilities', 'facilitiesSetting'));
     }
 }

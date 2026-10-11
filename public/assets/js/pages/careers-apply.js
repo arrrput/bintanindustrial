@@ -13,7 +13,7 @@
         });
 
         if (!isValid) {
-            alert('Please fill in all required fields before proceeding.');
+            AppAlert.warning('Please fill in all required fields before proceeding.');
         }
         return isValid;
     }
@@ -94,7 +94,7 @@
         const province = document.getElementById('addr_province').value;
 
         if(!country || !postalCode || !line || !cityRegency || !province) {
-            alert('Please fill in all address fields.'); return;
+            AppAlert.warning('Please fill in all address fields.'); return;
         }
 
         const addr = { country, postal_code: postalCode, address_line: line, city_regency: cityRegency, province };
@@ -153,10 +153,11 @@
         showAddressForm();
     }
     function deleteAddress(index) {
-        if(confirm('Delete this address entry?')) {
+        AppAlert.confirm('Delete this address entry?').then(ok => {
+            if (!ok) return;
             addresses.splice(index, 1);
             renderAddresses();
-        }
+        });
     }
     function cancelAddressForm() { resetAddressFormFields(); hideAddressForm(); }
     function resetAddressFormFields() {
@@ -170,7 +171,7 @@
         document.getElementById('btnCancelAddr').classList.add('d-none');
     }
     function validateAndNextStep2() {
-        if (addresses.length === 0) { alert('Add at least one address.'); return; }
+        if (addresses.length === 0) { AppAlert.warning('Add at least one address.'); return; }
         nextStep(2);
     }
 
@@ -196,7 +197,7 @@
         const country = document.getElementById('edu_country').value;
 
         if(!degree || !major || !school || !startDate || !endDate || !country) {
-            alert('Please fill in all education fields.'); return;
+            AppAlert.warning('Please fill in all education fields.'); return;
         }
 
         const edu = { degree, major, school, start_date: startDate, end_date: endDate, country };
@@ -256,10 +257,11 @@
         showEduForm();
     }
     function deleteEducation(index) {
-        if(confirm('Delete this education entry?')) {
+        AppAlert.confirm('Delete this education entry?').then(ok => {
+            if (!ok) return;
             educations.splice(index, 1);
             renderEducations();
-        }
+        });
     }
     function cancelEduForm() { resetEduFormFields(); hideEduForm(); }
     function resetEduFormFields() {
@@ -274,7 +276,7 @@
         document.getElementById('btnCancelEdu').classList.add('d-none');
     }
     function validateAndNextStep3() {
-        if (educations.length === 0) { alert('Add at least one education.'); return; }
+        if (educations.length === 0) { AppAlert.warning('Add at least one education.'); return; }
         nextStep(3);
     }
 
@@ -301,7 +303,7 @@
         const desc = document.getElementById('exp_job_desc').value;
 
         if(!title || !company || !startDate) {
-            alert('Job Title, Company, and Start Date are required.'); return;
+            AppAlert.warning('Job Title, Company, and Start Date are required.'); return;
         }
 
         const exp = { job_title: title, company, city, type_business: typeBusiness, start_date: startDate, end_date: endDate, job_desc: desc };
@@ -362,10 +364,11 @@
         showExpForm();
     }
     function deleteExperience(index) {
-        if(confirm('Delete this experience?')) {
+        AppAlert.confirm('Delete this experience?').then(ok => {
+            if (!ok) return;
             experiences.splice(index, 1);
             renderExperiences();
-        }
+        });
     }
     function cancelExpForm() { resetExpFormFields(); hideExpForm(); }
     function resetExpFormFields() {
@@ -401,7 +404,7 @@
         const expirationDate = document.getElementById('cert_expiration_date').value;
 
         if(!name || !issuedBy || !issuedDate) {
-            alert('Certificate Name, Issued By, and Issued Date are required.'); return;
+            AppAlert.warning('Certificate Name, Issued By, and Issued Date are required.'); return;
         }
 
         const cert = { name, issued_by: issuedBy, issued_date: issuedDate, expiration_date: expirationDate };
@@ -457,10 +460,11 @@
         showCertForm();
     }
     function deleteCertification(index) {
-        if(confirm('Delete this certification?')) {
+        AppAlert.confirm('Delete this certification?').then(ok => {
+            if (!ok) return;
             certifications.splice(index, 1);
             renderCertifications();
-        }
+        });
     }
     function cancelCertForm() { resetCertFormFields(); hideCertForm(); }
     function resetCertFormFields() {

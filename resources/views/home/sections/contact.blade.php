@@ -52,14 +52,6 @@
             {{-- Contact form --}}
             <div class="col-lg-7">
                 <div class="form-wrap shadow-lg border-0 rounded-4 p-5" style="background: white;">
-                    @if (session('success'))
-                        <div class="alert alert-success alert-dismissible fade show shadow-sm mb-4 border-0 rounded-3"
-                            role="alert">
-                            <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
-
                     <form action="{{ route('contact.submit') }}" method="POST" class="php-email-form">
                         @csrf
 
@@ -102,9 +94,6 @@
                                         Send Message <i class="bi bi-send ms-2"></i>
                                     </button>
                                 </div>
-                                <div class="loading mt-3">Processing...</div>
-                                <div class="error-message mt-3"></div>
-                                <div class="sent-message mt-3">Your message has been sent. Thank you!</div>
                             </div>
                         </div>
                     </form>

@@ -8,9 +8,8 @@
 @endpush
 
 @section('content')
-    @include('partials.page-title', ['current' => 'Profile'])
-
     @include('profile.sections.bintan')
+    @include('profile.sections.business-opportunity')
     @include('profile.sections.industrial-solutions')
 @endsection
 

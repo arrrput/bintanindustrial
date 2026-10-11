@@ -10,10 +10,14 @@ class BiePageController extends Controller
 {
     public function index()
     {
-        // "bie" (Our Industrial Estate) is shown on Home; "work" (Service Suite, Facilities) on OSS.
-        $bintanSetting = SectionSetting::cachedForBiePage()->get('bintan');
+        // Profile page: Bintan Island + Business Opportunity ("work" main sections).
+        // "bie" (Our Industrial Estate) is shown on Home; Service Suite & Facilities on OSS.
+        $settings = SectionSetting::cachedForBiePage();
+        $bintanSetting = $settings->get('bintan');
+        $workSetting = $settings->get('work');
         $bintans = Bie::where('page_group', 'bintan')->orderBy('order')->get();
+        $works = Bie::where('page_group', 'work')->where('category', 'main_section')->orderBy('order')->get();
 
-        return view('profile.index', compact('bintanSetting', 'bintans'));
+        return view('profile.index', compact('bintanSetting', 'bintans', 'workSetting', 'works'));
     }
 }

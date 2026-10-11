@@ -1,15 +1,22 @@
+    // Show the fields that matter for the chosen category:
+    // - Business Opportunity (main_section): cover image + subtitle + description
+    // - Service Suite card: icon + description
+    // - Facility photo card: photo + icon, description optional
     function toggleFields() {
         const category = document.getElementById('categorySelect').value;
-        const imageField = document.getElementById('imageField');
-        const iconField = document.getElementById('iconField');
+        const show = (id, visible) => document.getElementById(id)?.classList.toggle('d-none', !visible);
 
-        if (category === 'service_suite') {
-            imageField.classList.add('d-none');
-            iconField.classList.remove('d-none');
-        } else {
-            imageField.classList.remove('d-none');
-            iconField.classList.add('d-none');
-        }
+        show('imageField', category !== 'service_suite');
+        show('iconField', category !== 'main_section');
+        show('subtitleField', category !== 'facility');
+
+        const imageLabel = document.getElementById('imageLabel');
+        if (imageLabel) imageLabel.textContent = category === 'facility' ? 'Photo' : 'Cover Image';
+
+        const description = document.getElementById('descriptionInput');
+        const descriptionRequired = document.getElementById('descriptionRequired');
+        if (description) description.required = category !== 'facility';
+        if (descriptionRequired) descriptionRequired.classList.toggle('d-none', category === 'facility');
     }
 
     document.addEventListener('DOMContentLoaded', toggleFields);

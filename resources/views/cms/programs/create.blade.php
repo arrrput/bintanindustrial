@@ -9,7 +9,8 @@
       <ol>
         <li><a href="{{ url('/') }}">Home</a></li>
         <li><a href="{{ route('cms.dashboard') }}">CMS</a></li>
-        <li><a href="{{ route('cms.programs.index') }}">Program</a></li>
+        <li><a href="{{ route('cms.blogs.index') }}">Manage Blog</a></li>
+        <li><a href="{{ route('cms.programs.index') }}">Programs</a></li>
         <li class="current">Add Content</li>
       </ol>
     </nav>
@@ -19,6 +20,11 @@
 <div class="container py-5 mt-2">
     <div class="row justify-content-center">
         <div class="col-lg-10">
+            <div class="mb-4">
+                <a href="{{ route('cms.programs.index') }}" class="btn btn-secondary rounded-pill px-4 fw-bold">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Back
+                </a>
+            </div>
             <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
                 <div class="card-header bg-success py-3 border-0">
                     <h5 class="mb-0 text-white fw-bold"><i class="fa-solid fa-plus-circle me-2"></i> Add New Program Content</h5>

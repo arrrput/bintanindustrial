@@ -30,7 +30,7 @@
 
     <div class="row g-4">
         <!-- 1. Manage Home -->
-        @role('BDD|CRS|IT')
+        @can('home.manage')
         <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
             <a href="{{ route('cms.home.index') }}" class="card bg-white p-4 cms-card h-100">
                 <div class="cms-icon-wrapper bg-primary-subtle text-primary">
@@ -44,45 +44,62 @@
                 </div>
             </a>
         </div>
-        @endrole
+        @endcan
 
-        <!-- 2. Manage Profile & OSS -->
-        @role('BDD|CRS|IT')
+        <!-- 2. Manage Profiles -->
+        @can('profiles.manage')
         <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
-            <a href="{{ route('cms.bie-page.index') }}" class="card bg-white p-4 cms-card h-100">
+            <a href="{{ route('cms.profiles.index') }}" class="card bg-white p-4 cms-card h-100">
                 <div class="cms-icon-wrapper bg-success-subtle text-success">
                     <i class="fa-solid fa-building-columns"></i>
                 </div>
-                <h4 class="fw-bold text-dark mb-2">Manage Profile &amp; OSS</h4>
-                <p class="text-muted small mb-0">Manage Bintan Island slides on the Profile page, plus the One Stop Service Suite and Facilities on the OSS page.</p>
+                <h4 class="fw-bold text-dark mb-2">Manage Profiles</h4>
+                <p class="text-muted small mb-0">Manage the Bintan Island slider and Business Opportunity on the Profile page.</p>
 
                 <div class="mt-4 d-flex align-items-center text-success fw-bold text-uppercase small" style="letter-spacing: 1px;">
                     Open Module <i class="fa-solid fa-arrow-right ms-2"></i>
                 </div>
             </a>
         </div>
-        @endrole
+        @endcan
 
-        <!-- 3. Manage Programs -->
-        @role('BDD|CRS|IT')
+        <!-- 3. Manage OSS -->
+        @can('oss.manage')
         <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
-            <a href="{{ route('cms.programs.index') }}" class="card bg-white p-4 cms-card h-100">
-                <div class="cms-icon-wrapper bg-danger-subtle text-danger">
-                    <i class="fa-solid fa-calendar-days"></i>
+            <a href="{{ route('cms.oss.index') }}" class="card bg-white p-4 cms-card h-100">
+                <div class="cms-icon-wrapper bg-info-subtle text-info">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
                 </div>
-                <h4 class="fw-bold text-dark mb-2">Manage Programs</h4>
-                <p class="text-muted small mb-0">Manage Event, Entertainment &amp; CSR programs shown in "Beyond The Workplace" on the News page.</p>
+                <h4 class="fw-bold text-dark mb-2">Manage OSS</h4>
+                <p class="text-muted small mb-0">Manage the One Stop Service Suite and Facilities on the OSS page.</p>
 
-                <div class="mt-4 d-flex align-items-center text-danger fw-bold text-uppercase small" style="letter-spacing: 1px;">
+                <div class="mt-4 d-flex align-items-center text-info fw-bold text-uppercase small" style="letter-spacing: 1px;">
                     Open Module <i class="fa-solid fa-arrow-right ms-2"></i>
                 </div>
             </a>
         </div>
-        @endrole
+        @endcan
 
-        <!-- 4. Manage Careers -->
-        @role('HRGA|IT')
+        <!-- 4. Manage Blog (articles + Beyond The Workplace programs) -->
+        @canany(['blog.manage', 'programs.manage'])
         <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+            <a href="{{ auth()->user()->can('blog.manage') ? route('cms.blogs.index') : route('cms.programs.index') }}" class="card bg-white p-4 cms-card h-100">
+                <div class="cms-icon-wrapper bg-primary-subtle text-primary">
+                    <i class="fa-solid fa-newspaper"></i>
+                </div>
+                <h4 class="fw-bold text-dark mb-2">Manage Blog</h4>
+                <p class="text-muted small mb-0">Write articles and press releases, and manage the Event, Entertainment &amp; CSR programs of "Beyond The Workplace".</p>
+
+                <div class="mt-4 d-flex align-items-center text-primary fw-bold text-uppercase small" style="letter-spacing: 1px;">
+                    Open Module <i class="fa-solid fa-arrow-right ms-2"></i>
+                </div>
+            </a>
+        </div>
+        @endcanany
+
+        <!-- 5. Manage Careers -->
+        @can('careers.manage')
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
             <a href="{{ route('cms.careers.index') }}" class="card bg-white p-4 cms-card h-100">
                 <div class="cms-icon-wrapper bg-success-subtle text-success">
                     <i class="fa-solid fa-briefcase"></i>
@@ -95,24 +112,34 @@
                 </div>
             </a>
         </div>
-        @endrole
+        @endcan
 
-        <!-- 5. Manage News -->
-        @role('BDD|CRS|IT')
-        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
-            <a href="{{ route('cms.blogs.index') }}" class="card bg-white p-4 cms-card h-100">
-                <div class="cms-icon-wrapper bg-primary-subtle text-primary">
-                    <i class="fa-solid fa-newspaper"></i>
+        <!-- 6. Admin Panel -->
+        @canany(['users.manage', 'roles.manage'])
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
+            <a href="{{ route('cms.admin.index') }}" class="card bg-white p-4 cms-card h-100">
+                <div class="cms-icon-wrapper bg-dark-subtle text-dark">
+                    <i class="fa-solid fa-user-gear"></i>
                 </div>
-                <h4 class="fw-bold text-dark mb-2">Manage News</h4>
-                <p class="text-muted small mb-0">Write company news, press releases, and articles about Bintan Industrial Estate.</p>
-                
-                <div class="mt-4 d-flex align-items-center text-primary fw-bold text-uppercase small" style="letter-spacing: 1px;">
+                <h4 class="fw-bold text-dark mb-2">Admin Panel</h4>
+                <p class="text-muted small mb-0">Manage CMS users, roles, and what each role is allowed to access.</p>
+
+                <div class="mt-4 d-flex align-items-center text-dark fw-bold text-uppercase small" style="letter-spacing: 1px;">
                     Open Module <i class="fa-solid fa-arrow-right ms-2"></i>
                 </div>
             </a>
         </div>
-        @endrole
+        @endcanany
+
+        @if(!auth()->user()->canAny(\App\Support\CmsPermissions::all()))
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4 p-5 text-center text-muted">
+                <i class="fa-solid fa-lock fs-1 mb-3"></i>
+                <h5 class="fw-bold text-dark">No modules available yet</h5>
+                <p class="mb-0">Your role does not have any permissions. Please contact an administrator.</p>
+            </div>
+        </div>
+        @endif
 
     </div>
 </div>

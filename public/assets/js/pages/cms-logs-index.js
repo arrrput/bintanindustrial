@@ -25,6 +25,7 @@
             .catch(error => {
                 console.error('Error fetching logs:', error);
                 liveIndicator.classList.add('d-none');
+                AppAlert.error('Failed to load activity logs. Please try again.');
             });
         }
 

@@ -28,22 +28,6 @@
                         <p class="text-muted small">We will send a One-Time Password (OTP) to your email address to verify your identity before proceeding to the application form.</p>
                     </div>
 
-                    @if ($errors->any())
-                        <div class="alert alert-danger rounded-4 mb-4 text-start">
-                            <ul class="mb-0">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    @if (session('error'))
-                        <div class="alert alert-danger rounded-4 mb-4 text-start">
-                            {{ session('error') }}
-                        </div>
-                    @endif
-
                     <form action="{{ route('career.apply.send-otp', $career->slug) }}" method="POST">
                         @csrf
                         <div class="mb-4 text-start">
@@ -52,7 +36,7 @@
                         </div>
 
                         <div class="d-grid gap-3">
-                            <button type="submit" class="btn btn-apply-submit border-0">Send Verification Code</button>
+                            <button type="submit" data-loading-text="Sending code..." class="btn btn-apply-submit border-0">Send Verification Code</button>
                             <a href="{{ route('career.show', $career->slug) }}" class="text-muted text-decoration-none small fw-bold">Cancel and go back</a>
                         </div>
                     </form>

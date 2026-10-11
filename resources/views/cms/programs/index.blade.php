@@ -1,18 +1,8 @@
 @extends('layouts.main') 
 
-@section('title', 'Manage Programs - BIIE CMS')
-
-@push('styles')
-<link rel="stylesheet" href="{{ asset('assets/css/pages/cms-programs-index.css') }}">
-@endpush
+@section('title', 'Programs - Manage Blog - BIIE CMS')
 
 @section('content')
-
-  @if(session('success'))
-      <div id="adminSuccessToast" class="custom-success-toast">
-          <i class="fa-solid fa-circle-check fs-5"></i> {{ session('success') }}
-      </div>
-  @endif
 
 <div class="page-title" data-aos="fade">
   <div class="container d-lg-flex justify-content-between align-items-center">
@@ -20,7 +10,8 @@
       <ol>
         <li><a href="{{ url('/') }}">Home</a></li>
         <li><a href="{{ route('cms.dashboard') }}">CMS</a></li>
-        <li class="current">Manage Programs</li>
+        <li><a href="{{ route('cms.blogs.index') }}">Manage Blog</a></li>
+        <li class="current">Programs</li>
       </ol>
     </nav>
   </div>
@@ -28,17 +19,20 @@
 
 <div class="container py-4 py-md-5 mt-2">
 
+    @include('cms.blogs.partials.header', ['active' => 'programs'])
+
     <!-- Section Settings Form -->
     <div class="card border-0 shadow-sm rounded-4 mb-5">
         <div class="card-body p-4">
             <h4 class="fw-bold text-dark mb-4">
-                <i class="fa-solid fa-image text-danger me-2"></i> Beyond The Workplace &mdash; Banner
+                <i class="fa-solid fa-image text-danger me-2"></i> Beyond The Workplace &mdash; Heading &amp; Banner
             </h4>
-            <p class="text-muted small mb-4 mt-n3">Banner shown above the Event, Entertainment &amp; CSR sections on the News page.</p>
+            <p class="text-muted small mb-4 mt-n3">Banner shown above the Event, Entertainment &amp; CSR sections on the Blog page.</p>
             <form action="{{ route('cms.section-settings.update') }}" method="POST" enctype="multipart/form-data" class="js-banner-bg-form">
                 @csrf
                 <input type="hidden" name="section_key" value="program">
                 <div class="row g-3">
+                    @include('cms.partials.section-heading-fields', ['key' => 'program', 'setting' => $setting])
                     <div class="col-md-6">
                         <label class="form-label small fw-bold">Banner Title</label>
                         <input type="text" name="title" class="form-control rounded-pill" value="{{ $setting->title ?? 'Beyond The Workplace' }}" placeholder="Enter banner title">
@@ -64,7 +58,7 @@
             <h2 class="fw-bold text-dark mb-0 fs-3">
                 <i class="fa-solid fa-calendar-days text-danger me-2"></i> Program Content
             </h2>
-            <p class="text-muted small mb-0 mt-1">Manage content for "Event", "Entertainment" and "CSR" sections in the "Beyond The Workplace" section of the News page.</p>
+            <p class="text-muted small mb-0 mt-1">Manage content for "Event", "Entertainment" and "CSR" sections in the "Beyond The Workplace" section of the Blog page.</p>
         </div>
         <div>
             <a href="{{ route('cms.programs.create') }}" class="btn btn-danger rounded-pill px-4 shadow-sm fw-bold">
@@ -111,7 +105,7 @@
                                     <a href="{{ route('cms.programs.edit', $program->id) }}" class="btn btn-sm btn-light text-primary rounded-circle shadow-sm">
                                         <i class="fa-solid fa-pen"></i>
                                     </a>
-                                    <form action="{{ route('cms.programs.destroy', $program->id) }}" method="POST" onsubmit="return confirm('Delete this content?');">
+                                    <form action="{{ route('cms.programs.destroy', $program->id) }}" method="POST" data-confirm="Delete this content?">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-light text-danger rounded-circle shadow-sm">
                                             <i class="fa-solid fa-trash"></i>
@@ -133,6 +127,3 @@
 </div>
 @endsection
 
-@push('scripts')
-<script src="{{ asset('assets/js/pages/cms-programs-index.js') }}"></script>
-@endpush

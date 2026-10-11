@@ -13,8 +13,12 @@ class SectionSetting extends Model
 
     protected $fillable = [
         'section_key',
+        'show_banner',
         'title',
         'subtitle',
+        'heading_badge',
+        'heading_title',
+        'heading_description',
         'background_type',
         'background_color',
         'background_images',
@@ -22,7 +26,24 @@ class SectionSetting extends Model
 
     protected $casts = [
         'background_images' => 'array',
+        'show_banner' => 'boolean',
     ];
+
+    /**
+     * Whether a section shows its banner. Sections without a saved setting keep their banner.
+     */
+    public static function bannerVisible(?self $setting): bool
+    {
+        return $setting?->show_banner ?? true;
+    }
+
+    /**
+     * Whether the section has a sub-heading (pill label + title + description) to show.
+     */
+    public function hasHeading(): bool
+    {
+        return filled($this->heading_badge) || filled($this->heading_title) || filled($this->heading_description);
+    }
 
     /**
      * The solid background color when the banner uses one, otherwise null (image slideshow).
@@ -53,7 +74,7 @@ class SectionSetting extends Model
     public static function cachedForBiePage(): Collection
     {
         return Cache::remember('bie_page_settings', 3600, fn () =>
-            static::whereIn('section_key', ['bie', 'work', 'bintan', 'service_suite'])->get()->keyBy('section_key')
+            static::whereIn('section_key', ['bie', 'work', 'bintan', 'service_suite', 'facilities'])->get()->keyBy('section_key')
         );
     }
 }

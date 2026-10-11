@@ -21,6 +21,12 @@
 </div>
 
 <div class="container py-4 py-md-5 mt-2">
+    <div class="mb-4">
+        <a href="{{ auth()->user()->can('careers.manage') ? route('cms.careers.index') : route('cms.dashboard') }}" class="btn btn-secondary rounded-pill px-4 fw-bold">
+            <i class="fa-solid fa-arrow-left me-2"></i> Back
+        </a>
+    </div>
+
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h2 class="fw-bold text-dark mb-0 fs-3">
@@ -116,10 +122,10 @@
                                                         </div>
 
                                                         <div class="d-grid gap-2 mb-3">
-                                                            <button type="button" class="btn btn-success rounded-pill fw-bold" onclick="triggerConfirm(this.form, 'HIRED', '{{ $applicant->name }}', '{{ $applicant->career->title }}')">
+                                                            <button type="button" class="btn btn-success rounded-pill fw-bold" onclick="triggerConfirm(this.form, 'HIRED', '{{ $applicant->name }}', '{{ $applicant->career->title }}', this)">
                                                                 <i class="fa-solid fa-check-circle me-1"></i> Hired
                                                             </button>
-                                                            <button type="button" class="btn btn-danger rounded-pill fw-bold" onclick="triggerConfirm(this.form, 'REJECTED', '{{ $applicant->name }}', '{{ $applicant->career->title }}')">
+                                                            <button type="button" class="btn btn-danger rounded-pill fw-bold" onclick="triggerConfirm(this.form, 'REJECTED', '{{ $applicant->name }}', '{{ $applicant->career->title }}', this)">
                                                                 <i class="fa-solid fa-circle-xmark me-1"></i> Rejected
                                                             </button>
                                                         </div>
@@ -192,7 +198,7 @@
                                     <a href="{{ route('cms.applicants.show', $applicant) }}" class="btn btn-sm btn-light text-success rounded-circle shadow-sm" title="View Details">
                                         <i class="fa-solid fa-eye"></i>
                                     </a>
-                                    <form action="{{ route('cms.applicants.destroy', $applicant) }}" method="POST" onsubmit="return confirm('Delete this history record?');">
+                                    <form action="{{ route('cms.applicants.destroy', $applicant) }}" method="POST" data-confirm="Delete this history record?">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-light text-danger rounded-circle shadow-sm">
                                             <i class="fa-solid fa-trash"></i>
@@ -213,27 +219,6 @@
     </div>
     <div class="mt-4">
         {{ $historyApplicants->appends(['active_page' => $activeApplicants->currentPage()])->links() }}
-    </div>
-</div>
-
-<!-- Reusable Beautiful Confirmation Modal -->
-<div class="modal fade" id="statusConfirmModal" tabindex="-1" aria-hidden="true" style="z-index: 2000;">
-    <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
-        <div class="modal-content border-0 rounded-4 shadow">
-            <div class="modal-header border-0 pb-0 justify-content-center pt-4">
-                <div class="rounded-circle bg-warning-subtle text-warning d-flex align-items-center justify-content-center shadow-sm" style="width: 60px; height: 60px; background-color: #fff3cd;">
-                    <i class="fa-solid fa-circle-question fs-2 text-warning"></i>
-                </div>
-            </div>
-            <div class="modal-body p-4 text-center">
-                <h5 class="fw-bold text-dark mb-2">Confirm Status Update</h5>
-                <p class="text-muted small mb-0" id="statusConfirmMessage" style="font-size: 0.9rem; line-height: 1.5;"></p>
-            </div>
-            <div class="modal-footer border-0 pt-0 justify-content-center gap-2 pb-4">
-                <button type="button" class="btn btn-light rounded-pill px-4 btn-sm fw-bold text-muted border" data-bs-dismiss="modal" id="statusConfirmCancelBtn">Cancel</button>
-                <button type="button" class="btn btn-success rounded-pill px-4 btn-sm fw-bold shadow-sm" id="statusConfirmProceedBtn" style="background-color: #198754; border-color: #198754;">Confirm</button>
-            </div>
-        </div>
     </div>
 </div>
 

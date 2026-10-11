@@ -17,7 +17,11 @@ class HomeCmsController extends Controller
         $bieSetting = SectionSetting::where('section_key', 'bie')->first();
 
         $testimonials = Testimonial::latest()->get();
-        $tenants = TenantLogo::latest()->get();
-        return view('cms.home.index', compact('bies', 'bieSetting', 'testimonials', 'tenants'));
+
+        // Tenant logos: preview only, managed on their own page (cms.tenants.index)
+        $tenantCount = TenantLogo::count();
+        $tenants = TenantLogo::latest()->take(12)->get();
+
+        return view('cms.home.index', compact('bies', 'bieSetting', 'testimonials', 'tenants', 'tenantCount'));
     }
 }

@@ -55,7 +55,7 @@
                                 </div>
 
                                 <p class="blog-desc mb-4 text-muted small">
-                                    {{ $blog->excerpt ?? strip_tags($blog->content) }}
+                                    {{ $blog->excerpt ?: strip_tags($blog->content) }}
                                 </p>
 
                                 <div class="d-flex justify-content-between align-items-center pt-3 border-top">

@@ -47,7 +47,7 @@ class ContactController extends Controller
             Mail::to($adminEmail)->send(new AdminContactNotification($contact));
         } catch (\Exception $e) {
             // Jika email gagal terkirim (misal karena jaringan), pesan tetap tersimpan di database
-            Log::error('Email Kontak Gagal Dikirim: ' . $e->getMessage() . ' | Data: ' . json_encode($request->all()));
+            Log::error('Contact email could not be sent: ' . $e->getMessage() . ' | Data: ' . json_encode($request->all()));
         }
 
         // 4. Kembalikan respons sesuai dengan cara form dikirim

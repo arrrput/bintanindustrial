@@ -31,6 +31,7 @@
 
     <section class="section pt-5 pb-5 bg-white">
         <div class="container mt-4">
+            @include('partials.section-heading', ['setting' => $serviceSuiteSetting])
 
             <div class="service-suite-flex">
                 @foreach ($serviceChunks as $serviceChunk)

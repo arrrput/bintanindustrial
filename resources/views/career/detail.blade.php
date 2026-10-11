@@ -19,28 +19,6 @@
 @endpush
 
 @section('content')
-  @if(session('success'))
-      <div id="appliedSuccessToast" class="custom-success-toast show">
-          <i class="fa-solid fa-circle-check fs-5"></i> {{ session('success') }}
-      </div>
-  @endif
-
-  <div id="outdatedToast" class="custom-outdated-toast">
-      <i class="fa-solid fa-circle-exclamation fs-5"></i> Outdated! This vacancy has been closed.
-  </div>
-
-  <div class="page-title" data-aos="fade">
-    <div class="container d-lg-flex justify-content-between align-items-center">
-      <nav class="breadcrumbs">
-        <ol>
-          <li><a href="{{ url('/') }}">Home</a></li>
-          <li><a href="{{ route('career.index') }}">Career</a></li>
-          <li class="current">Job Details</li>
-        </ol>
-      </nav>
-    </div>
-  </div>
-
   <section class="job-detail-header" style="{{ $career->is_closed ? 'filter: grayscale(0.2);' : '' }}">
       <div class="container" data-aos="fade-up">
           <div class="row">

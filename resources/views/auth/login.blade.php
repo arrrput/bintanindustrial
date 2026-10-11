@@ -26,12 +26,6 @@
                     
                     <div class="card-body p-4">
                         
-                        @if($errors->any())
-                            <div class="alert alert-danger rounded-3 small fw-bold">
-                                <i class="fa-solid fa-triangle-exclamation me-2"></i> {{ $errors->first() }}
-                            </div>
-                        @endif
-
                         <form action="{{ route('login.post') }}" method="POST">
                             @csrf
                             <div class="form-floating mb-3">
@@ -42,7 +36,7 @@
                                 <input type="password" name="password" class="form-control rounded-3 border-light shadow-sm" id="password" placeholder="Password" required>
                                 <label for="password" class="text-muted"><i class="fa-solid fa-key me-2"></i> Password</label>
                             </div>
-                            <button type="submit" class="btn btn-success w-100 py-2 rounded-pill fw-bold shadow-sm d-flex justify-content-center align-items-center gap-2">
+                            <button type="submit" data-loading-text="Signing in..." class="btn btn-success w-100 py-2 rounded-pill fw-bold shadow-sm d-flex justify-content-center align-items-center gap-2">
                                 Login to Dashboard <i class="fa-solid fa-arrow-right-to-bracket"></i>
                             </button>
                         </form>

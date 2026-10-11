@@ -14,13 +14,13 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::with('roles')->get();
+        $users = User::with('roles')->orderBy('name')->get();
         return view('cms.users.index', compact('users'));
     }
 
     public function create()
     {
-        $roles = Role::all();
+        $roles = Role::withCount('permissions')->orderBy('name')->get();
         return view('cms.users.create', compact('roles'));
     }
 
@@ -48,7 +48,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        $roles = Role::all();
+        $roles = Role::withCount('permissions')->orderBy('name')->get();
         return view('cms.users.edit', compact('user', 'roles'));
     }
 
@@ -60,6 +60,11 @@ class UserController extends Controller
             'password' => 'nullable|string|min:8|confirmed',
             'role' => 'required|string|exists:roles,name'
         ]);
+
+        // Changing your own role could lock you out of the admin panel
+        if ($user->is(auth()->user()) && !$user->hasRole($request->role)) {
+            return back()->withInput()->with('error', 'You cannot change your own role. Ask another administrator to do it.');
+        }
 
         $user->update([
             'name' => $request->name,

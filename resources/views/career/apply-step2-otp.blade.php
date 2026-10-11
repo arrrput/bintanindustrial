@@ -28,22 +28,6 @@
                         <p class="text-muted small">We've sent a 6-character code to <strong>{{ session('apply_email') }}</strong>. Please enter it below to proceed.</p>
                     </div>
 
-                    @if (session('success'))
-                        <div class="alert alert-success rounded-4 mb-4 text-start">
-                            <i class="fa-solid fa-circle-check me-2"></i> {{ session('success') }}
-                        </div>
-                    @endif
-
-                    @if ($errors->any())
-                        <div class="alert alert-danger rounded-4 mb-4 text-start">
-                            <ul class="mb-0">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
                     <form action="{{ route('career.apply.verify', $career->slug) }}" method="POST">
                         @csrf
                         <div class="mb-4">
@@ -51,7 +35,7 @@
                         </div>
 
                         <div class="d-grid gap-3">
-                            <button type="submit" class="btn btn-apply-submit border-0">Verify & Continue</button>
+                            <button type="submit" data-loading-text="Verifying..." class="btn btn-apply-submit border-0">Verify &amp; Continue</button>
                         </div>
                     </form>
 
@@ -60,7 +44,7 @@
                         <form action="{{ route('career.apply.send-otp', $career->slug) }}" method="POST">
                             @csrf
                             <input type="hidden" name="email" value="{{ session('apply_email') }}">
-                            <button type="submit" class="btn btn-link text-success p-0 fw-bold text-decoration-none">Resend Code</button>
+                            <button type="submit" data-loading-text="Sending..." class="btn btn-link text-success p-0 fw-bold text-decoration-none">Resend Code</button>
                         </form>
                         <div class="mt-3">
                             <a href="{{ route('career.apply.email', $career->slug) }}" class="text-muted text-decoration-none small">Change Email Address</a>

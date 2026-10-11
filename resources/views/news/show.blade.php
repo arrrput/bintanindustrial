@@ -9,18 +9,6 @@
 @section('content')
 <main id="main">
 
-    <div class="page-title" data-aos="fade">
-        <div class="container d-flex align-items-center">
-            <nav class="breadcrumbs">
-                <ol>
-                    <li><a href="{{ url('/') }}">Home</a></li>
-                    <li><a href="{{ route('news.index') }}">News</a></li>
-                    <li class="current">Read Article</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-
     <section class="section pt-5 pb-5">
         <div class="container" data-aos="fade-up">
             

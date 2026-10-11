@@ -88,9 +88,12 @@
             </script>
             <div class="swiper-wrapper align-items-center">
                 @foreach ($tenants as $t)
-                    <div class="swiper-slide text-center">
+                    <div class="swiper-slide text-center tenant-logo py-2" @if ($t->name) title="{{ $t->name }}" tabindex="0" @endif>
                         <img loading="lazy" src="{{ asset('storage/' . $t->logo) }}" class="img-fluid"
-                            alt="{{ $t->name }}">
+                            alt="{{ $t->name ?: 'Tenant logo' }}">
+                        @if ($t->name)
+                            <span class="tenant-logo-name" aria-hidden="true">{{ $t->name }}</span>
+                        @endif
                     </div>
                 @endforeach
             </div>

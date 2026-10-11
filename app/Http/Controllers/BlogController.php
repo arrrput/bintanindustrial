@@ -6,6 +6,7 @@ use App\Models\Blog;
 use App\Models\Program;
 use App\Models\SectionSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 // use App\Services\InstagramService;
 use App\Helpers\LogHelper;
 use App\Helpers\ImageCompressor;
@@ -65,8 +66,8 @@ class BlogController extends Controller
             'title'      => $request->title,
             'slug'       => $request->slug,
             'content'    => $request->content,
-            'excerpt'    => $request->excerpt,
-            'image'      => json_encode($imagePaths), 
+            'excerpt'    => $this->resolveExcerpt($request),
+            'image'      => json_encode($imagePaths),
             'post_to_ig' => $request->has('post_to_ig') ? true : false, 
         ]);
 
@@ -153,7 +154,7 @@ class BlogController extends Controller
         // 3. Jika ada upload gambar BARU (Tambahkan, jangan timpa!)
         if ($request->hasFile('image')) {
             foreach ($request->file('image') as $file) {
-                $imagePaths[] = ImageCompressor::store($file, 'blogs'); // Tambahkan ke array yang sudah ada
+                $imagePaths[] = ImageCompressor::store($file, 'blogs'); // Append to the existing images
             }
         }
 
@@ -162,7 +163,7 @@ class BlogController extends Controller
             'title'      => $request->title,
             'slug'       => $request->slug,
             'content'    => $request->content,
-            'excerpt'    => $request->excerpt,
+            'excerpt'    => $this->resolveExcerpt($request),
             'image'      => json_encode($imagePaths),
             'post_to_ig' => $request->has('post_to_ig') ? true : false,
         ]);
@@ -224,5 +225,20 @@ class BlogController extends Controller
     {
         $blog = Blog::where('slug', $slug)->firstOrFail();
         return view('news.show', compact('blog'));
+    }
+
+    /**
+     * Excerpt dari input; jika kosong, dibuat otomatis dari isi artikel
+     */
+    private function resolveExcerpt(Request $request): string
+    {
+        if ($request->filled('excerpt')) {
+            return trim($request->excerpt);
+        }
+
+        $plain = html_entity_decode(strip_tags((string) $request->content), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $plain = trim(preg_replace('/\s+/u', ' ', $plain));
+
+        return Str::limit($plain, 200);
     }
 }

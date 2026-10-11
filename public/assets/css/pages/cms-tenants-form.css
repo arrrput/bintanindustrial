@@ -1,0 +1,33 @@
+/* Tenant logo add/edit form: per-row image drop zone */
+
+.logo-dropzone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 140px;
+    margin: 0;
+    padding: 12px;
+    border: 2px dashed #ced4da;
+    border-radius: 16px;
+    background: #f8f9fa;
+    color: #6c757d;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+.logo-dropzone:hover,
+.logo-dropzone:focus-visible,
+.logo-row.is-active .logo-dropzone { border-color: #335642; outline: none; }
+.logo-dropzone.is-dragover { border-color: #335642; background: #eef5f0; }
+
+.logo-dropzone-preview {
+    max-width: 100%;
+    max-height: 110px;
+    object-fit: contain;
+}
+
+.logo-row.is-active { box-shadow: 0 0 0 3px rgba(51, 86, 66, 0.15) !important; }
+
+/* The CMS lightbox shows a zoom cursor on images; previews here open the file picker */
+.logo-dropzone img { cursor: pointer !important; }

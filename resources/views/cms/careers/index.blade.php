@@ -8,12 +8,6 @@
 
 @section('content')
 
-  @if(session('success'))
-      <div id="adminSuccessToast" class="custom-success-toast">
-          <i class="fa-solid fa-circle-check fs-5"></i> {{ session('success') }}
-      </div>
-  @endif
-
 <div class="page-title" data-aos="fade">
   <div class="container d-lg-flex justify-content-between align-items-center">
     <nav class="breadcrumbs">
@@ -27,6 +21,12 @@
 </div>
 
 <div class="container py-4 py-md-5 mt-2">
+
+    <div class="mb-4">
+        <a href="{{ route('cms.dashboard') }}" class="btn btn-secondary rounded-pill px-4 fw-bold">
+            <i class="fa-solid fa-arrow-left me-2"></i> Back
+        </a>
+    </div>
 
     <!-- Top Cards Row -->
     <div class="row align-items-start mb-2">
@@ -47,6 +47,7 @@
                             @csrf
                             <input type="hidden" name="section_key" value="career">
                             <div class="row g-3">
+                                @include('cms.partials.section-heading-fields', ['key' => 'career', 'setting' => $setting])
                                 <div class="col-md-12">
                                     <label class="form-label small fw-bold">Custom Section Title</label>
                                     <input type="text" name="title" class="form-control rounded-pill px-3" value="{{ $setting->title ?? 'Join Our Team' }}" placeholder="Enter custom title">
@@ -180,7 +181,7 @@
                                     <a href="{{ route('cms.careers.edit', $career) }}" class="btn btn-sm btn-light text-primary rounded-circle shadow-sm">
                                         <i class="fa-solid fa-pen"></i>
                                     </a>
-                                    <form action="{{ route('cms.careers.destroy', $career) }}" method="POST" onsubmit="return confirm('Delete this job?');">
+                                    <form action="{{ route('cms.careers.destroy', $career) }}" method="POST" data-confirm="Delete this job?">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-light text-danger rounded-circle shadow-sm">
                                             <i class="fa-solid fa-trash"></i>
@@ -282,7 +283,7 @@
                                                             <a href="{{ route('cms.careers.edit', $career) }}" class="btn btn-sm btn-light text-primary rounded-circle shadow-sm">
                                                                 <i class="fa-solid fa-pen"></i>
                                                             </a>
-                                                            <form action="{{ route('cms.careers.destroy', $career) }}" method="POST" onsubmit="return confirm('Delete this history record?');">
+                                                            <form action="{{ route('cms.careers.destroy', $career) }}" method="POST" data-confirm="Delete this history record?">
                                                                 @csrf @method('DELETE')
                                                                 <button type="submit" class="btn btn-sm btn-light text-danger rounded-circle shadow-sm">
                                                                     <i class="fa-solid fa-trash"></i>

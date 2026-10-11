@@ -21,17 +21,6 @@
         <div class="row justify-content-center">
             <div class="col-lg-10">
 
-                @if ($errors->any())
-                    <div class="alert alert-danger rounded-4 mb-4 shadow-sm">
-                        <h6 class="fw-bold"><i class="fa-solid fa-circle-exclamation me-2"></i> Please fix the following errors:</h6>
-                        <ul class="mb-0 small">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
                 <div class="accordion" id="applicationAccordion">
                     
                     <!-- 1. Contact Information Section -->
@@ -397,13 +386,13 @@
                                             <div class="form-check bg-light p-3 rounded-3 border">
                                                 <input class="form-check-input ms-0" type="checkbox" name="confirm_data" id="confirmCheck" required>
                                                 <label class="form-check-label ms-2 fw-bold text-dark" for="confirmCheck" style="cursor: pointer;">
-                                                    Make sure all of data is right
+                                                    I confirm that all the information I have provided is correct.
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col-md-12 d-flex justify-content-between mt-4">
                                             <button type="button" class="btn btn-light btn-prev rounded-pill px-4" onclick="prevStep(5)">Previous</button>
-                                            <button type="submit" class="btn btn-apply-submit px-4 shadow-sm">Submit Final Application</button>
+                                            <button type="submit" data-loading-text="Submitting..." class="btn btn-apply-submit px-4 shadow-sm">Submit Final Application</button>
                                         </div>
                                     </div>
                                 </div>

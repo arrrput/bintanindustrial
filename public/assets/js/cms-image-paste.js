@@ -70,6 +70,8 @@
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('input[type="file"]').forEach(function (input) {
             if (!isImageInput(input)) return;
+            // Forms with their own paste/drop/preview handling (e.g. tenant logo rows)
+            if (input.closest('form[data-own-upload]')) return;
 
             // Default to the first image input on the page so paste works
             // right away, even before the user clicks/focuses anything.
@@ -183,7 +185,7 @@
 
         document.addEventListener('click', function (e) {
             const img = e.target.closest('main.main img');
-            if (!img) return;
+            if (!img || img.closest('[data-dropzone]')) return; // previews inside a drop zone open the file picker instead
             openLightbox(img.currentSrc || img.src);
         });
     }
