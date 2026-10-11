@@ -8,10 +8,6 @@
 @endpush
 
 @section('content')
-<div id="adminWarningToast" class="custom-warning-toast">
-    <i class="fa-solid fa-triangle-exclamation fs-5"></i> <span id="warningMessage">Warning Message</span>
-</div>
-
 <div class="page-title" data-aos="fade">
   <div class="container d-lg-flex justify-content-between align-items-center">
     <nav class="breadcrumbs">
@@ -28,6 +24,11 @@
 <div class="container py-5 mt-2">
     <div class="row justify-content-center">
         <div class="col-lg-10">
+            <div class="mb-4">
+                <a href="{{ route('cms.careers.index') }}" class="btn btn-secondary rounded-pill px-4 fw-bold">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Back
+                </a>
+            </div>
             <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
                 <div class="card-header bg-primary py-3 border-0">
                     <h5 class="mb-0 text-white fw-bold"><i class="fa-solid fa-pen-to-square me-2"></i> Edit Job: {{ $career->title }}</h5>
@@ -40,43 +41,43 @@
                         <div class="row g-4">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-dark">Job Title <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="title" id="title" value="{{ $career->title }}" required>
+                                <input type="text" class="form-control" name="title" id="title" value="{{ old('title', $career->title) }}" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-dark">Location <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="location" id="location" value="{{ $career->location }}" required>
+                                <input type="text" class="form-control" name="location" id="location" value="{{ old('location', $career->location) }}" required>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label fw-bold text-dark">Level <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="level" id="level" value="{{ $career->level }}" required>
+                                <input type="text" class="form-control" name="level" id="level" value="{{ old('level', $career->level) }}" required>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label fw-bold text-dark">Min. Education <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="min_education" id="min_education" value="{{ $career->min_education }}" required>
+                                <input type="text" class="form-control" name="min_education" id="min_education" value="{{ old('min_education', $career->min_education) }}" required>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label fw-bold text-dark">Min. Experience <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="min_experience" id="min_experience" value="{{ $career->min_experience }}" required>
+                                <input type="text" class="form-control" name="min_experience" id="min_experience" value="{{ old('min_experience', $career->min_experience) }}" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-dark">Closing Date <span class="text-danger">*</span></label>
-                                <input type="date" class="form-control" name="closing_date" id="closing_date" value="{{ $career->closing_date }}" required>
+                                <input type="date" class="form-control" name="closing_date" id="closing_date" value="{{ old('closing_date', $career->closing_date) }}" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-dark">Job Status</label>
                                 <select class="form-select" name="status" id="status">
-                                    <option value="open" {{ $career->status == 'open' ? 'selected' : '' }}>OPEN</option>
-                                    <option value="closed" {{ $career->status == 'closed' ? 'selected' : '' }}>CLOSED</option>
+                                    <option value="open" {{ old('status', $career->status) == 'open' ? 'selected' : '' }}>OPEN</option>
+                                    <option value="closed" {{ old('status', $career->status) == 'closed' ? 'selected' : '' }}>CLOSED</option>
                                 </select>
                             </div>
 
                             <div class="col-12">
                                 <label class="form-label fw-bold text-dark">Job Description <span class="text-danger">*</span></label>
-                                <textarea class="form-control summernote-editor" name="description" required>{!! $career->description !!}</textarea>
+                                <textarea class="form-control summernote-editor" name="description" required>{!! old('description', $career->description) !!}</textarea>
                             </div>
                             <div class="col-12">
                                 <label class="form-label fw-bold text-dark">Requirements <span class="text-danger">*</span></label>
-                                <textarea class="form-control summernote-editor" name="requirements" required>{!! $career->requirements !!}</textarea>
+                                <textarea class="form-control summernote-editor" name="requirements" required>{!! old('requirements', $career->requirements) !!}</textarea>
                             </div>
 
                             {{--

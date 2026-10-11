@@ -1,0 +1,85 @@
+/* Admin Panel (users, roles, permissions) */
+
+.admin-nav {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 6px;
+    background: #f1f3f5;
+    border-radius: 50px;
+    width: fit-content;
+    max-width: 100%;
+    scrollbar-width: none;
+}
+.admin-nav::-webkit-scrollbar { display: none; }
+
+.admin-nav-link {
+    flex-shrink: 0;
+    padding: 8px 20px;
+    border-radius: 50px;
+    color: #6c757d;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s;
+}
+.admin-nav-link:hover { color: #335642; background: #e2e6ea; }
+.admin-nav-link.active {
+    background: #335642;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(51, 86, 66, 0.25);
+}
+
+.admin-stat-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    flex-shrink: 0;
+}
+
+.admin-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent-color, #335642);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+/* Permission checklist (role form) */
+.permission-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid #e9ecef;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+    height: 100%;
+}
+.permission-option:hover { border-color: #b7c9bd; }
+.permission-option:has(input:checked) { border-color: #335642; background: #f2f7f4; }
+.permission-option input { margin-top: 3px; flex-shrink: 0; }
+
+/* Role × permission matrix */
+.permission-matrix th.role-col { min-width: 110px; }
+.permission-matrix .group-row td {
+    background: #f8f9fa;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #6c757d;
+}
+.permission-matrix .form-check-input { width: 1.2em; height: 1.2em; cursor: pointer; }
+.permission-matrix .form-check-input:disabled { cursor: not-allowed; }
+.permission-matrix tbody tr:not(.group-row):hover td { background: #fafbfc; }

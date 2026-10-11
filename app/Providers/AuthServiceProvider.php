@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Support\CmsPermissions;
 use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
@@ -25,6 +26,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // Super admin role passes every permission check, so it can never be locked out
+        Gate::before(function ($user) {
+            return $user->hasRole(CmsPermissions::SUPER_ADMIN_ROLE) ? true : null;
+        });
     }
 }

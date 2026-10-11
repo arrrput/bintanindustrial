@@ -3,16 +3,10 @@
 @section('title', 'Manage Home - BIIE CMS')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('assets/css/pages/cms-home-index.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/pages/cms-bie-page-index.css') }}">
 @endpush
 
 @section('content')
-
-  @if(session('success'))
-      <div id="adminSuccessToast" class="custom-success-toast">
-          <i class="fa-solid fa-circle-check fs-5"></i> {{ session('success') }}
-      </div>
-  @endif
 
 <div class="page-title" data-aos="fade">
   <div class="container d-lg-flex justify-content-between align-items-center">
@@ -36,21 +30,51 @@
             </h2>
             <p class="text-muted mb-0">Manage all content sections of the public <strong>Home</strong> page from one place.</p>
         </div>
-        <a href="{{ route('home') }}" target="_blank" class="btn btn-outline-primary rounded-pill px-4 fw-bold">
-            <i class="fa-solid fa-arrow-up-right-from-square me-2"></i> View Live Page
-        </a>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{{ route('cms.dashboard') }}" class="btn btn-secondary rounded-pill px-4 fw-bold">
+                <i class="fa-solid fa-arrow-left me-2"></i> Back
+            </a>
+            <a href="{{ route('home') }}" target="_blank" class="btn btn-outline-primary rounded-pill px-4 fw-bold">
+                <i class="fa-solid fa-arrow-up-right-from-square me-2"></i> View Live Page
+            </a>
+        </div>
     </div>
 
+    {{-- Tab Navigation --}}
+    <ul class="nav section-tab-nav gap-2 mb-5" id="homeTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="tab-estate" data-bs-toggle="tab" data-bs-target="#pane-estate" type="button" role="tab" aria-controls="pane-estate" aria-selected="true">
+                <i class="fa-solid fa-industry me-1"></i> Our Industrial Estate
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab-testimonials" data-bs-toggle="tab" data-bs-target="#pane-testimonials" type="button" role="tab" aria-controls="pane-testimonials" aria-selected="false">
+                <i class="fa-solid fa-comments me-1"></i> Client Testimonials
+                <span class="badge rounded-pill bg-white text-dark border ms-1" id="testimonialTabCount">{{ $testimonials->count() }}</span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab-tenants" data-bs-toggle="tab" data-bs-target="#pane-tenants" type="button" role="tab" aria-controls="pane-tenants" aria-selected="false">
+                <i class="fa-solid fa-users me-1"></i> Tenant Logos
+                <span class="badge rounded-pill bg-white text-dark border ms-1">{{ $tenantCount }}</span>
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="homeTabContent">
+
+    <div class="tab-pane fade show active" id="pane-estate" role="tabpanel" aria-labelledby="tab-estate">
     <!-- SECTION 1: OUR INDUSTRIAL ESTATE -->
     <div class="card border-0 shadow-sm rounded-4 mb-4">
         <div class="card-body p-4">
             <h4 class="fw-bold text-dark mb-4">
-                <i class="fa-solid fa-industry text-success me-2"></i> Our Industrial Estate &mdash; Banner
+                <i class="fa-solid fa-industry text-success me-2"></i> Our Industrial Estate &mdash; Heading &amp; Banner
             </h4>
             <form action="{{ route('cms.section-settings.update') }}" method="POST" enctype="multipart/form-data" class="js-banner-bg-form">
                 @csrf
                 <input type="hidden" name="section_key" value="bie">
                 <div class="row g-3">
+                    @include('cms.partials.section-heading-fields', ['key' => 'bie', 'setting' => $bieSetting])
                     <div class="col-md-6">
                         <label class="form-label small fw-bold">Banner Title</label>
                         <input type="text" name="title" class="form-control rounded-pill" value="{{ $bieSetting->title ?? 'Our Industrial Estate' }}" placeholder="Enter banner title">
@@ -85,17 +109,18 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead class="bg-light text-muted" style="font-size: 0.85rem; letter-spacing: 1px;">
                         <tr>
-                            <th class="ps-4 py-3 text-uppercase" style="width: 80px;">Media</th>
+                            <th class="ps-3 py-3" style="width: 48px;"><span class="visually-hidden">Reorder</span></th>
+                                <th class="ps-4 py-3 text-uppercase" style="width: 80px;">Media</th>
                             <th class="py-3 text-uppercase">Title & Type</th>
                             <th class="py-3 text-uppercase d-none d-md-table-cell">Description</th>
-                            <th class="py-3 text-uppercase text-center">Order</th>
                             <th class="pe-4 py-3 text-uppercase text-end">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody data-sortable-url="{{ route('cms.bies.reorder') }}">
                         @forelse($bies as $item)
-                        <tr>
-                            <td class="ps-4 py-3">
+                        <tr data-id="{{ $item->id }}">
+                            <td class="drag-handle ps-3 py-3" title="Drag to reorder" aria-label="Drag to reorder"><i class="fa-solid fa-grip-vertical"></i></td>
+                            <td class="py-3">
                                 @if($item->image)
                                     <img src="{{ asset('storage/' . $item->image) }}" class="rounded-3 shadow-sm" style="width: 56px; height: 56px; object-fit: cover;">
                                 @elseif($item->icon)
@@ -120,15 +145,12 @@
                             <td class="py-3 d-none d-md-table-cell text-muted small">
                                 {{ Str::limit(strip_tags($item->description), 80) }}
                             </td>
-                            <td class="py-3 text-center">
-                                <span class="badge bg-light text-dark border">{{ $item->order }}</span>
-                            </td>
                             <td class="pe-4 py-3 text-end">
                                 <div class="d-flex justify-content-end gap-2">
                                     <a href="{{ route('cms.bies.edit', $item->id) }}" class="btn btn-sm btn-light text-primary rounded-circle shadow-sm" title="Edit">
                                         <i class="fa-solid fa-pen"></i>
                                     </a>
-                                    <form action="{{ route('cms.bies.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Delete this section?');">
+                                    <form action="{{ route('cms.bies.destroy', $item->id) }}" method="POST" data-confirm="Delete this section?">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-light text-danger rounded-circle shadow-sm" title="Delete">
                                             <i class="fa-solid fa-trash"></i>
@@ -150,6 +172,9 @@
         </div>
     </div>
 
+    </div>
+
+    <div class="tab-pane fade" id="pane-testimonials" role="tabpanel" aria-labelledby="tab-testimonials">
     <!-- SECTION 2: TESTIMONIALS -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
@@ -236,80 +261,60 @@
         </div>
     </div>
 
+    </div>
+
+    <div class="tab-pane fade" id="pane-tenants" role="tabpanel" aria-labelledby="tab-tenants">
     <!-- SECTION 3: TENANT LOGOS -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+            <h2 class="fw-bold text-dark mb-0 fs-3">
+                <i class="fa-solid fa-users text-success me-2"></i> Tenant Logos
+                <span class="badge bg-success-subtle text-success rounded-pill fs-6 ms-1 align-middle">{{ $tenantCount }}</span>
+            </h2>
+            <p class="text-muted small mb-0 mt-1">Tenant logos displayed in the partnership section of the home page.</p>
+        </div>
+        <a href="{{ route('cms.tenants.index') }}" class="btn btn-success rounded-pill px-4 shadow-sm fw-bold">
+            <i class="fa-solid fa-gear me-2"></i> Manage Logos
+        </a>
+    </div>
+
     <div class="card border-0 shadow-sm rounded-4 mb-5">
-        <div class="card-body p-4 text-center">
-            <h4 class="fw-bold text-dark mb-4 text-start">
-                <i class="fa-solid fa-users text-success me-2"></i> Manage Tenant Logos
-            </h4>
-            <form action="{{ route('cms.tenants.store') }}" method="POST" enctype="multipart/form-data" id="tenantUploadForm">
-                @csrf
-                <div class="p-5 border border-2 border-dashed rounded-4 bg-light mb-2 position-relative d-flex flex-column align-items-center justify-content-center">
-                    <i class="fa-solid fa-images fs-1 text-muted mb-3"></i>
-                    <p class="mb-3 text-secondary">Click "Browse" or drag and drop tenant logos here</p>
-                    <input type="file" name="logos[]" id="tenantLogosInput" class="form-control position-absolute inset-0 opacity-0 w-100 h-100" style="cursor: pointer; z-index: 2;" accept="image/*" multiple>
-                    <button type="button" class="btn btn-outline-success rounded-pill px-4 fw-bold position-relative" style="z-index: 1;">
-                        <i class="fa-solid fa-folder-open me-2"></i> Browse Files
-                    </button>
+        <div class="card-body p-4">
+            @if($tenants->isEmpty())
+                <div class="text-center py-4 text-muted small">
+                    No tenant logos uploaded yet. <a href="{{ route('cms.tenants.index') }}">Upload some</a>.
                 </div>
-                <p class="text-muted small mt-2 mb-0">
-                    <i class="fa-regular fa-clipboard me-1"></i> Tip: drag &amp; drop an image here, or press <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste one.
-                </p>
-            </form>
-
-            <!-- Staged preview (not yet uploaded) -->
-            <div id="tenantPreview" class="row g-3 text-start mb-3"></div>
-            <div id="tenantSubmitWrap" class="text-center mb-4 d-none">
-                <button type="button" id="tenantUploadBtn" class="btn btn-success rounded-pill px-5 fw-bold shadow-sm">
-                    <i class="fa-solid fa-cloud-arrow-up me-2"></i> Upload <span id="tenantCount"></span>
-                </button>
-                <button type="button" id="tenantClearBtn" class="btn btn-link text-muted text-decoration-none ms-2">Clear</button>
-            </div>
-
-            @if($tenants->count() > 0)
-            <div class="d-flex justify-content-between align-items-center mb-3 text-start" id="tenantBulkBar">
-                <div class="form-check mb-0">
-                    <input type="checkbox" class="form-check-input" id="tenantSelectAll">
-                    <label class="form-check-label small text-muted" for="tenantSelectAll">Select all</label>
-                </div>
-                <button type="button" id="tenantBulkDelete" data-url="{{ route('cms.tenants.bulk-destroy') }}" class="btn btn-danger btn-sm rounded-pill px-3 fw-bold d-none">
-                    <i class="fa-solid fa-trash me-2"></i> Delete Selected (<span id="tenantSelCount">0</span>)
-                </button>
-            </div>
-            @endif
-
-            <div class="row g-4 text-start" id="tenantList">
-                @forelse($tenants as $t)
-                <div class="col-6 col-md-4 col-lg-2" data-tenant-id="{{ $t->id }}">
-                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative group" style="background: #f8f9fa;">
-                        <div class="p-3 d-flex align-items-center justify-content-center" style="height: 100px;">
-                            <img src="{{ asset('storage/' . $t->logo) }}" class="img-fluid" style="max-height: 60px; object-fit: contain;">
-                        </div>
-                        <div class="position-absolute top-0 start-0 p-2">
-                            <input type="checkbox" class="form-check-input tenant-check" value="{{ $t->id }}" style="width:18px;height:18px;cursor:pointer;">
-                        </div>
-                        <div class="position-absolute top-0 end-0 p-2">
-                            <form action="{{ route('cms.tenants.destroy', $t->id) }}" method="POST" class="js-delete-tenant">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 25px; height: 25px;">
-                                    <i class="fa-solid fa-xmark" style="font-size: 0.7rem;"></i>
-                                </button>
-                            </form>
+            @else
+                <div class="row g-3">
+                    @foreach($tenants as $t)
+                    <div class="col-4 col-md-3 col-lg-2">
+                        <div class="rounded-4 d-flex align-items-center justify-content-center p-3" style="height: 80px; background: #f8f9fa;">
+                            <img src="{{ asset('storage/' . $t->logo) }}" alt="{{ $t->name }}" title="{{ $t->name }}" class="img-fluid" style="max-height: 48px; object-fit: contain;">
                         </div>
                     </div>
+                    @endforeach
                 </div>
-                @empty
-                <div class="col-12 text-center py-4 text-muted small" id="tenantEmpty">No tenant logos uploaded yet.</div>
-                @endforelse
-            </div>
+                @if($tenantCount > $tenants->count())
+                    <div class="text-center mt-4">
+                        <a href="{{ route('cms.tenants.index') }}" class="text-success fw-bold text-decoration-none small">
+                            View all {{ $tenantCount }} logos <i class="fa-solid fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                @endif
+            @endif
         </div>
     </div>
 
+    </div>
+
+    </div>
 </div>
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('assets/js/components/bulk-delete.js') }}"></script>
+<script src="{{ asset('assets/js/pages/cms-bie-page-index.js') }}"></script>
 <script src="{{ asset('assets/js/pages/cms-home-index.js') }}"></script>
 @endpush
+
+@include('cms.partials.sortable-assets')

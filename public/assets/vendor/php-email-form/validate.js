@@ -21,9 +21,9 @@
         displayError(thisForm, 'The form action property is not set!');
         return;
       }
-      thisForm.querySelector('.loading').classList.add('d-block');
-      thisForm.querySelector('.error-message').classList.remove('d-block');
-      thisForm.querySelector('.sent-message').classList.remove('d-block');
+      if (thisForm.dataset.submitting === '1') return; // already sending
+      thisForm.dataset.submitting = '1';
+      ButtonLoading.start(ButtonLoading.submitButtonOf(thisForm, event.submitter), 'Sending...');
 
       let formData = new FormData( thisForm );
 
@@ -59,14 +59,23 @@
       if( response.ok ) {
         return response.text();
       } else {
-        throw new Error(`${response.status} ${response.statusText} ${response.url}`); 
+        // Laravel validation (JSON) or plain-text error responses
+        return response.text().then(text => {
+          let message = text;
+          try {
+            const json = JSON.parse(text);
+            message = json.errors ? Object.values(json.errors).flat().join('<br>') : (json.message || text);
+          } catch (e) {}
+          throw new Error(message || `${response.status} ${response.statusText}`);
+        });
       }
     })
     .then(data => {
-      thisForm.querySelector('.loading').classList.remove('d-block');
+      finishSubmit(thisForm);
       if (data.trim() == 'OK') {
-        thisForm.querySelector('.sent-message').classList.add('d-block');
-        thisForm.reset(); 
+        AppAlert.success('Your message has been sent. Thank you!');
+        thisForm.reset();
+        if (typeof grecaptcha !== 'undefined' && grecaptcha.reset) grecaptcha.reset();
       } else {
         throw new Error(data ? data : 'Form submission failed and no error message returned from: ' + action); 
       }
@@ -76,10 +85,14 @@
     });
   }
 
+  function finishSubmit(thisForm) {
+    delete thisForm.dataset.submitting;
+    thisForm.querySelectorAll('[data-loading="1"]').forEach(btn => ButtonLoading.stop(btn));
+  }
+
   function displayError(thisForm, error) {
-    thisForm.querySelector('.loading').classList.remove('d-block');
-    thisForm.querySelector('.error-message').innerHTML = error;
-    thisForm.querySelector('.error-message').classList.add('d-block');
+    finishSubmit(thisForm);
+    AppAlert.error(error && error.message ? error.message : String(error));
   }
 
 })();

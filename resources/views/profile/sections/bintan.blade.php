@@ -8,12 +8,7 @@
 
 <section class="why-bintan section light-background position-relative">
     <div class="container position-relative" style="z-index: 1;">
-        <div class="text-center mb-4" data-aos="fade-up">
-            <span class="badge bg-success-subtle text-success px-4 py-2 rounded-pill fw-bold"
-                style="font-size: 1rem; border: 1px solid rgba(51,86,66,0.2); letter-spacing: 1px;">
-                ADVANTAGES
-            </span>
-        </div>
+        @include('partials.section-heading', ['setting' => $bintanSetting, 'class' => 'pb-5'])
 
         {{-- Image slider (synced with descriptions below by bie-unified.js) --}}
         <div class="bintan-slider-outer" data-aos="fade-up" data-aos-delay="200">

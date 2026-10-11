@@ -1,0 +1,20 @@
+/* Drag & drop reordering for CMS tables (see assets/js/components/sortable-rows.js) */
+
+.drag-handle {
+    width: 48px;
+    cursor: grab;
+    color: #adb5bd;
+    text-align: center;
+    user-select: none;
+    touch-action: none;
+}
+.drag-handle:hover { color: #335642; }
+.drag-handle:active { cursor: grabbing; }
+
+tbody.is-static .drag-handle { cursor: default; color: #dee2e6; }
+
+tr.sortable-ghost td { background: #eef5f0 !important; }
+tr.sortable-ghost { opacity: 0.6; }
+tr.sortable-chosen { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); }
+
+tbody.is-saving { opacity: 0.6; pointer-events: none; transition: opacity 0.2s; }

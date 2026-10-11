@@ -8,8 +8,6 @@
 @endpush
 
 @section('content')
-    @include('partials.page-title', ['current' => 'OSS'])
-
     {{-- Hidden for now — uncomment to show again
     @include('partials.page-header', [
         'prefix' => 'program',
@@ -24,5 +22,4 @@
 
     @include('oss.sections.service-suite')
     @include('oss.sections.facilities')
-    @include('oss.sections.infrastructure')
 @endsection

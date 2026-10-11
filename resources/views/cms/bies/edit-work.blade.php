@@ -1,16 +1,23 @@
 @extends('layouts.main')
 
-@section('title', 'Edit Facilities & Work Content - BIIE CMS')
+@section('title', 'Edit Content - BIIE CMS')
 
 @section('content')
+@php
+    // Business Opportunity lives on Manage Profiles; Service Suite & Facilities on Manage OSS
+    $currentCategory = old('category', $bie->category);
+    $onOss = in_array($bie->category, ['service_suite', 'facility']);
+    $backRoute = $onOss ? 'cms.oss.index' : 'cms.profiles.index';
+    $backLabel = $onOss ? 'Manage OSS' : 'Manage Profiles';
+@endphp
 <div class="page-title" data-aos="fade">
   <div class="container d-lg-flex justify-content-between align-items-center">
     <nav class="breadcrumbs">
       <ol>
         <li><a href="{{ url('/') }}">Home</a></li>
         <li><a href="{{ route('cms.dashboard') }}">CMS</a></li>
-        <li><a href="{{ route('cms.bie-page.index') }}">Profile &amp; OSS</a></li>
-        <li class="current">Edit Work Item</li>
+        <li><a href="{{ route($backRoute) }}">{{ $backLabel }}</a></li>
+        <li class="current">Edit Content</li>
       </ol>
     </nav>
   </div>
@@ -19,9 +26,14 @@
 <div class="container py-5 mt-2">
     <div class="row justify-content-center">
         <div class="col-lg-10">
+            <div class="mb-4">
+                <a href="{{ route($backRoute) }}" class="btn btn-secondary rounded-pill px-4 fw-bold">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Back
+                </a>
+            </div>
             <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
                 <div class="card-header bg-primary py-3 border-0">
-                    <h5 class="mb-0 text-white fw-bold"><i class="fa-solid fa-pen-to-square me-2"></i> Edit Facilities & Work Content</h5>
+                    <h5 class="mb-0 text-white fw-bold"><i class="fa-solid fa-pen-to-square me-2"></i> Edit Content</h5>
                 </div>
                 <div class="card-body p-4 p-md-5">
                     <form action="{{ route('cms.bies.update', $bie->id) }}" method="POST" enctype="multipart/form-data">
@@ -40,8 +52,9 @@
                             <div class="col-md-4">
                                 <label class="form-label fw-bold text-dark">Category <span class="text-danger">*</span></label>
                                 <select name="category" id="categorySelect" class="form-select @error('category') is-invalid @enderror" required onchange="toggleFields()">
-                                    <option value="main_section" {{ $bie->category == 'main_section' ? 'selected' : '' }}>Main Section (Full Width)</option>
-                                    <option value="service_suite" {{ $bie->category == 'service_suite' ? 'selected' : '' }}>Service Suite (Card)</option>
+                                    <option value="main_section" {{ $currentCategory == 'main_section' ? 'selected' : '' }}>Business Opportunity (Profile page)</option>
+                                    <option value="service_suite" {{ $currentCategory == 'service_suite' ? 'selected' : '' }}>Service Suite card (OSS page)</option>
+                                    <option value="facility" {{ $currentCategory == 'facility' ? 'selected' : '' }}>Facility photo card (OSS page)</option>
                                 </select>
                                 @error('category') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
@@ -67,7 +80,7 @@
 
                             <!-- Image -->
                             <div id="imageField" class="col-12">
-                                <label class="form-label fw-bold text-dark">Cover Image</label>
+                                <label class="form-label fw-bold text-dark"><span id="imageLabel">Cover Image</span></label>
                                 <div class="row align-items-center g-3">
                                     <div class="col-md-3">
                                         @if($bie->image)
@@ -92,14 +105,14 @@
 
                             <!-- Description -->
                             <div class="col-12">
-                                <label class="form-label fw-bold text-dark">Description <span class="text-danger">*</span></label>
-                                <textarea name="description" rows="6" class="form-control @error('description') is-invalid @enderror" required>{{ old('description', $bie->description) }}</textarea>
+                                <label class="form-label fw-bold text-dark">Description <span class="text-danger" id="descriptionRequired">*</span></label>
+                                <textarea name="description" id="descriptionInput" rows="6" class="form-control @error('description') is-invalid @enderror" required>{{ old('description', $bie->description) }}</textarea>
                                 @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
                         </div>
 
                         <div class="d-flex justify-content-end gap-2 mt-5">
-                            <a href="{{ route('cms.bie-page.index') }}" class="btn btn-light rounded-pill px-4 fw-bold">Cancel</a>
+                            <a href="{{ route($backRoute) }}" class="btn btn-light rounded-pill px-4 fw-bold">Cancel</a>
                             <button type="submit" class="btn btn-primary rounded-pill px-5 shadow fw-bold">
                                 <i class="fa-solid fa-save me-2"></i> Update Content
                             </button>

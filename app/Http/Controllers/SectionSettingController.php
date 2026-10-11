@@ -22,11 +22,25 @@ class SectionSettingController extends Controller
             'remove_images'      => 'nullable|array',
             'background_type'    => 'nullable|in:image,color',
             'background_color'   => ['nullable', 'required_if:background_type,color', 'regex:/^#[0-9a-fA-F]{6}$/'],
+            'show_banner'        => 'nullable|boolean',
+            'heading_badge'      => 'nullable|string|max:100',
+            'heading_title'      => 'nullable|string|max:255',
+            'heading_description'=> 'nullable|string|max:1000',
         ]);
 
         $setting = SectionSetting::firstOrNew(['section_key' => $request->section_key]);
 
         $setting->title = $request->title;
+
+        // Banner on/off + section sub-heading (sent by cms.partials.section-heading-fields)
+        if ($request->has('show_banner')) {
+            $setting->show_banner = $request->boolean('show_banner');
+        }
+        foreach (['heading_badge', 'heading_title', 'heading_description'] as $field) {
+            if ($request->has($field)) {
+                $setting->{$field} = $request->input($field);
+            }
+        }
 
         // Only forms with a subtitle field send it.
         if ($request->has('subtitle')) {
@@ -65,7 +79,7 @@ class SectionSettingController extends Controller
         $setting->save();
 
         // Public pages cache these settings — bust the relevant cache so the change shows immediately.
-        if (in_array($request->section_key, ['bie', 'work', 'bintan', 'service_suite'])) {
+        if (in_array($request->section_key, ['bie', 'work', 'bintan', 'service_suite', 'facilities'])) {
             Cache::forget('bie_page_settings');
         }
         if ($request->section_key === 'career') {

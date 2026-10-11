@@ -9,7 +9,7 @@
       <ol>
         <li><a href="{{ url('/') }}">Home</a></li>
         <li><a href="{{ route('cms.dashboard') }}">CMS</a></li>
-        <li><a href="{{ route('cms.bie-page.index') }}">Profile &amp; OSS</a></li>
+        <li><a href="{{ route('cms.profiles.index') }}">Manage Profiles</a></li>
         <li class="current">Edit Bintan Slide</li>
       </ol>
     </nav>
@@ -19,6 +19,11 @@
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-10">
+            <div class="mb-4">
+                <a href="{{ route('cms.profiles.index') }}" class="btn btn-secondary rounded-pill px-4 fw-bold">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Back
+                </a>
+            </div>
             <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
                 <div class="card-header bg-primary py-3 border-0">
                     <h5 class="mb-0 text-white fw-bold"><i class="fa-solid fa-pen-to-square me-2"></i> Edit Bintan Island Slide</h5>
@@ -64,13 +69,6 @@
                                     'value' => old('icon', $bie->icon)
                                 ])
                                 @error('icon') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
-                            </div>
-
-                            <!-- Order -->
-                            <div class="col-md-3">
-                                <label class="form-label fw-bold text-dark">Display Order</label>
-                                <input type="number" name="order" class="form-control @error('order') is-invalid @enderror" value="{{ old('order', $bie->order) }}">
-                                @error('order') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
                             <!-- Image Upload -->
@@ -178,7 +176,7 @@
                         </div>
 
                         <div class="d-flex justify-content-end gap-2 mt-5">
-                            <a href="{{ route('cms.bie-page.index') }}" class="btn btn-light rounded-pill px-4 fw-bold">Cancel</a>
+                            <a href="{{ route('cms.profiles.index') }}" class="btn btn-light rounded-pill px-4 fw-bold">Cancel</a>
                             <button type="submit" class="btn btn-primary rounded-pill px-5 shadow fw-bold">
                                 <i class="fa-solid fa-save me-2"></i> Update Slide
                             </button>

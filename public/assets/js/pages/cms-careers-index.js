@@ -1,10 +1,29 @@
-    // Native vector-based PDF generation using jsPDF & jspdf-autotable
     function downloadPDF(monthName, tableId) {
+        const tableEl = document.getElementById(tableId);
+        if (!tableEl) {
+            AppAlert.error('The report data could not be found. Please reload the page and try again.', 'Failed to create PDF');
+            return;
+        }
+
+        // jsPDF / autotable are loaded from a CDN and may be unavailable (offline, blocked, etc.)
+        if (!window.jspdf || !window.jspdf.jsPDF || typeof window.jspdf.jsPDF.API.autoTable !== 'function') {
+            AppAlert.error('The PDF library could not be loaded. Please check your internet connection and reload the page.', 'Failed to create PDF');
+            return;
+        }
+
+        try {
+            generateVacanciesPDF(monthName, tableEl);
+        } catch (err) {
+            console.error('Failed to generate PDF: ', err);
+            AppAlert.error('Something went wrong while creating the PDF. Please try again.', 'Failed to create PDF');
+        }
+    }
+
+    // Native vector-based PDF generation using jsPDF & jspdf-autotable
+    function generateVacanciesPDF(monthName, tableEl) {
         const BIE_GREEN = [25, 135, 84]; // BIIE Green: #198754
         const BIE_GREEN_DARK = [15, 81, 50]; // Darker BIIE Green: #0f5132
-        const tableEl = document.getElementById(tableId);
-        if (!tableEl) return;
-        
+
         // Retrieve BIE Logo from DOM
         const logoImgEl = document.querySelector('.logo img') || document.querySelector('header img') || document.querySelector('.branding img');
         let logoBase64 = null;
@@ -221,12 +240,6 @@
     }
 
     document.addEventListener("DOMContentLoaded", function() {
-        const toast = document.getElementById('adminSuccessToast');
-        if (toast) {
-            setTimeout(() => { toast.classList.add('show'); }, 100);
-            setTimeout(() => { toast.classList.remove('show'); }, 3000);
-        }
-
         const monthSelect = document.getElementById('monthFilterSelect');
         if (monthSelect) {
             monthSelect.addEventListener('change', function() {

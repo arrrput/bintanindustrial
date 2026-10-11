@@ -12,9 +12,7 @@
             // ... (Rest of existing JS logic)
             const closingDateInput = document.getElementById('closing_date');
             const statusSelect = document.getElementById('status');
-            const warningToast = document.getElementById('adminWarningToast');
-            const warningMessage = document.getElementById('warningMessage');
-            function showWarning(msg) { warningMessage.innerText = msg; warningToast.classList.add('show'); setTimeout(() => { warningToast.classList.remove('show'); }, 4000); }
+            function showWarning(msg) { AppAlert.warning(msg, 'Status changed to Closed'); }
             function isDateInPast(dateStr) { if (!dateStr) return false; const today = new Date(); today.setHours(0, 0, 0, 0); const closingDate = new Date(dateStr); closingDate.setHours(0, 0, 0, 0); return closingDate < today; }
             closingDateInput.addEventListener('change', function() { if (isDateInPast(this.value)) { statusSelect.value = 'closed'; } });
             statusSelect.addEventListener('change', function() { if (this.value === 'open' && isDateInPast(closingDateInput.value)) { this.value = 'closed'; showWarning('Cannot set to OPEN because it\'s past the closing date.'); } });

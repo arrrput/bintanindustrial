@@ -22,6 +22,12 @@
 
 <div class="container py-4 py-md-5 mt-2">
 
+    <div class="mb-4">
+        <a href="{{ auth()->user()->canAny(['users.manage', 'roles.manage']) ? route('cms.admin.index') : route('cms.dashboard') }}" class="btn btn-secondary rounded-pill px-4 fw-bold">
+            <i class="fa-solid fa-arrow-left me-2"></i> Back
+        </a>
+    </div>
+
     <div class="mb-4 d-flex justify-content-between align-items-center">
         <div>
             <h2 class="fw-bold text-dark mb-0 fs-3">

@@ -2,6 +2,10 @@
 
 @section('title', 'Add New User - BIIE CMS')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('assets/css/pages/cms-admin.css') }}">
+@endpush
+
 @section('content')
 <div class="page-title" data-aos="fade">
   <div class="container d-lg-flex justify-content-between align-items-center">
@@ -9,6 +13,7 @@
       <ol>
         <li><a href="{{ url('/') }}">Home</a></li>
         <li><a href="{{ route('cms.dashboard') }}">CMS</a></li>
+        <li><a href="{{ route('cms.admin.index') }}">Admin Panel</a></li>
         <li><a href="{{ route('cms.users.index') }}">Users</a></li>
         <li class="current">Add User</li>
       </ol>
@@ -19,6 +24,11 @@
 <div class="container py-5 mt-2">
     <div class="row justify-content-center">
         <div class="col-lg-8">
+            <div class="mb-4">
+                <a href="{{ route('cms.users.index') }}" class="btn btn-secondary rounded-pill px-4 fw-bold">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Back
+                </a>
+            </div>
             <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
                 <div class="card-header bg-success py-3 border-0">
                     <h5 class="mb-0 text-white fw-bold"><i class="fa-solid fa-user-plus me-2"></i> Create New User</h5>
@@ -57,22 +67,7 @@
                             </div>
                         </div>
 
-                        <div class="mb-5">
-                            <label class="form-label fw-bold text-dark d-block">Assign Role <span class="text-danger">*</span></label>
-                            <div class="d-flex flex-wrap gap-4 mt-2">
-                                @foreach($roles as $role)
-                                <div class="form-check custom-radio">
-                                    <input class="form-check-input" type="radio" name="role" value="{{ $role->name }}" id="role_{{ $role->id }}" {{ old('role') == $role->name ? 'checked' : '' }} required>
-                                    <label class="form-check-label fw-semibold" for="role_{{ $role->id }}">
-                                        {{ $role->name }}
-                                    </label>
-                                </div>
-                                @endforeach
-                            </div>
-                            @error('role')
-                                <div class="text-danger small mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        @include('cms.users.partials.role-picker', ['selected' => old('role')])
 
                         <div class="d-flex justify-content-between align-items-center border-top pt-4">
                             <a href="{{ route('cms.users.index') }}" class="btn btn-light rounded-pill px-4 fw-bold">

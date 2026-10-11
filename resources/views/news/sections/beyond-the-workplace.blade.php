@@ -25,6 +25,8 @@
 @endif
 
 <div class="beyond-the-workplace">
+    {{-- Banner can be switched off in CMS > Manage Blog > Programs --}}
+    @if (\App\Models\SectionSetting::bannerVisible($programSetting))
     <section class="program-parallax-divider {{ $solidColor ? 'is-solid' : '' }} {{ $isLightColor ? 'is-light' : '' }}"
         @if ($solidColor) style="background-color: {{ $solidColor }};" @endif>
         @unless ($solidColor)
@@ -43,6 +45,13 @@
             @endif
         </div>
     </section>
+    @endif
+
+    @if ($programSetting?->hasHeading())
+        <div class="container pt-5">
+            @include('partials.section-heading', ['setting' => $programSetting, 'class' => 'pb-0'])
+        </div>
+    @endif
 
     @include('news.sections.events')
     @include('news.sections.entertainment')

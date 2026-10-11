@@ -8,6 +8,8 @@
 
 <section class="industrial-estate page-content section position-relative overflow-hidden">
     <div class="container position-relative" style="z-index: 1;">
+        @include('partials.section-heading', ['setting' => $bieSetting])
+
         @foreach ($bies as $index => $section)
             @php $isReversed = $index % 2 != 0; @endphp
 

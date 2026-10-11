@@ -1,18 +1,8 @@
 @extends('layouts.main') 
 
-@section('title', 'Manage News Articles - BIIE CMS')
-
-@push('styles')
-<link rel="stylesheet" href="{{ asset('assets/css/pages/cms-blogs-index.css') }}">
-@endpush
+@section('title', 'Manage Blog - BIIE CMS')
 
 @section('content')
-
-  @if(session('success'))
-      <div id="adminSuccessToast" class="custom-success-toast">
-          <i class="fa-solid fa-circle-check fs-5"></i> {{ session('success') }}
-      </div>
-  @endif
 
 <div class="page-title" data-aos="fade">
   <div class="container d-lg-flex justify-content-between align-items-center">
@@ -20,14 +10,16 @@
       <ol>
         <li><a href="{{ url('/') }}">Home</a></li>
         <li><a href="{{ route('cms.dashboard') }}">CMS</a></li>
-        <li class="current">News</li>
+        <li class="current">Manage Blog</li>
       </ol>
     </nav>
   </div>
 </div>
 
 <div class="container py-4 py-md-5 mt-2">
-    
+
+    @include('cms.blogs.partials.header', ['active' => 'articles'])
+
     <!-- Section Settings Form -->
     <div class="card border-0 shadow-sm rounded-4 mb-5">
         <div class="card-body p-4">
@@ -38,6 +30,7 @@
                 @csrf
                 <input type="hidden" name="section_key" value="blog">
                 <div class="row g-3">
+                    @include('cms.partials.section-heading-fields', ['key' => 'blog', 'setting' => $setting])
                     <div class="col-md-6">
                         <label class="form-label small fw-bold">Custom Section Title</label>
                         <input type="text" name="title" class="form-control rounded-pill" value="{{ $setting->title ?? 'News & Media' }}" placeholder="Enter custom title">
@@ -57,7 +50,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4 gap-2">
         <div>
             <h2 class="fw-bold text-dark mb-0 fs-3">
-                <i class="fa-solid fa-newspaper text-primary me-2"></i> News Articles
+                <i class="fa-solid fa-newspaper text-primary me-2"></i> Articles
             </h2>
             <p class="text-muted small mb-0 mt-1">Create, edit, and manage news and articles.</p>
         </div>
@@ -101,14 +94,14 @@
                                 <span class="text-muted small"><i class="fa-solid fa-calendar-days me-1"></i> {{ $blog->created_at->format('M d, Y') }}</span>
                             </td>
                             <td class="py-3 d-none d-md-table-cell text-muted small">
-                                {{ Str::limit($blog->excerpt, 80) }}
+                                {{ Str::limit($blog->excerpt ?: strip_tags($blog->content), 80) }}
                             </td>
                             <td class="pe-4 py-3 text-end">
                                 <div class="d-flex justify-content-end gap-2">
                                     <a href="{{ route('cms.blogs.edit', $blog->id) }}" class="btn btn-sm btn-light text-primary rounded-circle shadow-sm">
                                         <i class="fa-solid fa-pen"></i>
                                     </a>
-                                    <form action="{{ route('cms.blogs.destroy', $blog->id) }}" method="POST" onsubmit="return confirm('Delete this article?');">
+                                    <form action="{{ route('cms.blogs.destroy', $blog->id) }}" method="POST" data-confirm="Delete this article?">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-light text-danger rounded-circle shadow-sm">
                                             <i class="fa-solid fa-trash"></i>
@@ -130,6 +123,3 @@
 </div>
 @endsection
 
-@push('scripts')
-<script src="{{ asset('assets/js/pages/cms-blogs-index.js') }}"></script>
-@endpush

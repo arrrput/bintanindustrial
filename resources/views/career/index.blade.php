@@ -9,8 +9,6 @@
 @endpush
 
 @section('content')
-    @include('partials.page-title', ['current' => 'Career'])
-
     @include('partials.page-header', [
         'prefix' => 'career',
         'slideshowId' => 'careerBgSlideshow',
@@ -28,13 +26,7 @@
         <i class="fa-solid fa-award careers-bg-ornament" style="font-size: 14rem; bottom: 12%; right: -1%; animation-delay: 6s;"></i>
 
         <div class="container position-relative" style="z-index: 1;">
-            <div class="row align-items-center mb-5 pb-4" data-aos="fade-up" data-aos-duration="1000">
-                <div class="col-lg-8 mx-auto text-center">
-                    <span class="badge bg-success-subtle text-success mb-2 px-3 py-2 rounded-pill fw-bold"
-                        style="background: rgba(51,86,66,0.1);">Grow With Us</span>
-                    <p class="lead text-muted">KERJA KERJA KERJA !!!.</p>
-                </div>
-            </div>
+            @include('partials.section-heading', ['setting' => $setting])
 
             <div class="row g-4 mt-2">
                 @forelse ($careers as $job)
@@ -42,7 +34,7 @@
                 @empty
                     <div class="col-12 text-center py-5">
                         <i class="fa-solid fa-folder-open fs-1 text-muted mb-3"></i>
-                        <h5 class="text-muted">Belum ada lowongan pekerjaan saat ini.</h5>
+                        <h5 class="text-muted">There are no job openings at the moment. Please check back soon.</h5>
                     </div>
                 @endforelse
             </div>

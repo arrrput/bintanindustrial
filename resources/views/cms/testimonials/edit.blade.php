@@ -19,6 +19,11 @@
 <div class="container py-5 mt-2">
     <div class="row justify-content-center">
         <div class="col-lg-8">
+            <div class="mb-4">
+                <a href="{{ route('cms.home.index') }}" class="btn btn-secondary rounded-pill px-4 fw-bold">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Back
+                </a>
+            </div>
             <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
                 <div class="card-header bg-primary py-3 border-0">
                     <h5 class="mb-0 text-white fw-bold"><i class="fa-solid fa-pen-to-square me-2"></i> Edit Testimonial</h5>
@@ -100,6 +105,5 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('assets/js/pages/cms-testimonial-form.js') }}"></script>
 @endpush

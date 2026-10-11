@@ -49,7 +49,7 @@
                 <li><a href="{{ route('home') }}" class="{{ Request::routeIs('home') ? 'active' : '' }}">Home</a></li>
                 <li><a href="{{ route('profile') }}" class="{{ Request::routeIs('profile') ? 'active' : '' }}">Profile</a></li>
                 <li><a href="{{ route('oss') }}" class="{{ Request::routeIs('oss') ? 'active' : '' }}">OSS</a></li>
-                <li><a href="{{ route('news.index') }}" class="{{ Request::routeIs('news.*') ? 'active' : '' }}">News</a></li>
+                <li><a href="{{ route('news.index') }}" class="{{ Request::routeIs('news.*') ? 'active' : '' }}">Blog</a></li>
                 <li><a href="{{ route('career.index') }}" class="{{ Request::routeIs('career.*') ? 'active' : '' }}">Career</a></li>
                 @auth
                     <li class="cms-divider-custom" style="width: 1px; height: 20px; background: #ddd; margin: 0 8px; display: inline-block; vertical-align: middle;"></li>
@@ -68,17 +68,21 @@
                             </li>
                             <li><a href="{{ route('cms.dashboard') }}" class="dropdown-item-custom rounded-3 py-2 px-3 d-block"><i class="bi bi-speedometer2 me-2"></i> Dashboard CMS</a></li>
                             
-                            @role('IT')
+                            @canany(['users.manage', 'roles.manage', 'activity-logs.view'])
                             <li class="dropdown-divider my-2"></li>
                             <li class="px-3 py-1"><span class="text-muted small fw-bold text-uppercase" style="font-size: 0.65rem; letter-spacing: 1px;">System</span></li>
-                            <li><a href="{{ route('cms.users.index') }}" class="dropdown-item-custom rounded-3 py-2 px-3 d-block"><i class="bi bi-people me-2"></i> Manage User</a></li>
+                            @canany(['users.manage', 'roles.manage'])
+                            <li><a href="{{ route('cms.admin.index') }}" class="dropdown-item-custom rounded-3 py-2 px-3 d-block"><i class="bi bi-person-gear me-2"></i> Admin Panel</a></li>
+                            @endcanany
+                            @can('activity-logs.view')
                             <li><a href="{{ route('cms.logs.index') }}" class="dropdown-item-custom rounded-3 py-2 px-3 d-block"><i class="bi bi-clock-history me-2"></i> Log Activity</a></li>
-                            @endrole
+                            @endcan
+                            @endcanany
                             <li class="dropdown-divider my-2"></li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST" class="m-0">
                                     @csrf
-                                    <button type="submit" class="dropdown-item-logout rounded-3 w-100 text-start border-0 bg-transparent py-2 px-3 text-danger"><i class="bi bi-box-arrow-right me-2"></i> Logout</button>
+                                    <button type="submit" data-loading-text="Logging out..." class="dropdown-item-logout rounded-3 w-100 text-start border-0 bg-transparent py-2 px-3 text-danger"><i class="bi bi-box-arrow-right me-2"></i> Logout</button>
                                 </form>
                             </li>
                         </ul>
@@ -173,6 +177,10 @@
   <script src="{{ asset('assets/js/pages/layouts-main-js-1.js') }}"></script>
   <script src="{{ asset('assets/js/cms-image-paste.js') }}"></script>
   <script src="{{ asset('assets/js/cms-image-compression.js') }}"></script>
+  <!-- SweetAlert2 (global alerts & confirmations) -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
+  <script src="{{ asset('assets/js/app-alerts.js') }}"></script>
+  @include('partials.swal-flash')
 @stack('scripts')
 <link rel="stylesheet" href="{{ asset('assets/css/pages/layouts-main-3.css') }}">
 <script src="{{ asset('assets/js/pages/layouts-main-js-2.js') }}"></script>

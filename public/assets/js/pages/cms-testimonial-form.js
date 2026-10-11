@@ -118,11 +118,9 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        Swal.fire({
-            title: 'Saving...',
-            allowOutsideClick: false,
-            didOpen: () => Swal.showLoading(),
-        });
+        const submitBtn = ButtonLoading.submitButtonOf(form, e.submitter);
+        if (submitBtn && submitBtn.dataset.loading === '1') return; // already saving
+        ButtonLoading.start(submitBtn, 'Saving...');
 
         try {
             const formData = new FormData(form);
@@ -149,15 +147,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 throw new Error(msg);
             }
 
-            await Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: data.message || 'Saved successfully!',
-                timer: 1600,
-                showConfirmButton: false,
-            });
+            AppAlert.successAfterRedirect(data.message || 'Saved successfully!');
             window.location = data.redirect || document.referrer || '/';
         } catch (err) {
+            ButtonLoading.stop(submitBtn);
             Swal.fire({
                 icon: 'error',
                 title: 'Failed',

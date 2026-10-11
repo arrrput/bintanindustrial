@@ -40,9 +40,9 @@
             </ul>
           </div>
           <div class="portfolio-description" data-aos="fade-up" data-aos-delay="300">
-            <h2>Layanan Custom Build</h2>
+            <h2>Custom Build Service</h2>
             <p>
-              Fasilitas *Custom Build* kami tawarkan bagi Anda yang memiliki kebutuhan standar industri khusus. Kami akan bekerjasama merancang dan membangun pabrik dari nol yang 100% disesuaikan (*Tailor-made*) dengan dimensi, kebutuhan alat berat, hingga standar utilitas dari perusahaan Anda.
+              Our Custom Build service is designed for companies with specialised industrial requirements. We work with you to design and build a factory from the ground up, 100% tailor-made to your required dimensions, heavy-equipment needs and utility standards.
             </p>
           </div>
         </div>

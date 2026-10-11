@@ -14,6 +14,8 @@
     - $containerClass : (optional) extra classes for the title container
     - $aos            : (optional) data-aos attributes for the title container
 --}}
+{{-- Hidden when the banner is switched off in the CMS (the page then relies on its sub-heading) --}}
+@if (\App\Models\SectionSetting::bannerVisible($setting))
 @php
     $solidColor = $setting?->solidColor();
     $isLightColor = $setting?->isLightColor() ?? false;
@@ -46,4 +48,6 @@
     @push('scripts')
         <script src="{{ asset($script) }}"></script>
     @endpush
+@endif
+
 @endif

@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\ActivityLogController;
+use App\Http\Controllers\Admin\AdminPanelController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ApplicantCmsController;
 use App\Http\Controllers\Admin\BieUnifiedCmsController;
 use App\Http\Controllers\Admin\CareerController;
+use App\Http\Controllers\Admin\OssCmsController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BieController;
@@ -22,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Public pages (navbar: Home, Profile, OSS, News, Career)
+| Public pages (navbar: Home, Profile, OSS, Blog, Career)
 |--------------------------------------------------------------------------
 */
 
@@ -101,42 +105,49 @@ Route::controller(AuthController::class)->group(function () {
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('cms')->name('cms.')->middleware(['auth', 'role:HRGA|BDD|CRS|IT'])->group(function () {
+// Access per module is permission-based (see App\Support\CmsPermissions); the IT role has every permission.
+Route::prefix('cms')->name('cms.')->middleware(['auth', 'cms.access'])->group(function () {
     Route::view('/', 'cms.dashboard')->name('dashboard');
     Route::post('section-settings', [SectionSettingController::class, 'update'])->name('section-settings.update');
 
-    // Career & applicants (HRGA can access)
-    Route::resource('careers', CareerController::class);
-    Route::controller(ApplicantCmsController::class)->prefix('applicants')->name('applicants.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('{applicant}', 'show')->name('show');
-        Route::put('{applicant}/status', 'updateStatus')->name('update-status');
-        Route::delete('{applicant}', 'destroy')->name('destroy');
-    });
+    // Recruitment
+    Route::resource('careers', CareerController::class)->middleware('permission:careers.manage');
+    Route::controller(ApplicantCmsController::class)->prefix('applicants')->name('applicants.')
+        ->middleware('permission:applicants.manage')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('{applicant}', 'show')->name('show');
+            Route::put('{applicant}/status', 'updateStatus')->name('update-status');
+            Route::delete('{applicant}', 'destroy')->name('destroy');
+        });
 
-    // Website content
-    Route::middleware('role:BDD|CRS|IT')->group(function () {
-        // Home
+    // Home
+    Route::middleware('permission:home.manage')->group(function () {
         Route::get('home', [HomeCmsController::class, 'index'])->name('home.index');
         Route::post('testimonials/bulk-destroy', [TestimonialController::class, 'bulkDestroy'])->name('testimonials.bulk-destroy');
         Route::post('tenants/bulk-destroy', [TenantLogoController::class, 'bulkDestroy'])->name('tenants.bulk-destroy');
         Route::resource('testimonials', TestimonialController::class)->except(['index']);
-        Route::resource('tenants', TenantLogoController::class)->only(['store', 'destroy']);
-
-        // Profile
-        Route::get('bie-page', [BieUnifiedCmsController::class, 'index'])->name('bie-page.index');
-        Route::resource('bies', BieController::class);
-
-        // OSS
-        Route::resource('programs', ProgramController::class);
-
-        // News
-        Route::resource('blogs', BlogController::class);
+        Route::resource('tenants', TenantLogoController::class)->except(['show']);
     });
 
-    // System (IT only)
-    Route::middleware('role:IT')->group(function () {
-        Route::resource('users', UserController::class);
-        Route::get('logs', [ActivityLogController::class, 'index'])->name('logs.index');
+    // Profiles (Bintan Island, Business Opportunity) & OSS (Service Suite, Facilities).
+    // "bies" items are shared with Home > Our Industrial Estate; BieController checks the permission per item.
+    Route::get('profiles', [BieUnifiedCmsController::class, 'index'])->name('profiles.index')->middleware('permission:profiles.manage');
+    Route::get('oss', [OssCmsController::class, 'index'])->name('oss.index')->middleware('permission:oss.manage');
+    Route::permanentRedirect('bie-page', '/cms/profiles');
+    Route::post('bies/reorder', [BieController::class, 'reorder'])->name('bies.reorder')->middleware('permission:profiles.manage|oss.manage|home.manage');
+    Route::resource('bies', BieController::class)->except(['show'])->middleware('permission:profiles.manage|oss.manage|home.manage');
+
+    // Blog (articles + Beyond The Workplace programs)
+    Route::resource('blogs', BlogController::class)->middleware('permission:blog.manage');
+    Route::resource('programs', ProgramController::class)->middleware('permission:programs.manage');
+
+    // Admin panel
+    Route::prefix('admin')->group(function () {
+        Route::get('/', [AdminPanelController::class, 'index'])->name('admin.index')->middleware('permission:users.manage|roles.manage');
+        Route::resource('users', UserController::class)->except(['show'])->middleware('permission:users.manage');
+        Route::resource('roles', RoleController::class)->except(['show'])->middleware('permission:roles.manage');
+        Route::get('permissions', [PermissionController::class, 'index'])->name('permissions.index')->middleware('permission:roles.manage');
+        Route::put('permissions', [PermissionController::class, 'update'])->name('permissions.update')->middleware('permission:roles.manage');
     });
+    Route::get('logs', [ActivityLogController::class, 'index'])->name('logs.index')->middleware('permission:activity-logs.view');
 });

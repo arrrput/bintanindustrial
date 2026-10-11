@@ -8,10 +8,6 @@
 @endpush
 
 @section('content')
-<div id="adminWarningToast" class="custom-warning-toast">
-    <i class="fa-solid fa-triangle-exclamation fs-5"></i> <span id="warningMessage">Warning Message</span>
-</div>
-
 <div class="page-title" data-aos="fade">
   <div class="container d-lg-flex justify-content-between align-items-center">
     <nav class="breadcrumbs">
@@ -28,6 +24,11 @@
 <div class="container py-5 mt-2">
     <div class="row justify-content-center">
         <div class="col-lg-10">
+            <div class="mb-4">
+                <a href="{{ route('cms.careers.index') }}" class="btn btn-secondary rounded-pill px-4 fw-bold">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Back
+                </a>
+            </div>
             <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
                 <div class="card-header bg-success py-3 border-0">
                     <h5 class="mb-0 text-white fw-bold"><i class="fa-solid fa-file-signature me-2"></i> Post a New Job</h5>
@@ -39,43 +40,43 @@
                         <div class="row g-4">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-dark">Job Title <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="title" id="title" placeholder="e.g. HSE Officer" required>
+                                <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}" placeholder="e.g. HSE Officer" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-dark">Location <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="location" id="location" value="Bintan Industrial Estate" required>
+                                <input type="text" class="form-control" name="location" id="location" value="{{ old('location', 'Bintan Industrial Estate') }}" required>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label fw-bold text-dark">Level <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="level" id="level" placeholder="e.g. Staff, Manager" required>
+                                <input type="text" class="form-control" name="level" id="level" value="{{ old('level') }}" placeholder="e.g. Staff, Manager" required>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label fw-bold text-dark">Min. Education <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="min_education" id="min_education" placeholder="e.g. S1 / D3" required>
+                                <input type="text" class="form-control" name="min_education" id="min_education" value="{{ old('min_education') }}" placeholder="e.g. S1 / D3" required>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label fw-bold text-dark">Min. Experience <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="min_experience" id="min_experience" placeholder="e.g. 1 - 2 Years" required>
+                                <input type="text" class="form-control" name="min_experience" id="min_experience" value="{{ old('min_experience') }}" placeholder="e.g. 1 - 2 Years" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-dark">Closing Date <span class="text-danger">*</span></label>
-                                <input type="date" class="form-control" name="closing_date" id="closing_date" required>
+                                <input type="date" class="form-control" name="closing_date" id="closing_date" value="{{ old('closing_date') }}" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-dark">Job Status</label>
                                 <select class="form-select" name="status" id="status">
-                                    <option value="open">OPEN</option>
-                                    <option value="closed">CLOSED</option>
+                                    <option value="open" {{ old('status', 'open') == 'open' ? 'selected' : '' }}>OPEN</option>
+                                    <option value="closed" {{ old('status', 'open') == 'closed' ? 'selected' : '' }}>CLOSED</option>
                                 </select>
                             </div>
 
                             <div class="col-12">
                                 <label class="form-label fw-bold text-dark">Job Description <span class="text-danger">*</span></label>
-                                <textarea class="form-control summernote-editor" name="description" required></textarea>
+                                <textarea class="form-control summernote-editor" name="description" required>{!! old('description') !!}</textarea>
                             </div>
                             <div class="col-12">
                                 <label class="form-label fw-bold text-dark">Requirements <span class="text-danger">*</span></label>
-                                <textarea class="form-control summernote-editor" name="requirements" required></textarea>
+                                <textarea class="form-control summernote-editor" name="requirements" required>{!! old('requirements') !!}</textarea>
                             </div>
 
                             {{--

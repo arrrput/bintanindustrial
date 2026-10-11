@@ -1,20 +1,19 @@
     document.addEventListener("DOMContentLoaded", function() {
-        const toast = document.getElementById('adminSuccessToast');
-        if (toast) {
-            setTimeout(() => toast.classList.add('show'), 100);
-            setTimeout(() => toast.classList.remove('show'), 3500);
-        }
+        // Persist the active tab across page reloads (e.g. after a form submit) — Manage Profiles & Manage OSS
+        document.querySelectorAll('ul.section-tab-nav[id]').forEach(nav => {
+            const storageKey = 'cmsActiveTab:' + nav.id;
 
-        // Persist active tab across page reloads (e.g. after form submit)
-        const savedTab = sessionStorage.getItem('bieActiveTab');
-        if (savedTab) {
-            const tabEl = document.querySelector(`[data-bs-target="${savedTab}"]`);
-            if (tabEl) bootstrap.Tab.getOrCreateInstance(tabEl).show();
-        }
+            let savedTab = null;
+            try { savedTab = sessionStorage.getItem(storageKey); } catch (e) {}
+            if (savedTab) {
+                const tabEl = nav.querySelector(`[data-bs-target="${savedTab}"]`);
+                if (tabEl) bootstrap.Tab.getOrCreateInstance(tabEl).show();
+            }
 
-        document.querySelectorAll('#bieTabs [data-bs-toggle="tab"]').forEach(tab => {
-            tab.addEventListener('shown.bs.tab', e => {
-                sessionStorage.setItem('bieActiveTab', e.target.dataset.bsTarget);
+            nav.querySelectorAll('[data-bs-toggle="tab"]').forEach(tab => {
+                tab.addEventListener('shown.bs.tab', e => {
+                    try { sessionStorage.setItem(storageKey, e.target.dataset.bsTarget); } catch (err) {}
+                });
             });
         });
     });

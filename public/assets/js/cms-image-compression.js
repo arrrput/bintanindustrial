@@ -65,19 +65,24 @@
         document.querySelectorAll('form').forEach(function (form) {
             if (SKIP_FORM_IDS.includes(form.id)) return;
 
-            const fileInputs = findImageFileInputs(form);
-            if (fileInputs.length === 0) return;
+            // Forms that check file sizes against the server limits themselves keep their files untouched
+            if (form.hasAttribute('data-no-compress')) return;
+
+            // Forms with dynamic rows add file inputs later, so those are looked up at submit time
+            const isDynamic = form.hasAttribute('data-own-upload');
+            if (!isDynamic && findImageFileInputs(form).length === 0) return;
 
             form.addEventListener('submit', function (e) {
+                const fileInputs = findImageFileInputs(form);
                 const hasFiles = fileInputs.some((input) => input.files && input.files.length > 0);
                 if (!hasFiles) return; // nothing selected, let the browser submit normally
 
                 e.preventDefault();
 
-                const submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
-                if (submitBtn) {
-                    submitBtn.disabled = true;
-                    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Processing...';
+                if (form.dataset.submitting === '1') return; // already compressing/submitting
+                form.dataset.submitting = '1';
+                if (window.ButtonLoading) {
+                    ButtonLoading.start(ButtonLoading.submitButtonOf(form, e.submitter), ButtonLoading.textFor(form, e.submitter));
                 }
 
                 const finish = () => form.submit(); // bypasses this listener — no re-entrancy
