@@ -32,6 +32,13 @@ use Illuminate\Support\Facades\Route;
 
 // Home
 Route::get('/', [Controller::class, 'index'])->name('home');
+
+// Profile video streamed through Laravel so HTTP Range requests (seeking) work on every server,
+// including `php artisan serve`, which ignores Range for static files.
+Route::get('/video/profile', fn () => response()->file(public_path('assets/vid/biieprovid.mp4'), [
+    'Content-Type' => 'video/mp4',
+    'Cache-Control' => 'public, max-age=604800',
+]))->name('video.profile');
 Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact.submit');
 
 // Profile

@@ -1,105 +1,114 @@
-                    (function() {
-                      const v = document.getElementById('heroVideo');
-                      const pi = document.getElementById('vPlayIcon');
-                      const mi = document.getElementById('vMuteIcon');
-                      const ov = document.getElementById('overlayPlayBtn');
-                      const pr = document.getElementById('vProgress');
-                      const tm = document.getElementById('vTime');
-                      const vl = document.getElementById('vVolume');
-                      const ct = document.getElementById('videoContainer');
+/* Hero "Watch video profile" modal player: play/pause, seek, skip ±10s, volume, fullscreen */
+(function () {
+    const modal = document.getElementById('heroVideoModal');
+    const openBtn = document.getElementById('heroVideoOpen');
+    if (!modal || !openBtn) return;
 
-                      const fmt = (s) => {
-                        if (s === undefined || isNaN(s) || !isFinite(s)) return "0:00";
-                        const m = Math.floor(Math.abs(s) / 60);
-                        const sc = Math.floor(Math.abs(s) % 60);
-                        return m + ":" + (sc < 10 ? '0' : '') + sc;
-                      };
+    const v = document.getElementById('hvVideo');
+    const player = document.getElementById('hvPlayer');
+    const center = document.getElementById('hvCenter');
+    const playBtn = document.getElementById('hvPlay');
+    const progress = document.getElementById('hvProgress');
+    const time = document.getElementById('hvTime');
+    const muteBtn = document.getElementById('hvMute');
+    const volume = document.getElementById('hvVolume');
+    let seeking = false;
 
-                      window.isSeeking = false;
+    const fmt = (s) => {
+        if (!isFinite(s)) return '0:00';
+        const m = Math.floor(s / 60);
+        const sec = Math.floor(s % 60);
+        return m + ':' + (sec < 10 ? '0' : '') + sec;
+    };
 
-                      window.toggleHeroVid = (e) => {
-                        if(e) { e.preventDefault(); e.stopPropagation(); }
-                        if (v.paused) v.play().catch(err => {}); else v.pause();
-                        syncUI();
-                      };
+    const setIcon = (btn, icon) => { btn.querySelector('i').className = 'bi ' + icon; };
 
-                      // Preview time while dragging (responsive text)
-                      window.previewSeek = (val) => {
-                        if(v && v.duration && isFinite(v.duration)) {
-                          const previewTime = (parseFloat(val) / 100) * v.duration;
-                          if(tm) tm.innerText = fmt(previewTime) + " / " + fmt(v.duration);
-                        }
-                      };
+    const syncPlay = () => {
+        const icon = v.paused ? 'bi-play-fill' : 'bi-pause-fill';
+        setIcon(playBtn, icon);
+        setIcon(center, icon);
+        player.classList.toggle('is-paused', v.paused);
+    };
 
-                      // Actually seek video when slider is released
-                      window.commitSeek = (val) => {
-                        if(v && v.duration && isFinite(v.duration)) {
-                          const seekTo = (parseFloat(val) / 100) * v.duration;
-                          // Terapkan waktu baru ke video
-                          v.currentTime = Math.max(0, Math.min(seekTo, v.duration));
-                        }
-                        // Lepaskan kunci slider SETELAH waktu video diubah
-                        window.isSeeking = false; 
-                      };
+    const syncVolume = () => {
+        setIcon(muteBtn, v.muted || v.volume === 0 ? 'bi-volume-mute-fill' : 'bi-volume-up-fill');
+        volume.value = v.muted ? 0 : v.volume;
+    };
 
-                      window.muteHeroVid = (e) => {
-                        if(e) e.stopPropagation();
-                        v.muted = !v.muted;
-                        syncUI();
-                      };
+    const syncTime = () => {
+        if (!v.duration) return;
+        if (!seeking) progress.value = (v.currentTime / v.duration) * 100;
+        progress.style.setProperty('--fill', progress.value + '%');
+        time.textContent = fmt(v.currentTime) + ' / ' + fmt(v.duration);
+    };
 
-                      window.volHeroVid = (val) => {
-                        v.volume = val;
-                        v.muted = (val == 0);
-                        syncUI();
-                      };
+    const toggle = () => { v.paused ? v.play().catch(() => {}) : v.pause(); };
+    const skip = (sec) => {
+        if (!v.duration) return;
+        v.currentTime = Math.max(0, Math.min(v.currentTime + sec, v.duration));
+    };
 
-                      window.skipHeroVid = (sec, e) => {
-                        if(e) e.stopPropagation();
-                        if(v && v.duration && isFinite(v.duration)) {
-                           let newTime = v.currentTime + sec;
-                           v.currentTime = Math.max(0.1, Math.min(newTime, v.duration - 0.5));
-                        }
-                      };
+    const open = () => {
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.documentElement.style.overflow = 'hidden';
+        v.play().catch(() => {});
+    };
 
-                      window.fullHeroVid = (e) => {
-                        if(e) e.stopPropagation();
-                        if (!document.fullscreenElement) ct.requestFullscreen().catch(err => {});
-                        else if (document.exitFullscreen) document.exitFullscreen();
-                      };
+    const close = () => {
+        v.pause();
+        if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.documentElement.style.overflow = '';
+    };
 
-                      function syncUI() {
-                        if(pi) pi.className = v.paused ? "bi bi-play-fill" : "bi bi-pause-fill";
-                        if(ov) ov.style.opacity = v.paused ? "1" : "0";
-                        if(mi) mi.className = (v.muted || v.volume == 0) ? "bi bi-volume-mute-fill" : "bi bi-volume-up-fill";
-                        if(vl) vl.value = v.muted ? 0 : v.volume;
-                      }
+    openBtn.addEventListener('click', open);
+    modal.querySelectorAll('[data-hv-close]').forEach((el) => el.addEventListener('click', close));
 
-                      v.onplay = syncUI;
-                      v.onpause = syncUI;
-                      v.onvolumechange = syncUI;
-                      
-                      v.ontimeupdate = () => {
-                        if(pr && !window.isSeeking) {
-                          if(v.duration && isFinite(v.duration)) {
-                            pr.value = (v.currentTime / v.duration) * 100;
-                          }
-                        }
-                        if(tm && !window.isSeeking) {
-                          tm.innerText = fmt(v.currentTime) + " / " + fmt(v.duration);
-                        }
-                      };
+    v.addEventListener('click', toggle);
+    center.addEventListener('click', toggle);
+    playBtn.addEventListener('click', toggle);
+    document.getElementById('hvBack').addEventListener('click', () => skip(-10));
+    document.getElementById('hvFwd').addEventListener('click', () => skip(10));
 
-                      const initMeta = () => {
-                        if(tm) tm.innerText = "0:00 / " + fmt(v.duration);
-                        syncUI();
-                      };
+    progress.addEventListener('input', () => {
+        seeking = true;
+        progress.style.setProperty('--fill', progress.value + '%');
+        if (v.duration) time.textContent = fmt((progress.value / 100) * v.duration) + ' / ' + fmt(v.duration);
+    });
+    progress.addEventListener('change', () => {
+        if (v.duration) v.currentTime = (progress.value / 100) * v.duration;
+        seeking = false;
+    });
 
-                      v.onloadedmetadata = initMeta;
-                      v.oncanplay = initMeta;
-                      
-                      // Initial setup
-                      v.muted = true;
-                      v.volume = 0.5;
-                      if(v.readyState >= 1) initMeta();
-                    })();
+    muteBtn.addEventListener('click', () => {
+        v.muted = !v.muted;
+        if (!v.muted && v.volume === 0) v.volume = 0.5;
+    });
+    volume.addEventListener('input', () => {
+        v.volume = parseFloat(volume.value);
+        v.muted = v.volume === 0;
+    });
+
+    document.getElementById('hvFull').addEventListener('click', () => {
+        if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+        else player.requestFullscreen?.().catch(() => {});
+    });
+
+    ['play', 'pause', 'ended'].forEach((e) => v.addEventListener(e, syncPlay));
+    ['timeupdate', 'loadedmetadata', 'durationchange'].forEach((e) => v.addEventListener(e, syncTime));
+    v.addEventListener('volumechange', syncVolume);
+
+    // Keyboard: Esc closes, Space toggles, ←/→ skip 10s
+    document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('is-open')) return;
+        if (e.key === 'Escape') close();
+        else if (e.key === ' ') { e.preventDefault(); toggle(); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); skip(-10); }
+        else if (e.key === 'ArrowRight') { e.preventDefault(); skip(10); }
+    });
+
+    syncPlay();
+    syncVolume();
+})();

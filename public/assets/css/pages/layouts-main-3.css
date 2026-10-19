@@ -271,3 +271,65 @@
             color: var(--accent-color) !important;
         }
     }
+
+    /* ===== White navbar with #1B5E20 accents ===== */
+    #header.header,
+    #header .branding { background: #fff; }
+    #header.header {
+        border-bottom: 1px solid rgba(27, 94, 32, 0.12);
+        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.06);
+    }
+    #header .branding { min-height: 76px; }
+    #header .logo img { max-height: 56px !important; }
+    #header .mobile-nav-toggle { color: #1B5E20; }
+
+    @media (min-width: 1200px) {
+        #header .navmenu > ul > li > a,
+        #header .navmenu > ul > li > a:focus {
+            color: #1f2a1f;
+            font-family: var(--heading-font);
+            font-weight: 600;
+            position: relative;
+        }
+        #header .navmenu > ul > li > a::before { display: none; }
+
+        /* Green underline on hover/active */
+        #header .navmenu > ul > li:not(.user-dropdown):not(.nav-cms-item) > a::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 2px;
+            width: 0;
+            height: 3px;
+            border-radius: 2px;
+            background: #1B5E20;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+        #header .navmenu > ul > li:hover > a,
+        #header .navmenu > ul > li > a.active { color: #1B5E20; }
+        #header .navmenu > ul > li:hover > a::after,
+        #header .navmenu > ul > li > a.active::after { width: 60%; }
+
+        #header .navmenu li.cms-divider-custom { background: rgba(27, 94, 32, 0.25) !important; }
+
+        /* CMS login button: green pill, white on hover */
+        #header .navmenu li.nav-cms-item > a {
+            background: #1B5E20;
+            color: #fff !important;
+            border: 2px solid #1B5E20;
+            border-radius: 8px;
+            padding: 8px 20px;
+            transition: background-color 0.25s, color 0.25s;
+        }
+        #header .navmenu li.nav-cms-item > a:hover,
+        #header .navmenu li.nav-cms-item > a.active {
+            background: #fff;
+            color: #1B5E20 !important;
+        }
+
+        /* Logged-in user toggle */
+        #header .navmenu .user-dropdown-toggle span,
+        #header .navmenu .user-dropdown-toggle .toggle-dropdown-custom { color: #1B5E20 !important; }
+        #header .navmenu .user-dropdown-toggle .avatar-sm { background: #1B5E20 !important; }
+    }
