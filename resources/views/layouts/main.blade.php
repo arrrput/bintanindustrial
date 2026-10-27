@@ -139,6 +139,7 @@
           <div class="social-links d-flex">
             <a href="https://www.instagram.com/biieofficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><i class="bi bi-instagram"></i></a>
             <a href="https://www.linkedin.com/company/biie/" target="_blank"><i class="bi bi-linkedin"></i></a>
+            <a href="{{ route('links') }}" class="social-links-all"><i class="bi bi-link-45deg"></i> All Links</a>
           </div>
         </div>
 

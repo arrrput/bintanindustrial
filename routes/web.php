@@ -68,6 +68,9 @@ Route::prefix('career')->name('career.')->group(function () {
     });
 });
 
+// Links (Linktree-style page, linked from footer > Follow Us)
+Route::view('/links', 'links')->name('links');
+
 // Factory types (linked from Home > Industrial Solutions)
 Route::prefix('factory')->group(function () {
     Route::view('/type-a', 'factories.type-a');

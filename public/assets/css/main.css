@@ -723,6 +723,15 @@ h6 {
   border-color: var(--accent-color);
 }
 
+/* "All Links" pill that opens the Linktree-style /links page */
+.footer .social-links a.social-links-all {
+  width: auto;
+  padding: 0 14px;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
 .footer h4 {
   font-size: 16px;
   font-weight: bold;
