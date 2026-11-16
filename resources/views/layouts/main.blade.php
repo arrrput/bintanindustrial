@@ -87,14 +87,6 @@
                             </li>
                         </ul>
                     </li>
-                @else
-                    <li class="cms-divider-custom" style="width: 1px; height: 20px; background: #ddd; margin: 0 15px; display: inline-block; vertical-align: middle;"></li>
-
-                    <li class="nav-cms-item">
-                        <a class="nav-link fw-bold text-success ms-lg-3 {{ Request::is('login') ? 'active' : '' }}" href="{{ route('login') }}">
-                            <i class="fa-solid fa-user-lock me-1"></i> CMS
-                        </a>
-                    </li>
                 @endauth
             </ul>
         </nav>
